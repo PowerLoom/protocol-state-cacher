@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/cenkalti/backoff/v4 v4.3.0
-	github.com/ethereum/go-ethereum v1.14.7
+	github.com/ethereum/go-ethereum v1.13.12
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/sirupsen/logrus v1.9.3
 )
@@ -38,3 +38,5 @@ require (
 	golang.org/x/sys v0.20.0 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
+
+replace github.com/ethereum/go-ethereum v1.13.12 => github.com/muku314115/go-ethereum v1.13.12
