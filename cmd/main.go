@@ -5,6 +5,7 @@ import (
 	"protocol-state-cacher/pkgs/prost"
 	"protocol-state-cacher/pkgs/redis"
 	"protocol-state-cacher/pkgs/utils"
+	"sync"
 )
 
 func main() {
@@ -15,5 +16,9 @@ func main() {
 	prost.ConfigureContractInstance()
 	redis.RedisClient = redis.NewRedisClient()
 
-	prost.ColdSync()
+	wg := &sync.WaitGroup{}
+	wg.Add(2)
+	go prost.ColdSyncMappings()
+	go prost.ColdSyncValues()
+	wg.Wait()
 }
