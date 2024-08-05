@@ -2,14 +2,17 @@ package prost
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"github.com/cenkalti/backoff/v4"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/ethereum/go-ethereum/rpc"
 	log "github.com/sirupsen/logrus"
 	"math/big"
+	"net/http"
 	"protocol-state-cacher/config"
 	"protocol-state-cacher/pkgs"
 	listenerCommon "protocol-state-cacher/pkgs/common"
@@ -30,11 +33,17 @@ var (
 const BlockTime = 1
 
 func ConfigureClient() {
-	var err error
-	Client, err = ethclient.Dial(config.SettingsObj.ClientUrl)
+	rpcClient, err := rpc.DialOptions(
+		context.Background(),
+		config.SettingsObj.ClientUrl,
+		rpc.WithHTTPClient(
+			&http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}},
+		),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
+	Client = ethclient.NewClient(rpcClient)
 }
 
 func ConfigureContractInstance() {
