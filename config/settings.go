@@ -3,6 +3,7 @@ package config
 import (
 	log "github.com/sirupsen/logrus"
 	"os"
+	"strconv"
 )
 
 var SettingsObj *Settings
@@ -14,6 +15,7 @@ type Settings struct {
 	RedisPort         string
 	SlackReportingUrl string
 	DataMarketAddress string
+	RedisDb           int
 }
 
 func LoadConfig() {
@@ -37,14 +39,28 @@ func LoadConfig() {
 	if config.DataMarketAddress == "" {
 		missingEnvVars = append(missingEnvVars, "DATA_MARKET_ADDRESS")
 	}
+	if getEnv("REDIS_DB", "") == "" {
+		missingEnvVars = append(missingEnvVars, "REDIS_DB")
+	}
+	if config.RedisHost == "" {
+		missingEnvVars = append(missingEnvVars, "REDIS_HOST")
+	}
+	if config.RedisPort == "" {
+		missingEnvVars = append(missingEnvVars, "REDIS_PORT")
+	}
 
 	if len(missingEnvVars) > 0 {
 		log.Fatalf("Missing required environment variables: %v", missingEnvVars)
 	}
 
+	redisDb, err := strconv.Atoi(getEnv("REDIS_DB", ""))
+	if err != nil || redisDb < 0 {
+		log.Fatalf("Invalid REDIS_DB value: %s", config.RedisDb)
+	}
+
+	config.RedisDb = redisDb
+
 	checkOptionalEnvVar(config.SlackReportingUrl, "SLACK_REPORTING_URL")
-	checkOptionalEnvVar(config.RedisHost, "REDIS_HOST")
-	checkOptionalEnvVar(config.RedisPort, "REDIS_PORT")
 
 	SettingsObj = &config
 }

@@ -18,7 +18,7 @@ func NewRedisClient() *redis.Client {
 	return redis.NewClient(&redis.Options{
 		Addr:         fmt.Sprintf("%s:%s", config.SettingsObj.RedisHost, config.SettingsObj.RedisPort), // Redis server address
 		Password:     "",                                                                               // no password set
-		DB:           0,
+		DB:           config.SettingsObj.RedisDb,
 		PoolSize:     1000,
 		ReadTimeout:  200 * time.Millisecond,
 		WriteTimeout: 200 * time.Millisecond,
