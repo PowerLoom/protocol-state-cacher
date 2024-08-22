@@ -96,7 +96,7 @@ func coldSyncAllSlots() {
 		for i := int64(0); i <= 6000; i += 20 {
 			var wg sync.WaitGroup
 
-			for j := i; j < i+20 && j <= 5000; j++ {
+			for j := i; j < i+20 && j <= 6000; j++ {
 				wg.Add(1)
 				go func(slotIndex int64) {
 					defer wg.Done()
