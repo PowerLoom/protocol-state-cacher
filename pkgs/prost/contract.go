@@ -93,7 +93,7 @@ func coldSyncAllSlots() {
 		var mu sync.Mutex
 
 		// TODO: MAKE THIS COUNT TO SLOT NUMBER
-		for i := int64(0); i <= 5000; i += 20 {
+		for i := int64(0); i <= 6000; i += 20 {
 			var wg sync.WaitGroup
 
 			for j := i; j < i+20 && j <= 5000; j++ {
