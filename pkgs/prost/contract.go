@@ -18,6 +18,7 @@ import (
 	listenerCommon "protocol-state-cacher/pkgs/common"
 	"protocol-state-cacher/pkgs/contract"
 	"protocol-state-cacher/pkgs/redis"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -71,7 +72,7 @@ func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K
 func ColdSyncMappings() {
 	for {
 		coldSyncAllSlots()
-		time.Sleep(1 * time.Minute)
+		time.Sleep(60 * time.Minute)
 	}
 
 }
@@ -169,6 +170,16 @@ func PopulateStateVars() {
 	if output, err := Instance.EpochsInADay(&bind.CallOpts{}, DataMarket); output != nil && err == nil {
 		key := redis.ContractStateVariable(pkgs.EpochsInADay)
 		PersistState(context.Background(), key, output.String())
+	}
+
+	if output, err := Instance.EPOCHSIZE(&bind.CallOpts{}, DataMarket); output != 0 && err == nil {
+		key := redis.ContractStateVariable(pkgs.EPOCH_SIZE)
+		PersistState(context.Background(), key, strconv.Itoa(int(output)))
+	}
+
+	if output, err := Instance.SOURCECHAINBLOCKTIME(&bind.CallOpts{}, DataMarket); output != nil && err == nil {
+		key := redis.ContractStateVariable(pkgs.SOURCE_CHAIN_BLOCK_TIME)
+		PersistState(context.Background(), key, strconv.Itoa(int(output.Int64())))
 	}
 }
 
