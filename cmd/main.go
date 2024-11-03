@@ -12,8 +12,7 @@ func main() {
 	utils.InitLogger()
 	config.LoadConfig()
 
-	prost.ConfigureClient()
-	prost.ConfigureContractInstance()
+	prost.Initialize()
 	redis.RedisClient = redis.NewRedisClient()
 
 	wg := &sync.WaitGroup{}
