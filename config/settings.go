@@ -1,31 +1,49 @@
 package config
 
 import (
-	log "github.com/sirupsen/logrus"
+	"encoding/json"
 	"os"
 	"strconv"
+
+	"github.com/ethereum/go-ethereum/common"
+	log "github.com/sirupsen/logrus"
 )
 
 var SettingsObj *Settings
 
 type Settings struct {
-	ClientUrl         string
-	ContractAddress   string
-	RedisHost         string
-	RedisPort         string
-	SlackReportingUrl string
-	DataMarketAddress string
-	RedisDb           int
+	ClientUrl                   string
+	ContractAddress             string
+	RedisHost                   string
+	RedisPort                   string
+	SlackReportingUrl           string
+	DataMarketAddresses         []string
+	DataMarketContractAddresses []common.Address
+	RedisDb                     int
 }
 
 func LoadConfig() {
+	dataMarketAddresses := getEnv("DATA_MARKET_ADDRESSES", "[]")
+	dataMarketAddressesList := []string{}
+	dataMarketContractAddresses := []common.Address{}
+	err := json.Unmarshal([]byte(dataMarketAddresses), &dataMarketAddressesList)
+	if err != nil {
+		log.Fatalf("Failed to parse DATA_MARKET_ADDRESSES environment variable: %v", err)
+	}
+	if len(dataMarketAddressesList) == 0 {
+		log.Fatalf("DATA_MARKET_ADDRESSES environment variable has an empty array")
+	}
+	for _, addr := range dataMarketAddressesList {
+		dataMarketContractAddresses = append(dataMarketContractAddresses, common.HexToAddress(addr))
+	}
 	config := Settings{
-		ClientUrl:         getEnv("PROST_RPC_URL", ""),
-		ContractAddress:   getEnv("PROTOCOL_STATE_CONTRACT", ""),
-		RedisHost:         getEnv("REDIS_HOST", ""),
-		RedisPort:         getEnv("REDIS_PORT", ""),
-		SlackReportingUrl: getEnv("SLACK_REPORTING_URL", ""),
-		DataMarketAddress: getEnv("DATA_MARKET_ADDRESS", ""),
+		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
+		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
+		RedisHost:                   getEnv("REDIS_HOST", ""),
+		RedisPort:                   getEnv("REDIS_PORT", ""),
+		SlackReportingUrl:           getEnv("SLACK_REPORTING_URL", ""),
+		DataMarketAddresses:         dataMarketAddressesList,
+		DataMarketContractAddresses: dataMarketContractAddresses,
 	}
 
 	// Check for any missing required environment variables and log errors
@@ -36,8 +54,8 @@ func LoadConfig() {
 	if config.ContractAddress == "" {
 		missingEnvVars = append(missingEnvVars, "PROTOCOL_STATE_CONTRACT")
 	}
-	if config.DataMarketAddress == "" {
-		missingEnvVars = append(missingEnvVars, "DATA_MARKET_ADDRESS")
+	if len(config.DataMarketAddresses) == 0 {
+		missingEnvVars = append(missingEnvVars, "DATA_MARKET_ADDRESSES")
 	}
 	if getEnv("REDIS_DB", "") == "" {
 		missingEnvVars = append(missingEnvVars, "REDIS_DB")
@@ -55,7 +73,7 @@ func LoadConfig() {
 
 	redisDb, err := strconv.Atoi(getEnv("REDIS_DB", ""))
 	if err != nil || redisDb < 0 {
-		log.Fatalf("Invalid REDIS_DB value: %s", config.RedisDb)
+		log.Fatalf("Invalid REDIS_DB value: %v", redisDb)
 	}
 
 	config.RedisDb = redisDb
