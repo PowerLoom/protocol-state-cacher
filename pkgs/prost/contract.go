@@ -25,15 +25,16 @@ import (
 )
 
 var (
-	Instances    map[common.Address]*contract.Contract
+	Instance     *contract.Contract
 	Client       *ethclient.Client
 	CurrentBlock *types.Block
 )
 
 const BlockTime = 1
 
-func init() {
-	Instances = make(map[common.Address]*contract.Contract)
+func Initialize() {
+	ConfigureClient()
+	ConfigureContractInstance()
 }
 
 func ConfigureClient() {
@@ -51,15 +52,13 @@ func ConfigureClient() {
 }
 
 func ConfigureContractInstance() {
-	for _, dataMarketAddr := range config.SettingsObj.DataMarketAddresses {
-		dataMarket := common.HexToAddress(dataMarketAddr)
-		instance, err := contract.NewContract(dataMarket, Client)
-		if err != nil {
-			log.Errorf("Failed to create contract instance for data market %s: %v", dataMarketAddr, err)
-			continue
-		}
-		Instances[dataMarket] = instance
+	// Initialize single contract instance using the protocol state contract address
+	protocolStateAddr := common.HexToAddress(config.SettingsObj.ContractAddress)
+	instance, err := contract.NewContract(protocolStateAddr, Client)
+	if err != nil {
+		log.Fatalf("Failed to create contract instance: %v", err)
 	}
+	Instance = instance
 }
 
 func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K, err error)) (K, error) {
@@ -97,8 +96,9 @@ func ColdSyncValues() {
 }
 
 func coldSyncAllSlots() {
-	for dataMarket, instance := range Instances {
-		if slotCount, err := instance.SlotCounter(&bind.CallOpts{}); slotCount != nil && err == nil {
+	for _, dataMarket := range config.SettingsObj.DataMarketAddresses {
+		dataMarketAddr := common.HexToAddress(dataMarket)
+		if slotCount, err := Instance.SlotCounter(&bind.CallOpts{}); slotCount != nil && err == nil {
 			PersistState(context.Background(), redis.ContractStateVariable(pkgs.SlotCounter), slotCount.String())
 
 			var allSlots []string
@@ -111,7 +111,7 @@ func coldSyncAllSlots() {
 					wg.Add(1)
 					go func(slotIndex int64) {
 						defer wg.Done()
-						slot, err := instance.GetSlotInfo(&bind.CallOpts{}, dataMarket, big.NewInt(slotIndex))
+						slot, err := Instance.GetSlotInfo(&bind.CallOpts{}, dataMarketAddr, big.NewInt(slotIndex))
 
 						if slot == (contract.PowerloomDataMarketSlotInfo{}) || err != nil {
 							log.Debugln("Error getting slot info: ", slotIndex)
@@ -152,7 +152,7 @@ func coldSyncAllSlots() {
 				}
 			}
 		} else {
-			log.Errorln("Error getting slot counter for data market", dataMarket.String(), ":", err)
+			log.Errorln("Error getting slot counter for data market", dataMarketAddr.String(), ":", err)
 			listenerCommon.SendFailureNotification("ColdSync", err.Error(), time.Now().String(), "ERROR")
 		}
 		break // Exit after processing first instance
@@ -169,24 +169,26 @@ func PopulateStateVars() {
 		}
 	}
 
-	for dataMarket, instance := range Instances {
-		if output, err := instance.CurrentEpoch(&bind.CallOpts{}, dataMarket); output.EpochId != nil && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarket.String(), pkgs.CurrentEpoch)
+	for _, dataMarket := range config.SettingsObj.DataMarketAddresses {
+		dataMarketAddr := common.HexToAddress(dataMarket)
+
+		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddr); output.EpochId != nil && err == nil {
+			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.CurrentEpoch)
 			PersistState(context.Background(), key, output.EpochId.String())
 		}
 
-		if output, err := instance.EpochsInADay(&bind.CallOpts{}, dataMarket); output != nil && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarket.String(), pkgs.EpochsInADay)
+		if output, err := Instance.EpochsInADay(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
+			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.EpochsInADay)
 			PersistState(context.Background(), key, output.String())
 		}
 
-		if output, err := instance.EPOCHSIZE(&bind.CallOpts{}, dataMarket); output != 0 && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarket.String(), pkgs.EPOCH_SIZE)
+		if output, err := Instance.EPOCHSIZE(&bind.CallOpts{}, dataMarketAddr); output != 0 && err == nil {
+			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.EPOCH_SIZE)
 			PersistState(context.Background(), key, strconv.Itoa(int(output)))
 		}
 
-		if output, err := instance.SOURCECHAINBLOCKTIME(&bind.CallOpts{}, dataMarket); output != nil && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarket.String(), pkgs.SOURCE_CHAIN_BLOCK_TIME)
+		if output, err := Instance.SOURCECHAINBLOCKTIME(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
+			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.SOURCE_CHAIN_BLOCK_TIME)
 			PersistState(context.Background(), key, strconv.Itoa(int(output.Int64())))
 		}
 	}
