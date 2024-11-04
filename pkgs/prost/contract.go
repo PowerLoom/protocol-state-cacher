@@ -98,45 +98,54 @@ func ColdSyncValues() {
 func coldSyncAllSlots() {
 	for _, dataMarket := range config.SettingsObj.DataMarketAddresses {
 		dataMarketAddr := common.HexToAddress(dataMarket)
-		if slotCount, err := Instance.SlotCounter(&bind.CallOpts{}); slotCount != nil && err == nil {
-			PersistState(context.Background(), redis.ContractStateVariable(pkgs.SlotCounter), slotCount.String())
+		log.Debugln("Cold syncing slots for data market: ", dataMarketAddr.String())
+		
+		// Get total node count
+		nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{
+			Context: context.Background(),
+		})
+		if err != nil {
+			log.Errorf("Error getting total node count: %v", err)
+			continue
+		}
+		
+		var allSlots []string
+		var mu sync.Mutex
 
-			var allSlots []string
-			var mu sync.Mutex
+		// Use actual node count instead of hardcoded 6000
+		for i := int64(0); i <= nodeCount.Int64(); i += 20 {
+			var wg sync.WaitGroup
 
-			for i := int64(0); i <= 6000; i += 20 {
-				var wg sync.WaitGroup
+			for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
+				wg.Add(1)
+				go func(slotIndex int64) {
+					defer wg.Done()
+					slot, err := Instance.GetSlotInfo(&bind.CallOpts{}, dataMarketAddr, big.NewInt(slotIndex))
 
-				for j := i; j < i+20 && j <= 6000; j++ {
-					wg.Add(1)
-					go func(slotIndex int64) {
-						defer wg.Done()
-						slot, err := Instance.GetSlotInfo(&bind.CallOpts{}, dataMarketAddr, big.NewInt(slotIndex))
-
-						if slot == (contract.PowerloomDataMarketSlotInfo{}) || err != nil {
+					if slot == (contract.PowerloomDataMarketSlotInfo{}) || err != nil {
 							log.Debugln("Error getting slot info: ", slotIndex)
-							return
-						}
+						return
+					}
 
-						slotMarshalled, err := json.Marshal(slot)
-						if err != nil {
-							log.Debugln("Error marshalling slot info: ", slotIndex)
-							return
-						}
+					slotMarshalled, err := json.Marshal(slot)
+					if err != nil {
+						log.Debugln("Error marshalling slot info: ", slotIndex)
+						return
+					}
 
-						PersistState(
-							context.Background(),
-							redis.SlotInfo(slot.SlotId.String()),
-							string(slotMarshalled),
-						)
+					PersistState(
+						context.Background(),
+						redis.SlotInfo(slot.SlotId.String()),
+						string(slotMarshalled),
+					)
 
-						mu.Lock()
-						allSlots = append(allSlots, redis.SlotInfo(slot.SlotId.String()))
-						mu.Unlock()
+					mu.Lock()
+					allSlots = append(allSlots, redis.SlotInfo(slot.SlotId.String()))
+					mu.Unlock()
 
-						log.Debugln("Slot info: ", slotIndex, string(slotMarshalled), slot.SlotId.String())
-					}(j)
-				}
+					log.Debugln("Slot info: ", slotIndex, string(slotMarshalled), slot.SlotId.String())
+				}(j)
+			}
 
 				wg.Wait()
 
@@ -147,13 +156,9 @@ func coldSyncAllSlots() {
 					if err != nil {
 						log.Errorln("Error adding slots to set: ", err)
 						listenerCommon.SendFailureNotification("ColdSync", err.Error(), time.Now().String(), "ERROR")
-					}
-					allSlots = nil // reset batch
 				}
+				allSlots = nil // reset batch
 			}
-		} else {
-			log.Errorln("Error getting slot counter for data market", dataMarketAddr.String(), ":", err)
-			listenerCommon.SendFailureNotification("ColdSync", err.Error(), time.Now().String(), "ERROR")
 		}
 		break // Exit after processing first instance
 	}
