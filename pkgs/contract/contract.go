@@ -39,7 +39,7 @@ type PowerloomDataMarketSlotInfo struct {
 
 // ContractMetaData contains all meta data concerning the Contract contract.
 var ContractMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"}],\"name\":\"AddressEmptyCode\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"ERC1967InvalidImplementation\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ERC1967NonPayable\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedInnerCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidInitialization\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotInitializing\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"UUPSUnauthorizedCallContext\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"slot\",\"type\":\"bytes32\"}],\"name\":\"UUPSUnsupportedProxiableUUID\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"adminAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"AdminsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"BatchSubmissionsCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DailyTaskCompletedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"protocolState\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"name\":\"DataMarketCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DayStartedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"DelayedAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"snapshotterAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedSnapshotSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"EpochReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"version\",\"type\":\"uint64\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectType\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"enableEpochId\",\"type\":\"uint256\"}],\"name\":\"ProjectTypeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string[]\",\"name\":\"projects\",\"type\":\"string[]\"},{\"indexed\":false,\"internalType\":\"bool[]\",\"name\":\"status\",\"type\":\"bool[]\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"enableEpochId\",\"type\":\"uint256\"}],\"name\":\"ProjectsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sequencerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"SequencersUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"SnapshotBatchAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"TriggerBatchResubmission\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"Upgraded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"ValidatorAttestationsInvalidated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"ValidatorsUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"DAY_SIZE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"EPOCH_SIZE\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"SOURCE_CHAIN_BLOCK_TIME\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"SOURCE_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"UPGRADE_INTERFACE_VERSION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"USE_BLOCK_NUMBER_AS_EPOCH_ID\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"allSnapshotters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectType\",\"type\":\"string\"}],\"name\":\"allowedProjectTypes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"_slotIds\",\"type\":\"uint256[]\"},{\"internalType\":\"address[]\",\"name\":\"_snapshotterAddresses\",\"type\":\"address[]\"}],\"name\":\"assignSnapshotterToSlotBulk\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"attestationSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"attestationsReceived\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"attestationsReceivedCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"batchCidAttestationStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"batchCidDivergentValidators\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"batchCidSequencerAttestation\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"batchCidToProjects\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"batchSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"checkDynamicConsensusAttestations\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"checkSlotTaskStatusForDay\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"}],\"name\":\"createDataMarket\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"currentEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"dailySnapshotQuota\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dataMarketCount\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"name\":\"dataMarketEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dataMarketFactory\",\"outputs\":[{\"internalType\":\"contractDataMarketFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"dataMarketId\",\"type\":\"uint8\"}],\"name\":\"dataMarketIdToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"dataMarkets\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"enabled\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"createdAt\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"dayCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"deploymentBlockNumber\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"endBatchSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"epochIdToBatchCids\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"epochInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"blocknumber\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"epochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"epochsInADay\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"forceCompleteConsensusAttestations\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"forceSkipEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getEpochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getSequencerId\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getSequencers\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"rewardPoints\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentDaySnapshotCount\",\"type\":\"uint256\"}],\"internalType\":\"structPowerloomDataMarket.SlotInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"rewards\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getTotalSequencersCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalSnapshotterCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getTotalValidatorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getValidators\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"initialOwner\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"lastFinalizedSnapshot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"lastSequencerFinalizedSnapshot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_dayCounter\",\"type\":\"uint256\"}],\"name\":\"loadCurrentDay\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"snapshotCount\",\"type\":\"uint256\"}],\"name\":\"loadSlotSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"maxAttestationFinalizedRootHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"maxAttestationsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"maxSnapshotsCid\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"minAttestationsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"minSubmissionsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"projectFirstEpochId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"proxiableUUID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"releaseEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"rewardBasePoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"rewardsEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_sequencerId\",\"type\":\"string\"}],\"name\":\"setSequencerId\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"slotCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotRewardPoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"slotRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotSnapshotterMapping\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"}],\"name\":\"slotSubmissionCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"snapshotStatus\",\"outputs\":[{\"internalType\":\"enumPowerloomDataMarket.SnapshotStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"snapshotSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"snapshotterState\",\"outputs\":[{\"internalType\":\"contractSnapshotterState\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitBatchAttestation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string[]\",\"name\":\"projectIds\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"snapshotCids\",\"type\":\"string[]\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitSubmissionBatch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"enabled\",\"type\":\"bool\"}],\"name\":\"toggleDataMarket\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"toggleRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"enumPowerloomDataMarket.Role\",\"name\":\"role\",\"type\":\"uint8\"},{\"internalType\":\"address[]\",\"name\":\"_addresses\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateAddresses\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_projectType\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"_status\",\"type\":\"bool\"}],\"name\":\"updateAllowedProjectType\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newattestationSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateAttestationSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newbatchSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateBatchSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_dailySnapshotQuota\",\"type\":\"uint256\"}],\"name\":\"updateDailySnapshotQuota\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateDataMarketFactory\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newDaySize\",\"type\":\"uint256\"}],\"name\":\"updateDaySize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateEpochManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_minAttestationsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinAttestationsForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_minSubmissionsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinSnapshottersForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string[]\",\"name\":\"_projects\",\"type\":\"string[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateProjects\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newRewardBasePoints\",\"type\":\"uint256\"}],\"name\":\"updateRewardBasePoints\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"slotIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"submissionsList\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"updateRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newsnapshotSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateSnapshotSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateSnapshotterState\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"upgradeToAndCall\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"}],\"name\":\"AddressEmptyCode\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"ERC1967InvalidImplementation\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ERC1967NonPayable\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedInnerCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidInitialization\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotInitializing\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"UUPSUnauthorizedCallContext\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"slot\",\"type\":\"bytes32\"}],\"name\":\"UUPSUnsupportedProxiableUUID\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"adminAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"AdminsUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"BatchSubmissionsCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"rewardPoints\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DailyTaskCompletedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"protocolState\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"name\":\"DataMarketCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DayStartedEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"DelayedAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"snapshotterAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"DelayedSnapshotSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"EmergencyWithdraw\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"EpochReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"version\",\"type\":\"uint64\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"RewardsClaimed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sequencerAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"SequencersUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"validatorAddr\",\"type\":\"address\"}],\"name\":\"SnapshotBatchAttestationSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotBatchSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"SnapshotFinalized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"TriggerBatchResubmission\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"Upgraded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"ValidatorAttestationsInvalidated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"allowed\",\"type\":\"bool\"}],\"name\":\"ValidatorsUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"DAY_SIZE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"EPOCH_SIZE\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"SOURCE_CHAIN_BLOCK_TIME\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"SOURCE_CHAIN_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"UPGRADE_INTERFACE_VERSION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"USE_BLOCK_NUMBER_AS_EPOCH_ID\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"allSnapshotters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"attestationSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"attestationsReceived\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"attestationsReceivedCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"batchCidAttestationStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"batchCidDivergentValidators\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"batchCidSequencerAttestation\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"batchCidToProjects\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"batchSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"checkDynamicConsensusAttestations\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"}],\"name\":\"checkSlotTaskStatusForDay\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"claimRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"}],\"name\":\"createDataMarket\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"currentEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"dailySnapshotQuota\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dataMarketCount\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"name\":\"dataMarketEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dataMarketFactory\",\"outputs\":[{\"internalType\":\"contractDataMarketFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"dataMarketId\",\"type\":\"uint8\"}],\"name\":\"dataMarketIdToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"dataMarkets\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddress\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"epochSize\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"sourceChainBlockTime\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"useBlockNumberAsEpochId\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"enabled\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"createdAt\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"dayCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"deploymentBlockNumber\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"emergencyWithdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"enabledNodeCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"endBatchSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"epochIdToBatchCids\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"epochInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"blocknumber\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"epochEnd\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"epochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"epochsInADay\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"forceCompleteConsensusAttestations\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"forceSkipEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getEpochManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getSequencerId\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getSequencers\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"snapshotterAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"rewardPoints\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentDaySnapshotCount\",\"type\":\"uint256\"}],\"internalType\":\"structPowerloomDataMarket.SlotInfo\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"getSlotRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"rewards\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getTotalSequencersCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalSnapshotterCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getTotalValidatorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"getValidators\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"initialOwner\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"lastFinalizedSnapshot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"lastSequencerFinalizedSnapshot\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_dayCounter\",\"type\":\"uint256\"}],\"name\":\"loadCurrentDay\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"snapshotCount\",\"type\":\"uint256\"}],\"name\":\"loadSlotSubmissions\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"maxAttestationFinalizedRootHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"}],\"name\":\"maxAttestationsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"maxSnapshotsCid\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"minAttestationsForConsensus\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"}],\"name\":\"projectFirstEpochId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"proxiableUUID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"begin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"releaseEpoch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"rewardPoolSize\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"rewardsEnabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_sequencerId\",\"type\":\"string\"}],\"name\":\"setSequencerId\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotRewardPoints\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"slotRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"}],\"name\":\"slotSnapshotterMapping\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"slotId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dayId\",\"type\":\"uint256\"}],\"name\":\"slotSubmissionCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"projectId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"}],\"name\":\"snapshotStatus\",\"outputs\":[{\"internalType\":\"enumPowerloomDataMarket.SnapshotStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"snapshotCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"snapshotSubmissionWindow\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"snapshotterState\",\"outputs\":[{\"internalType\":\"contractPowerloomNodes\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitBatchAttestation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"batchCid\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"epochId\",\"type\":\"uint256\"},{\"internalType\":\"string[]\",\"name\":\"projectIds\",\"type\":\"string[]\"},{\"internalType\":\"string[]\",\"name\":\"snapshotCids\",\"type\":\"string[]\"},{\"internalType\":\"bytes32\",\"name\":\"finalizedCidsRootHash\",\"type\":\"bytes32\"}],\"name\":\"submitSubmissionBatch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dataMarketAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"enabled\",\"type\":\"bool\"}],\"name\":\"toggleDataMarket\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"}],\"name\":\"toggleRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"enumPowerloomDataMarket.Role\",\"name\":\"role\",\"type\":\"uint8\"},{\"internalType\":\"address[]\",\"name\":\"_addresses\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"_status\",\"type\":\"bool[]\"}],\"name\":\"updateAddresses\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newattestationSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateAttestationSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newbatchSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateBatchSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_dailySnapshotQuota\",\"type\":\"uint256\"}],\"name\":\"updateDailySnapshotQuota\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateDataMarketFactory\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newDaySize\",\"type\":\"uint256\"}],\"name\":\"updateDaySize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateEpochManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_minAttestationsForConsensus\",\"type\":\"uint256\"}],\"name\":\"updateMinAttestationsForConsensus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newRewardPoolSize\",\"type\":\"uint256\"}],\"name\":\"updateRewardPoolSize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"slotIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"submissionsList\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"day\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"eligibleNodes\",\"type\":\"uint256\"}],\"name\":\"updateRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractPowerloomDataMarket\",\"name\":\"dataMarket\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"newsnapshotSubmissionWindow\",\"type\":\"uint256\"}],\"name\":\"updateSnapshotSubmissionWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"updateSnapshotterState\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newImplementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"upgradeToAndCall\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalRewards\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalClaimed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastClaimed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdated\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // ContractABI is the input ABI used to generate the binding from.
@@ -403,37 +403,6 @@ func (_Contract *ContractSession) AllSnapshotters(addr common.Address) (bool, er
 // Solidity: function allSnapshotters(address addr) view returns(bool)
 func (_Contract *ContractCallerSession) AllSnapshotters(addr common.Address) (bool, error) {
 	return _Contract.Contract.AllSnapshotters(&_Contract.CallOpts, addr)
-}
-
-// AllowedProjectTypes is a free data retrieval call binding the contract method 0xc17b3434.
-//
-// Solidity: function allowedProjectTypes(address dataMarket, string projectType) view returns(bool)
-func (_Contract *ContractCaller) AllowedProjectTypes(opts *bind.CallOpts, dataMarket common.Address, projectType string) (bool, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "allowedProjectTypes", dataMarket, projectType)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// AllowedProjectTypes is a free data retrieval call binding the contract method 0xc17b3434.
-//
-// Solidity: function allowedProjectTypes(address dataMarket, string projectType) view returns(bool)
-func (_Contract *ContractSession) AllowedProjectTypes(dataMarket common.Address, projectType string) (bool, error) {
-	return _Contract.Contract.AllowedProjectTypes(&_Contract.CallOpts, dataMarket, projectType)
-}
-
-// AllowedProjectTypes is a free data retrieval call binding the contract method 0xc17b3434.
-//
-// Solidity: function allowedProjectTypes(address dataMarket, string projectType) view returns(bool)
-func (_Contract *ContractCallerSession) AllowedProjectTypes(dataMarket common.Address, projectType string) (bool, error) {
-	return _Contract.Contract.AllowedProjectTypes(&_Contract.CallOpts, dataMarket, projectType)
 }
 
 // AttestationSubmissionWindow is a free data retrieval call binding the contract method 0xe1d5fbce.
@@ -1088,6 +1057,37 @@ func (_Contract *ContractCallerSession) DeploymentBlockNumber(dataMarket common.
 	return _Contract.Contract.DeploymentBlockNumber(&_Contract.CallOpts, dataMarket)
 }
 
+// EnabledNodeCount is a free data retrieval call binding the contract method 0xce7b6afb.
+//
+// Solidity: function enabledNodeCount() view returns(uint256)
+func (_Contract *ContractCaller) EnabledNodeCount(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "enabledNodeCount")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// EnabledNodeCount is a free data retrieval call binding the contract method 0xce7b6afb.
+//
+// Solidity: function enabledNodeCount() view returns(uint256)
+func (_Contract *ContractSession) EnabledNodeCount() (*big.Int, error) {
+	return _Contract.Contract.EnabledNodeCount(&_Contract.CallOpts)
+}
+
+// EnabledNodeCount is a free data retrieval call binding the contract method 0xce7b6afb.
+//
+// Solidity: function enabledNodeCount() view returns(uint256)
+func (_Contract *ContractCallerSession) EnabledNodeCount() (*big.Int, error) {
+	return _Contract.Contract.EnabledNodeCount(&_Contract.CallOpts)
+}
+
 // EpochIdToBatchCids is a free data retrieval call binding the contract method 0x2edb1d00.
 //
 // Solidity: function epochIdToBatchCids(address dataMarket, uint256 epochId) view returns(string[])
@@ -1696,37 +1696,6 @@ func (_Contract *ContractCallerSession) MinAttestationsForConsensus(dataMarket c
 	return _Contract.Contract.MinAttestationsForConsensus(&_Contract.CallOpts, dataMarket)
 }
 
-// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x0984dbd2.
-//
-// Solidity: function minSubmissionsForConsensus(address dataMarket) view returns(uint256)
-func (_Contract *ContractCaller) MinSubmissionsForConsensus(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "minSubmissionsForConsensus", dataMarket)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x0984dbd2.
-//
-// Solidity: function minSubmissionsForConsensus(address dataMarket) view returns(uint256)
-func (_Contract *ContractSession) MinSubmissionsForConsensus(dataMarket common.Address) (*big.Int, error) {
-	return _Contract.Contract.MinSubmissionsForConsensus(&_Contract.CallOpts, dataMarket)
-}
-
-// MinSubmissionsForConsensus is a free data retrieval call binding the contract method 0x0984dbd2.
-//
-// Solidity: function minSubmissionsForConsensus(address dataMarket) view returns(uint256)
-func (_Contract *ContractCallerSession) MinSubmissionsForConsensus(dataMarket common.Address) (*big.Int, error) {
-	return _Contract.Contract.MinSubmissionsForConsensus(&_Contract.CallOpts, dataMarket)
-}
-
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
 //
 // Solidity: function owner() view returns(address)
@@ -1820,12 +1789,12 @@ func (_Contract *ContractCallerSession) ProxiableUUID() ([32]byte, error) {
 	return _Contract.Contract.ProxiableUUID(&_Contract.CallOpts)
 }
 
-// RewardBasePoints is a free data retrieval call binding the contract method 0x7f59285a.
+// RewardPoolSize is a free data retrieval call binding the contract method 0x5350fa81.
 //
-// Solidity: function rewardBasePoints(address dataMarket) view returns(uint256)
-func (_Contract *ContractCaller) RewardBasePoints(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
+// Solidity: function rewardPoolSize(address dataMarket) view returns(uint256)
+func (_Contract *ContractCaller) RewardPoolSize(opts *bind.CallOpts, dataMarket common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "rewardBasePoints", dataMarket)
+	err := _Contract.contract.Call(opts, &out, "rewardPoolSize", dataMarket)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -1837,18 +1806,18 @@ func (_Contract *ContractCaller) RewardBasePoints(opts *bind.CallOpts, dataMarke
 
 }
 
-// RewardBasePoints is a free data retrieval call binding the contract method 0x7f59285a.
+// RewardPoolSize is a free data retrieval call binding the contract method 0x5350fa81.
 //
-// Solidity: function rewardBasePoints(address dataMarket) view returns(uint256)
-func (_Contract *ContractSession) RewardBasePoints(dataMarket common.Address) (*big.Int, error) {
-	return _Contract.Contract.RewardBasePoints(&_Contract.CallOpts, dataMarket)
+// Solidity: function rewardPoolSize(address dataMarket) view returns(uint256)
+func (_Contract *ContractSession) RewardPoolSize(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.RewardPoolSize(&_Contract.CallOpts, dataMarket)
 }
 
-// RewardBasePoints is a free data retrieval call binding the contract method 0x7f59285a.
+// RewardPoolSize is a free data retrieval call binding the contract method 0x5350fa81.
 //
-// Solidity: function rewardBasePoints(address dataMarket) view returns(uint256)
-func (_Contract *ContractCallerSession) RewardBasePoints(dataMarket common.Address) (*big.Int, error) {
-	return _Contract.Contract.RewardBasePoints(&_Contract.CallOpts, dataMarket)
+// Solidity: function rewardPoolSize(address dataMarket) view returns(uint256)
+func (_Contract *ContractCallerSession) RewardPoolSize(dataMarket common.Address) (*big.Int, error) {
+	return _Contract.Contract.RewardPoolSize(&_Contract.CallOpts, dataMarket)
 }
 
 // RewardsEnabled is a free data retrieval call binding the contract method 0x83450d26.
@@ -1880,37 +1849,6 @@ func (_Contract *ContractSession) RewardsEnabled(dataMarket common.Address) (boo
 // Solidity: function rewardsEnabled(address dataMarket) view returns(bool)
 func (_Contract *ContractCallerSession) RewardsEnabled(dataMarket common.Address) (bool, error) {
 	return _Contract.Contract.RewardsEnabled(&_Contract.CallOpts, dataMarket)
-}
-
-// SlotCounter is a free data retrieval call binding the contract method 0xe59a4105.
-//
-// Solidity: function slotCounter() view returns(uint256)
-func (_Contract *ContractCaller) SlotCounter(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Contract.contract.Call(opts, &out, "slotCounter")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// SlotCounter is a free data retrieval call binding the contract method 0xe59a4105.
-//
-// Solidity: function slotCounter() view returns(uint256)
-func (_Contract *ContractSession) SlotCounter() (*big.Int, error) {
-	return _Contract.Contract.SlotCounter(&_Contract.CallOpts)
-}
-
-// SlotCounter is a free data retrieval call binding the contract method 0xe59a4105.
-//
-// Solidity: function slotCounter() view returns(uint256)
-func (_Contract *ContractCallerSession) SlotCounter() (*big.Int, error) {
-	return _Contract.Contract.SlotCounter(&_Contract.CallOpts)
 }
 
 // SlotRewardPoints is a free data retrieval call binding the contract method 0x9a2458a6.
@@ -2149,25 +2087,80 @@ func (_Contract *ContractCallerSession) SnapshotterState() (common.Address, erro
 	return _Contract.Contract.SnapshotterState(&_Contract.CallOpts)
 }
 
-// AssignSnapshotterToSlotBulk is a paid mutator transaction binding the contract method 0x066522b0.
+// UserInfo is a free data retrieval call binding the contract method 0x1959a002.
 //
-// Solidity: function assignSnapshotterToSlotBulk(uint256[] _slotIds, address[] _snapshotterAddresses) returns()
-func (_Contract *ContractTransactor) AssignSnapshotterToSlotBulk(opts *bind.TransactOpts, _slotIds []*big.Int, _snapshotterAddresses []common.Address) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "assignSnapshotterToSlotBulk", _slotIds, _snapshotterAddresses)
+// Solidity: function userInfo(address ) view returns(uint256 totalRewards, uint256 totalClaimed, uint256 lastClaimed, uint256 lastUpdated)
+func (_Contract *ContractCaller) UserInfo(opts *bind.CallOpts, arg0 common.Address) (struct {
+	TotalRewards *big.Int
+	TotalClaimed *big.Int
+	LastClaimed  *big.Int
+	LastUpdated  *big.Int
+}, error) {
+	var out []interface{}
+	err := _Contract.contract.Call(opts, &out, "userInfo", arg0)
+
+	outstruct := new(struct {
+		TotalRewards *big.Int
+		TotalClaimed *big.Int
+		LastClaimed  *big.Int
+		LastUpdated  *big.Int
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.TotalRewards = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.TotalClaimed = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+	outstruct.LastClaimed = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
+	outstruct.LastUpdated = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
+
+	return *outstruct, err
+
 }
 
-// AssignSnapshotterToSlotBulk is a paid mutator transaction binding the contract method 0x066522b0.
+// UserInfo is a free data retrieval call binding the contract method 0x1959a002.
 //
-// Solidity: function assignSnapshotterToSlotBulk(uint256[] _slotIds, address[] _snapshotterAddresses) returns()
-func (_Contract *ContractSession) AssignSnapshotterToSlotBulk(_slotIds []*big.Int, _snapshotterAddresses []common.Address) (*types.Transaction, error) {
-	return _Contract.Contract.AssignSnapshotterToSlotBulk(&_Contract.TransactOpts, _slotIds, _snapshotterAddresses)
+// Solidity: function userInfo(address ) view returns(uint256 totalRewards, uint256 totalClaimed, uint256 lastClaimed, uint256 lastUpdated)
+func (_Contract *ContractSession) UserInfo(arg0 common.Address) (struct {
+	TotalRewards *big.Int
+	TotalClaimed *big.Int
+	LastClaimed  *big.Int
+	LastUpdated  *big.Int
+}, error) {
+	return _Contract.Contract.UserInfo(&_Contract.CallOpts, arg0)
 }
 
-// AssignSnapshotterToSlotBulk is a paid mutator transaction binding the contract method 0x066522b0.
+// UserInfo is a free data retrieval call binding the contract method 0x1959a002.
 //
-// Solidity: function assignSnapshotterToSlotBulk(uint256[] _slotIds, address[] _snapshotterAddresses) returns()
-func (_Contract *ContractTransactorSession) AssignSnapshotterToSlotBulk(_slotIds []*big.Int, _snapshotterAddresses []common.Address) (*types.Transaction, error) {
-	return _Contract.Contract.AssignSnapshotterToSlotBulk(&_Contract.TransactOpts, _slotIds, _snapshotterAddresses)
+// Solidity: function userInfo(address ) view returns(uint256 totalRewards, uint256 totalClaimed, uint256 lastClaimed, uint256 lastUpdated)
+func (_Contract *ContractCallerSession) UserInfo(arg0 common.Address) (struct {
+	TotalRewards *big.Int
+	TotalClaimed *big.Int
+	LastClaimed  *big.Int
+	LastUpdated  *big.Int
+}, error) {
+	return _Contract.Contract.UserInfo(&_Contract.CallOpts, arg0)
+}
+
+// ClaimRewards is a paid mutator transaction binding the contract method 0xef5cfb8c.
+//
+// Solidity: function claimRewards(address _user) returns()
+func (_Contract *ContractTransactor) ClaimRewards(opts *bind.TransactOpts, _user common.Address) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "claimRewards", _user)
+}
+
+// ClaimRewards is a paid mutator transaction binding the contract method 0xef5cfb8c.
+//
+// Solidity: function claimRewards(address _user) returns()
+func (_Contract *ContractSession) ClaimRewards(_user common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.ClaimRewards(&_Contract.TransactOpts, _user)
+}
+
+// ClaimRewards is a paid mutator transaction binding the contract method 0xef5cfb8c.
+//
+// Solidity: function claimRewards(address _user) returns()
+func (_Contract *ContractTransactorSession) ClaimRewards(_user common.Address) (*types.Transaction, error) {
+	return _Contract.Contract.ClaimRewards(&_Contract.TransactOpts, _user)
 }
 
 // CreateDataMarket is a paid mutator transaction binding the contract method 0x1dbc586b.
@@ -2189,6 +2182,27 @@ func (_Contract *ContractSession) CreateDataMarket(ownerAddress common.Address, 
 // Solidity: function createDataMarket(address ownerAddress, uint8 epochSize, uint256 sourceChainId, uint256 sourceChainBlockTime, bool useBlockNumberAsEpochId) returns(address)
 func (_Contract *ContractTransactorSession) CreateDataMarket(ownerAddress common.Address, epochSize uint8, sourceChainId *big.Int, sourceChainBlockTime *big.Int, useBlockNumberAsEpochId bool) (*types.Transaction, error) {
 	return _Contract.Contract.CreateDataMarket(&_Contract.TransactOpts, ownerAddress, epochSize, sourceChainId, sourceChainBlockTime, useBlockNumberAsEpochId)
+}
+
+// EmergencyWithdraw is a paid mutator transaction binding the contract method 0xdb2e21bc.
+//
+// Solidity: function emergencyWithdraw() returns()
+func (_Contract *ContractTransactor) EmergencyWithdraw(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "emergencyWithdraw")
+}
+
+// EmergencyWithdraw is a paid mutator transaction binding the contract method 0xdb2e21bc.
+//
+// Solidity: function emergencyWithdraw() returns()
+func (_Contract *ContractSession) EmergencyWithdraw() (*types.Transaction, error) {
+	return _Contract.Contract.EmergencyWithdraw(&_Contract.TransactOpts)
+}
+
+// EmergencyWithdraw is a paid mutator transaction binding the contract method 0xdb2e21bc.
+//
+// Solidity: function emergencyWithdraw() returns()
+func (_Contract *ContractTransactorSession) EmergencyWithdraw() (*types.Transaction, error) {
+	return _Contract.Contract.EmergencyWithdraw(&_Contract.TransactOpts)
 }
 
 // EndBatchSubmissions is a paid mutator transaction binding the contract method 0x6ee55d73.
@@ -2506,27 +2520,6 @@ func (_Contract *ContractTransactorSession) UpdateAddresses(dataMarket common.Ad
 	return _Contract.Contract.UpdateAddresses(&_Contract.TransactOpts, dataMarket, role, _addresses, _status)
 }
 
-// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0xb1a3f28d.
-//
-// Solidity: function updateAllowedProjectType(address dataMarket, string _projectType, bool _status) returns()
-func (_Contract *ContractTransactor) UpdateAllowedProjectType(opts *bind.TransactOpts, dataMarket common.Address, _projectType string, _status bool) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateAllowedProjectType", dataMarket, _projectType, _status)
-}
-
-// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0xb1a3f28d.
-//
-// Solidity: function updateAllowedProjectType(address dataMarket, string _projectType, bool _status) returns()
-func (_Contract *ContractSession) UpdateAllowedProjectType(dataMarket common.Address, _projectType string, _status bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAllowedProjectType(&_Contract.TransactOpts, dataMarket, _projectType, _status)
-}
-
-// UpdateAllowedProjectType is a paid mutator transaction binding the contract method 0xb1a3f28d.
-//
-// Solidity: function updateAllowedProjectType(address dataMarket, string _projectType, bool _status) returns()
-func (_Contract *ContractTransactorSession) UpdateAllowedProjectType(dataMarket common.Address, _projectType string, _status bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateAllowedProjectType(&_Contract.TransactOpts, dataMarket, _projectType, _status)
-}
-
 // UpdateAttestationSubmissionWindow is a paid mutator transaction binding the contract method 0x89afe86a.
 //
 // Solidity: function updateAttestationSubmissionWindow(address dataMarket, uint256 newattestationSubmissionWindow) returns()
@@ -2674,88 +2667,46 @@ func (_Contract *ContractTransactorSession) UpdateMinAttestationsForConsensus(da
 	return _Contract.Contract.UpdateMinAttestationsForConsensus(&_Contract.TransactOpts, dataMarket, _minAttestationsForConsensus)
 }
 
-// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x3cb782cd.
+// UpdateRewardPoolSize is a paid mutator transaction binding the contract method 0xd9ad5d2e.
 //
-// Solidity: function updateMinSnapshottersForConsensus(address dataMarket, uint256 _minSubmissionsForConsensus) returns()
-func (_Contract *ContractTransactor) UpdateMinSnapshottersForConsensus(opts *bind.TransactOpts, dataMarket common.Address, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateMinSnapshottersForConsensus", dataMarket, _minSubmissionsForConsensus)
+// Solidity: function updateRewardPoolSize(address dataMarket, uint256 newRewardPoolSize) returns()
+func (_Contract *ContractTransactor) UpdateRewardPoolSize(opts *bind.TransactOpts, dataMarket common.Address, newRewardPoolSize *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateRewardPoolSize", dataMarket, newRewardPoolSize)
 }
 
-// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x3cb782cd.
+// UpdateRewardPoolSize is a paid mutator transaction binding the contract method 0xd9ad5d2e.
 //
-// Solidity: function updateMinSnapshottersForConsensus(address dataMarket, uint256 _minSubmissionsForConsensus) returns()
-func (_Contract *ContractSession) UpdateMinSnapshottersForConsensus(dataMarket common.Address, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateMinSnapshottersForConsensus(&_Contract.TransactOpts, dataMarket, _minSubmissionsForConsensus)
+// Solidity: function updateRewardPoolSize(address dataMarket, uint256 newRewardPoolSize) returns()
+func (_Contract *ContractSession) UpdateRewardPoolSize(dataMarket common.Address, newRewardPoolSize *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewardPoolSize(&_Contract.TransactOpts, dataMarket, newRewardPoolSize)
 }
 
-// UpdateMinSnapshottersForConsensus is a paid mutator transaction binding the contract method 0x3cb782cd.
+// UpdateRewardPoolSize is a paid mutator transaction binding the contract method 0xd9ad5d2e.
 //
-// Solidity: function updateMinSnapshottersForConsensus(address dataMarket, uint256 _minSubmissionsForConsensus) returns()
-func (_Contract *ContractTransactorSession) UpdateMinSnapshottersForConsensus(dataMarket common.Address, _minSubmissionsForConsensus *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateMinSnapshottersForConsensus(&_Contract.TransactOpts, dataMarket, _minSubmissionsForConsensus)
+// Solidity: function updateRewardPoolSize(address dataMarket, uint256 newRewardPoolSize) returns()
+func (_Contract *ContractTransactorSession) UpdateRewardPoolSize(dataMarket common.Address, newRewardPoolSize *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewardPoolSize(&_Contract.TransactOpts, dataMarket, newRewardPoolSize)
 }
 
-// UpdateProjects is a paid mutator transaction binding the contract method 0x0589852d.
+// UpdateRewards is a paid mutator transaction binding the contract method 0x68af906d.
 //
-// Solidity: function updateProjects(address dataMarket, string[] _projects, bool[] _status) returns()
-func (_Contract *ContractTransactor) UpdateProjects(opts *bind.TransactOpts, dataMarket common.Address, _projects []string, _status []bool) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateProjects", dataMarket, _projects, _status)
+// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day, uint256 eligibleNodes) returns()
+func (_Contract *ContractTransactor) UpdateRewards(opts *bind.TransactOpts, dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int, eligibleNodes *big.Int) (*types.Transaction, error) {
+	return _Contract.contract.Transact(opts, "updateRewards", dataMarket, slotIds, submissionsList, day, eligibleNodes)
 }
 
-// UpdateProjects is a paid mutator transaction binding the contract method 0x0589852d.
+// UpdateRewards is a paid mutator transaction binding the contract method 0x68af906d.
 //
-// Solidity: function updateProjects(address dataMarket, string[] _projects, bool[] _status) returns()
-func (_Contract *ContractSession) UpdateProjects(dataMarket common.Address, _projects []string, _status []bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateProjects(&_Contract.TransactOpts, dataMarket, _projects, _status)
+// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day, uint256 eligibleNodes) returns()
+func (_Contract *ContractSession) UpdateRewards(dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int, eligibleNodes *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, dataMarket, slotIds, submissionsList, day, eligibleNodes)
 }
 
-// UpdateProjects is a paid mutator transaction binding the contract method 0x0589852d.
+// UpdateRewards is a paid mutator transaction binding the contract method 0x68af906d.
 //
-// Solidity: function updateProjects(address dataMarket, string[] _projects, bool[] _status) returns()
-func (_Contract *ContractTransactorSession) UpdateProjects(dataMarket common.Address, _projects []string, _status []bool) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateProjects(&_Contract.TransactOpts, dataMarket, _projects, _status)
-}
-
-// UpdateRewardBasePoints is a paid mutator transaction binding the contract method 0x7195df15.
-//
-// Solidity: function updateRewardBasePoints(address dataMarket, uint256 newRewardBasePoints) returns()
-func (_Contract *ContractTransactor) UpdateRewardBasePoints(opts *bind.TransactOpts, dataMarket common.Address, newRewardBasePoints *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateRewardBasePoints", dataMarket, newRewardBasePoints)
-}
-
-// UpdateRewardBasePoints is a paid mutator transaction binding the contract method 0x7195df15.
-//
-// Solidity: function updateRewardBasePoints(address dataMarket, uint256 newRewardBasePoints) returns()
-func (_Contract *ContractSession) UpdateRewardBasePoints(dataMarket common.Address, newRewardBasePoints *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateRewardBasePoints(&_Contract.TransactOpts, dataMarket, newRewardBasePoints)
-}
-
-// UpdateRewardBasePoints is a paid mutator transaction binding the contract method 0x7195df15.
-//
-// Solidity: function updateRewardBasePoints(address dataMarket, uint256 newRewardBasePoints) returns()
-func (_Contract *ContractTransactorSession) UpdateRewardBasePoints(dataMarket common.Address, newRewardBasePoints *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateRewardBasePoints(&_Contract.TransactOpts, dataMarket, newRewardBasePoints)
-}
-
-// UpdateRewards is a paid mutator transaction binding the contract method 0x7d2bd53d.
-//
-// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
-func (_Contract *ContractTransactor) UpdateRewards(opts *bind.TransactOpts, dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
-	return _Contract.contract.Transact(opts, "updateRewards", dataMarket, slotIds, submissionsList, day)
-}
-
-// UpdateRewards is a paid mutator transaction binding the contract method 0x7d2bd53d.
-//
-// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
-func (_Contract *ContractSession) UpdateRewards(dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, dataMarket, slotIds, submissionsList, day)
-}
-
-// UpdateRewards is a paid mutator transaction binding the contract method 0x7d2bd53d.
-//
-// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day) returns()
-func (_Contract *ContractTransactorSession) UpdateRewards(dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int) (*types.Transaction, error) {
-	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, dataMarket, slotIds, submissionsList, day)
+// Solidity: function updateRewards(address dataMarket, uint256[] slotIds, uint256[] submissionsList, uint256 day, uint256 eligibleNodes) returns()
+func (_Contract *ContractTransactorSession) UpdateRewards(dataMarket common.Address, slotIds []*big.Int, submissionsList []*big.Int, day *big.Int, eligibleNodes *big.Int) (*types.Transaction, error) {
+	return _Contract.Contract.UpdateRewards(&_Contract.TransactOpts, dataMarket, slotIds, submissionsList, day, eligibleNodes)
 }
 
 // UpdateSnapshotSubmissionWindow is a paid mutator transaction binding the contract method 0xa02c3e9b.
@@ -3194,13 +3145,14 @@ type ContractDailyTaskCompletedEvent struct {
 	SnapshotterAddress common.Address
 	SlotId             *big.Int
 	DayId              *big.Int
+	RewardPoints       *big.Int
 	Timestamp          *big.Int
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
-// FilterDailyTaskCompletedEvent is a free log retrieval operation binding the contract event 0x7da483c8dd175f1c370a23b17545e19c0584cf3960d991202e216e6cf95b7a3d.
+// FilterDailyTaskCompletedEvent is a free log retrieval operation binding the contract event 0x3f80954353f9060121cb024ef2580d122fc250f7faad898ef5167aeef38f2b12.
 //
-// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
+// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 rewardPoints, uint256 timestamp)
 func (_Contract *ContractFilterer) FilterDailyTaskCompletedEvent(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractDailyTaskCompletedEventIterator, error) {
 
 	var dataMarketAddressRule []interface{}
@@ -3215,9 +3167,9 @@ func (_Contract *ContractFilterer) FilterDailyTaskCompletedEvent(opts *bind.Filt
 	return &ContractDailyTaskCompletedEventIterator{contract: _Contract.contract, event: "DailyTaskCompletedEvent", logs: logs, sub: sub}, nil
 }
 
-// WatchDailyTaskCompletedEvent is a free log subscription operation binding the contract event 0x7da483c8dd175f1c370a23b17545e19c0584cf3960d991202e216e6cf95b7a3d.
+// WatchDailyTaskCompletedEvent is a free log subscription operation binding the contract event 0x3f80954353f9060121cb024ef2580d122fc250f7faad898ef5167aeef38f2b12.
 //
-// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
+// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 rewardPoints, uint256 timestamp)
 func (_Contract *ContractFilterer) WatchDailyTaskCompletedEvent(opts *bind.WatchOpts, sink chan<- *ContractDailyTaskCompletedEvent, dataMarketAddress []common.Address) (event.Subscription, error) {
 
 	var dataMarketAddressRule []interface{}
@@ -3257,9 +3209,9 @@ func (_Contract *ContractFilterer) WatchDailyTaskCompletedEvent(opts *bind.Watch
 	}), nil
 }
 
-// ParseDailyTaskCompletedEvent is a log parse operation binding the contract event 0x7da483c8dd175f1c370a23b17545e19c0584cf3960d991202e216e6cf95b7a3d.
+// ParseDailyTaskCompletedEvent is a log parse operation binding the contract event 0x3f80954353f9060121cb024ef2580d122fc250f7faad898ef5167aeef38f2b12.
 //
-// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 timestamp)
+// Solidity: event DailyTaskCompletedEvent(address indexed dataMarketAddress, address snapshotterAddress, uint256 slotId, uint256 dayId, uint256 rewardPoints, uint256 timestamp)
 func (_Contract *ContractFilterer) ParseDailyTaskCompletedEvent(log types.Log) (*ContractDailyTaskCompletedEvent, error) {
 	event := new(ContractDailyTaskCompletedEvent)
 	if err := _Contract.contract.UnpackLog(event, "DailyTaskCompletedEvent", log); err != nil {
@@ -4058,6 +4010,151 @@ func (_Contract *ContractFilterer) ParseDelayedSnapshotSubmitted(log types.Log) 
 	return event, nil
 }
 
+// ContractEmergencyWithdrawIterator is returned from FilterEmergencyWithdraw and is used to iterate over the raw logs and unpacked data for EmergencyWithdraw events raised by the Contract contract.
+type ContractEmergencyWithdrawIterator struct {
+	Event *ContractEmergencyWithdraw // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractEmergencyWithdrawIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractEmergencyWithdraw)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractEmergencyWithdraw)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractEmergencyWithdrawIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractEmergencyWithdrawIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractEmergencyWithdraw represents a EmergencyWithdraw event raised by the Contract contract.
+type ContractEmergencyWithdraw struct {
+	Owner  common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterEmergencyWithdraw is a free log retrieval operation binding the contract event 0x5fafa99d0643513820be26656b45130b01e1c03062e1266bf36f88cbd3bd9695.
+//
+// Solidity: event EmergencyWithdraw(address indexed owner, uint256 amount)
+func (_Contract *ContractFilterer) FilterEmergencyWithdraw(opts *bind.FilterOpts, owner []common.Address) (*ContractEmergencyWithdrawIterator, error) {
+
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
+	}
+
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "EmergencyWithdraw", ownerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &ContractEmergencyWithdrawIterator{contract: _Contract.contract, event: "EmergencyWithdraw", logs: logs, sub: sub}, nil
+}
+
+// WatchEmergencyWithdraw is a free log subscription operation binding the contract event 0x5fafa99d0643513820be26656b45130b01e1c03062e1266bf36f88cbd3bd9695.
+//
+// Solidity: event EmergencyWithdraw(address indexed owner, uint256 amount)
+func (_Contract *ContractFilterer) WatchEmergencyWithdraw(opts *bind.WatchOpts, sink chan<- *ContractEmergencyWithdraw, owner []common.Address) (event.Subscription, error) {
+
+	var ownerRule []interface{}
+	for _, ownerItem := range owner {
+		ownerRule = append(ownerRule, ownerItem)
+	}
+
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "EmergencyWithdraw", ownerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractEmergencyWithdraw)
+				if err := _Contract.contract.UnpackLog(event, "EmergencyWithdraw", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseEmergencyWithdraw is a log parse operation binding the contract event 0x5fafa99d0643513820be26656b45130b01e1c03062e1266bf36f88cbd3bd9695.
+//
+// Solidity: event EmergencyWithdraw(address indexed owner, uint256 amount)
+func (_Contract *ContractFilterer) ParseEmergencyWithdraw(log types.Log) (*ContractEmergencyWithdraw, error) {
+	event := new(ContractEmergencyWithdraw)
+	if err := _Contract.contract.UnpackLog(event, "EmergencyWithdraw", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
 // ContractEpochReleasedIterator is returned from FilterEpochReleased and is used to iterate over the raw logs and unpacked data for EpochReleased events raised by the Contract contract.
 type ContractEpochReleasedIterator struct {
 	Event *ContractEpochReleased // Event containing the contract specifics and raw log
@@ -4501,9 +4598,9 @@ func (_Contract *ContractFilterer) ParseOwnershipTransferred(log types.Log) (*Co
 	return event, nil
 }
 
-// ContractProjectTypeUpdatedIterator is returned from FilterProjectTypeUpdated and is used to iterate over the raw logs and unpacked data for ProjectTypeUpdated events raised by the Contract contract.
-type ContractProjectTypeUpdatedIterator struct {
-	Event *ContractProjectTypeUpdated // Event containing the contract specifics and raw log
+// ContractRewardsClaimedIterator is returned from FilterRewardsClaimed and is used to iterate over the raw logs and unpacked data for RewardsClaimed events raised by the Contract contract.
+type ContractRewardsClaimedIterator struct {
+	Event *ContractRewardsClaimed // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -4517,7 +4614,7 @@ type ContractProjectTypeUpdatedIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *ContractProjectTypeUpdatedIterator) Next() bool {
+func (it *ContractRewardsClaimedIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -4526,7 +4623,7 @@ func (it *ContractProjectTypeUpdatedIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(ContractProjectTypeUpdated)
+			it.Event = new(ContractRewardsClaimed)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -4541,7 +4638,7 @@ func (it *ContractProjectTypeUpdatedIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(ContractProjectTypeUpdated)
+		it.Event = new(ContractRewardsClaimed)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -4557,54 +4654,53 @@ func (it *ContractProjectTypeUpdatedIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *ContractProjectTypeUpdatedIterator) Error() error {
+func (it *ContractRewardsClaimedIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *ContractProjectTypeUpdatedIterator) Close() error {
+func (it *ContractRewardsClaimedIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// ContractProjectTypeUpdated represents a ProjectTypeUpdated event raised by the Contract contract.
-type ContractProjectTypeUpdated struct {
-	DataMarketAddress common.Address
-	ProjectType       string
-	Allowed           bool
-	EnableEpochId     *big.Int
-	Raw               types.Log // Blockchain specific contextual infos
+// ContractRewardsClaimed represents a RewardsClaimed event raised by the Contract contract.
+type ContractRewardsClaimed struct {
+	User      common.Address
+	Amount    *big.Int
+	Timestamp *big.Int
+	Raw       types.Log // Blockchain specific contextual infos
 }
 
-// FilterProjectTypeUpdated is a free log retrieval operation binding the contract event 0x3c6dc99dfc227a11ad701f84af7d44db829ba6c5e71c85f0ba80da02a2c20b42.
+// FilterRewardsClaimed is a free log retrieval operation binding the contract event 0xdacbdde355ba930696a362ea6738feb9f8bd52dfb3d81947558fd3217e23e325.
 //
-// Solidity: event ProjectTypeUpdated(address indexed dataMarketAddress, string projectType, bool allowed, uint256 enableEpochId)
-func (_Contract *ContractFilterer) FilterProjectTypeUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractProjectTypeUpdatedIterator, error) {
+// Solidity: event RewardsClaimed(address indexed user, uint256 amount, uint256 timestamp)
+func (_Contract *ContractFilterer) FilterRewardsClaimed(opts *bind.FilterOpts, user []common.Address) (*ContractRewardsClaimedIterator, error) {
 
-	var dataMarketAddressRule []interface{}
-	for _, dataMarketAddressItem := range dataMarketAddress {
-		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
 	}
 
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "ProjectTypeUpdated", dataMarketAddressRule)
+	logs, sub, err := _Contract.contract.FilterLogs(opts, "RewardsClaimed", userRule)
 	if err != nil {
 		return nil, err
 	}
-	return &ContractProjectTypeUpdatedIterator{contract: _Contract.contract, event: "ProjectTypeUpdated", logs: logs, sub: sub}, nil
+	return &ContractRewardsClaimedIterator{contract: _Contract.contract, event: "RewardsClaimed", logs: logs, sub: sub}, nil
 }
 
-// WatchProjectTypeUpdated is a free log subscription operation binding the contract event 0x3c6dc99dfc227a11ad701f84af7d44db829ba6c5e71c85f0ba80da02a2c20b42.
+// WatchRewardsClaimed is a free log subscription operation binding the contract event 0xdacbdde355ba930696a362ea6738feb9f8bd52dfb3d81947558fd3217e23e325.
 //
-// Solidity: event ProjectTypeUpdated(address indexed dataMarketAddress, string projectType, bool allowed, uint256 enableEpochId)
-func (_Contract *ContractFilterer) WatchProjectTypeUpdated(opts *bind.WatchOpts, sink chan<- *ContractProjectTypeUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
+// Solidity: event RewardsClaimed(address indexed user, uint256 amount, uint256 timestamp)
+func (_Contract *ContractFilterer) WatchRewardsClaimed(opts *bind.WatchOpts, sink chan<- *ContractRewardsClaimed, user []common.Address) (event.Subscription, error) {
 
-	var dataMarketAddressRule []interface{}
-	for _, dataMarketAddressItem := range dataMarketAddress {
-		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
 	}
 
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "ProjectTypeUpdated", dataMarketAddressRule)
+	logs, sub, err := _Contract.contract.WatchLogs(opts, "RewardsClaimed", userRule)
 	if err != nil {
 		return nil, err
 	}
@@ -4614,8 +4710,8 @@ func (_Contract *ContractFilterer) WatchProjectTypeUpdated(opts *bind.WatchOpts,
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(ContractProjectTypeUpdated)
-				if err := _Contract.contract.UnpackLog(event, "ProjectTypeUpdated", log); err != nil {
+				event := new(ContractRewardsClaimed)
+				if err := _Contract.contract.UnpackLog(event, "RewardsClaimed", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -4636,159 +4732,12 @@ func (_Contract *ContractFilterer) WatchProjectTypeUpdated(opts *bind.WatchOpts,
 	}), nil
 }
 
-// ParseProjectTypeUpdated is a log parse operation binding the contract event 0x3c6dc99dfc227a11ad701f84af7d44db829ba6c5e71c85f0ba80da02a2c20b42.
+// ParseRewardsClaimed is a log parse operation binding the contract event 0xdacbdde355ba930696a362ea6738feb9f8bd52dfb3d81947558fd3217e23e325.
 //
-// Solidity: event ProjectTypeUpdated(address indexed dataMarketAddress, string projectType, bool allowed, uint256 enableEpochId)
-func (_Contract *ContractFilterer) ParseProjectTypeUpdated(log types.Log) (*ContractProjectTypeUpdated, error) {
-	event := new(ContractProjectTypeUpdated)
-	if err := _Contract.contract.UnpackLog(event, "ProjectTypeUpdated", log); err != nil {
-		return nil, err
-	}
-	event.Raw = log
-	return event, nil
-}
-
-// ContractProjectsUpdatedIterator is returned from FilterProjectsUpdated and is used to iterate over the raw logs and unpacked data for ProjectsUpdated events raised by the Contract contract.
-type ContractProjectsUpdatedIterator struct {
-	Event *ContractProjectsUpdated // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *ContractProjectsUpdatedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(ContractProjectsUpdated)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(ContractProjectsUpdated)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *ContractProjectsUpdatedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *ContractProjectsUpdatedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// ContractProjectsUpdated represents a ProjectsUpdated event raised by the Contract contract.
-type ContractProjectsUpdated struct {
-	DataMarketAddress common.Address
-	Projects          []string
-	Status            []bool
-	EnableEpochId     *big.Int
-	Raw               types.Log // Blockchain specific contextual infos
-}
-
-// FilterProjectsUpdated is a free log retrieval operation binding the contract event 0xcbf1b93d76451f05244e2f6139bf7266a14bac5182e5ed8981ab0ce36479efbf.
-//
-// Solidity: event ProjectsUpdated(address indexed dataMarketAddress, string[] projects, bool[] status, uint256 enableEpochId)
-func (_Contract *ContractFilterer) FilterProjectsUpdated(opts *bind.FilterOpts, dataMarketAddress []common.Address) (*ContractProjectsUpdatedIterator, error) {
-
-	var dataMarketAddressRule []interface{}
-	for _, dataMarketAddressItem := range dataMarketAddress {
-		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
-	}
-
-	logs, sub, err := _Contract.contract.FilterLogs(opts, "ProjectsUpdated", dataMarketAddressRule)
-	if err != nil {
-		return nil, err
-	}
-	return &ContractProjectsUpdatedIterator{contract: _Contract.contract, event: "ProjectsUpdated", logs: logs, sub: sub}, nil
-}
-
-// WatchProjectsUpdated is a free log subscription operation binding the contract event 0xcbf1b93d76451f05244e2f6139bf7266a14bac5182e5ed8981ab0ce36479efbf.
-//
-// Solidity: event ProjectsUpdated(address indexed dataMarketAddress, string[] projects, bool[] status, uint256 enableEpochId)
-func (_Contract *ContractFilterer) WatchProjectsUpdated(opts *bind.WatchOpts, sink chan<- *ContractProjectsUpdated, dataMarketAddress []common.Address) (event.Subscription, error) {
-
-	var dataMarketAddressRule []interface{}
-	for _, dataMarketAddressItem := range dataMarketAddress {
-		dataMarketAddressRule = append(dataMarketAddressRule, dataMarketAddressItem)
-	}
-
-	logs, sub, err := _Contract.contract.WatchLogs(opts, "ProjectsUpdated", dataMarketAddressRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(ContractProjectsUpdated)
-				if err := _Contract.contract.UnpackLog(event, "ProjectsUpdated", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// ParseProjectsUpdated is a log parse operation binding the contract event 0xcbf1b93d76451f05244e2f6139bf7266a14bac5182e5ed8981ab0ce36479efbf.
-//
-// Solidity: event ProjectsUpdated(address indexed dataMarketAddress, string[] projects, bool[] status, uint256 enableEpochId)
-func (_Contract *ContractFilterer) ParseProjectsUpdated(log types.Log) (*ContractProjectsUpdated, error) {
-	event := new(ContractProjectsUpdated)
-	if err := _Contract.contract.UnpackLog(event, "ProjectsUpdated", log); err != nil {
+// Solidity: event RewardsClaimed(address indexed user, uint256 amount, uint256 timestamp)
+func (_Contract *ContractFilterer) ParseRewardsClaimed(log types.Log) (*ContractRewardsClaimed, error) {
+	event := new(ContractRewardsClaimed)
+	if err := _Contract.contract.UnpackLog(event, "RewardsClaimed", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
