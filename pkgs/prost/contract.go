@@ -15,7 +15,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-	
+
 	"github.com/cenkalti/backoff/v4"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
@@ -91,7 +91,7 @@ func ColdSyncValues() {
 	go func() {
 		for {
 			PopulateStateVars()
-			time.Sleep((time.Second * 10) * BlockTime)
+			time.Sleep((time.Millisecond * 500) * BlockTime)
 		}
 	}()
 }
