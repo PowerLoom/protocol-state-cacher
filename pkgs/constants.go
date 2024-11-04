@@ -1,10 +1,10 @@
 package pkgs
 
 const (
-	CurrentEpoch            = "CurrentEpoch"
+	CurrentEpochID          = "CurrentEpochID"
 	CurrentBatchId          = "CurrentBatchId"
 	EpochsInADay            = "EpochsInADay"
-	SlotCounter             = "SlotCounter"
+	SlotCounter             = "Slot	Counter"
 	EPOCH_SIZE              = "EPOCH_SIZE"
 	SOURCE_CHAIN_BLOCK_TIME = "SOURCE_CHAIN_BLOCK_TIME"
 )

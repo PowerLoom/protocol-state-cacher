@@ -12,9 +12,10 @@ import (
 	"protocol-state-cacher/pkgs/contract"
 	"protocol-state-cacher/pkgs/redis"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
-
+	
 	"github.com/cenkalti/backoff/v4"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
@@ -99,7 +100,7 @@ func coldSyncAllSlots() {
 	for _, dataMarket := range config.SettingsObj.DataMarketAddresses {
 		dataMarketAddr := common.HexToAddress(dataMarket)
 		log.Debugln("Cold syncing slots for data market: ", dataMarketAddr.String())
-		
+
 		// Get total node count
 		nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{
 			Context: context.Background(),
@@ -108,7 +109,7 @@ func coldSyncAllSlots() {
 			log.Errorf("Error getting total node count: %v", err)
 			continue
 		}
-		
+
 		var allSlots []string
 		var mu sync.Mutex
 
@@ -123,7 +124,7 @@ func coldSyncAllSlots() {
 					slot, err := Instance.GetSlotInfo(&bind.CallOpts{}, dataMarketAddr, big.NewInt(slotIndex))
 
 					if slot == (contract.PowerloomDataMarketSlotInfo{}) || err != nil {
-							log.Debugln("Error getting slot info: ", slotIndex)
+						log.Debugln("Error getting slot info: ", slotIndex)
 						return
 					}
 
@@ -147,15 +148,15 @@ func coldSyncAllSlots() {
 				}(j)
 			}
 
-				wg.Wait()
+			wg.Wait()
 
-				if len(allSlots) > 0 {
-					mu.Lock()
-					err := redis.AddToSet(context.Background(), "AllSlotsInfo", allSlots...)
-					mu.Unlock()
-					if err != nil {
-						log.Errorln("Error adding slots to set: ", err)
-						listenerCommon.SendFailureNotification("ColdSync", err.Error(), time.Now().String(), "ERROR")
+			if len(allSlots) > 0 {
+				mu.Lock()
+				err := redis.AddToSet(context.Background(), "AllSlotsInfo", allSlots...)
+				mu.Unlock()
+				if err != nil {
+					log.Errorln("Error adding slots to set: ", err)
+					listenerCommon.SendFailureNotification("ColdSync", err.Error(), time.Now().String(), "ERROR")
 				}
 				allSlots = nil // reset batch
 			}
@@ -178,7 +179,7 @@ func PopulateStateVars() {
 		dataMarketAddr := common.HexToAddress(dataMarket)
 
 		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddr); output.EpochId != nil && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.CurrentEpoch)
+			key := redis.CurrentEpochID(strings.ToLower(dataMarketAddr.String()))
 			PersistState(context.Background(), key, output.EpochId.String())
 		}
 

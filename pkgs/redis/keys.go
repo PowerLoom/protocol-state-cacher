@@ -2,6 +2,8 @@ package redis
 
 import (
 	"fmt"
+	"protocol-state-cacher/pkgs"
+	"strings"
 )
 
 func ContractStateVariable(varName string) string {
@@ -14,4 +16,8 @@ func ContractStateVariableWithDataMarket(dataMarketAddress string, varName strin
 
 func SlotInfo(slotId string) string {
 	return fmt.Sprintf("%s.%s", ContractStateVariable("SlotInfo"), slotId)
+}
+
+func CurrentEpochID(dataMarketAddress string) string {
+	return fmt.Sprintf("%s.%s", strings.ToLower(dataMarketAddress), pkgs.CurrentEpochID)
 }
