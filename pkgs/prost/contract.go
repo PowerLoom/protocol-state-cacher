@@ -181,6 +181,7 @@ func PopulateStateVars() {
 		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddr); output.EpochId != nil && err == nil {
 			key := redis.CurrentEpochID(strings.ToLower(dataMarketAddr.String()))
 			PersistState(context.Background(), key, output.EpochId.String())
+			log.Debugln("Current epoch set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", output.EpochId.String())
 		}
 
 		if output, err := Instance.EpochsInADay(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
