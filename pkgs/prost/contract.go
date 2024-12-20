@@ -187,16 +187,25 @@ func PopulateStateVars() {
 		if output, err := Instance.EpochsInADay(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
 			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.EpochsInADay)
 			PersistState(context.Background(), key, output.String())
+			log.Debugln("Epochs in a day set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", output.String())
 		}
 
 		if output, err := Instance.EPOCHSIZE(&bind.CallOpts{}, dataMarketAddr); output != 0 && err == nil {
 			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.EPOCH_SIZE)
 			PersistState(context.Background(), key, strconv.Itoa(int(output)))
+			log.Debugln("Epoch size set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", strconv.Itoa(int(output)))
 		}
 
 		if output, err := Instance.SOURCECHAINBLOCKTIME(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
 			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.SOURCE_CHAIN_BLOCK_TIME)
 			PersistState(context.Background(), key, strconv.Itoa(int(output.Int64())))
+			log.Debugln("Source chain block time set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", strconv.Itoa(int(output.Int64())))
+		}
+
+		if output, err := Instance.DayCounter(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
+			key := redis.DataMarketCurrentDay(dataMarket)
+			PersistState(context.Background(), key, strconv.Itoa(int(output.Int64())))
+			log.Debugln("Day counter set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", strconv.Itoa(int(output.Int64())))
 		}
 	}
 }

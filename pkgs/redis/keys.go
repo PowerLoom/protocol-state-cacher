@@ -21,3 +21,7 @@ func SlotInfo(slotId string) string {
 func CurrentEpochID(dataMarketAddress string) string {
 	return fmt.Sprintf("%s.%s", strings.ToLower(dataMarketAddress), pkgs.CurrentEpochID)
 }
+
+func DataMarketCurrentDay(dataMarketAddress string) string {
+	return fmt.Sprintf("%s.%s", strings.ToLower(dataMarketAddress), pkgs.CurrentDay)
+}
