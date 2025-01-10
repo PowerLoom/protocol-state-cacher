@@ -23,5 +23,5 @@ func CurrentEpochID(dataMarketAddress string) string {
 }
 
 func DataMarketCurrentDay(dataMarketAddress string) string {
-	return fmt.Sprintf("%s.%s", strings.ToLower(dataMarketAddress), pkgs.CurrentDay)
+	return fmt.Sprintf("%s.%s", pkgs.CurrentDayKey, strings.ToLower(dataMarketAddress))
 }
