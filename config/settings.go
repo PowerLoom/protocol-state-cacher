@@ -20,6 +20,7 @@ type Settings struct {
 	DataMarketAddresses         []string
 	DataMarketContractAddresses []common.Address
 	RedisDb                     int
+	SlotSyncInterval            int
 }
 
 func LoadConfig() {
@@ -36,6 +37,10 @@ func LoadConfig() {
 	for _, addr := range dataMarketAddressesList {
 		dataMarketContractAddresses = append(dataMarketContractAddresses, common.HexToAddress(addr))
 	}
+	slotSyncInterval, err := strconv.Atoi(getEnv("SLOT_SYNC_INTERVAL", "60"))
+	if err != nil {
+		log.Fatalf("Invalid SLOT_SYNC_INTERVAL value: %v", err)
+	}
 	config := Settings{
 		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
 		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
@@ -44,6 +49,7 @@ func LoadConfig() {
 		SlackReportingUrl:           getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddresses:         dataMarketAddressesList,
 		DataMarketContractAddresses: dataMarketContractAddresses,
+		SlotSyncInterval:            slotSyncInterval,
 	}
 
 	// Check for any missing required environment variables and log errors

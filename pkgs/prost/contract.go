@@ -82,7 +82,7 @@ func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K
 func ColdSyncMappings() {
 	for {
 		coldSyncAllSlots()
-		time.Sleep(60 * time.Minute)
+		time.Sleep(time.Second * time.Duration(config.SettingsObj.SlotSyncInterval))
 	}
 
 }
