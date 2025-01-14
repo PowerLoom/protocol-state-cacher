@@ -3,52 +3,52 @@ package prost
 import (
 	"context"
 	"crypto/tls"
-	"encoding/json"
-	"math/big"
+	"fmt"
 	"net/http"
 	"protocol-state-cacher/config"
 	"protocol-state-cacher/pkgs"
-	listenerCommon "protocol-state-cacher/pkgs/common"
 	"protocol-state-cacher/pkgs/contract"
 	"protocol-state-cacher/pkgs/redis"
+	"protocol-state-cacher/pkgs/reporting"
+	"protocol-state-cacher/pkgs/snapshotterStateContract"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
 	log "github.com/sirupsen/logrus"
 )
 
 var (
-	Instance     *contract.Contract
-	Client       *ethclient.Client
-	CurrentBlock *types.Block
+	allSlots                    []string
+	mu                          sync.Mutex
+	Client                      *ethclient.Client
+	Instance                    *contract.Contract
+	ContractABI                 abi.ABI
+	SnapshotterStateContractABI abi.ABI
+	SnapshotterStateInstances   = make(map[string]*snapshotterStateContract.SnapshotterStateContract)
 )
 
-const BlockTime = 1
-
 func Initialize() {
+	// Set up the RPC client, contract, and ABI instance
 	ConfigureClient()
 	ConfigureContractInstance()
+	ConfigureABI()
 }
 
 func ConfigureClient() {
-	rpcClient, err := rpc.DialOptions(
-		context.Background(),
-		config.SettingsObj.ClientUrl,
-		rpc.WithHTTPClient(
-			&http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}},
-		),
-	)
+	rpcClient, err := rpc.DialOptions(context.Background(), config.SettingsObj.ClientUrl, rpc.WithHTTPClient(&http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}))
 	if err != nil {
+		log.Errorf("Failed to connect to client: %s", err)
 		log.Fatal(err)
 	}
+
 	Client = ethclient.NewClient(rpcClient)
 }
 
@@ -59,7 +59,30 @@ func ConfigureContractInstance() {
 	if err != nil {
 		log.Fatalf("Failed to create contract instance: %v", err)
 	}
+
 	Instance = instance
+
+	for _, dataMarketContractAddr := range config.SettingsObj.DataMarketContractAddresses {
+		snapshotterStateInstance, _ := snapshotterStateContract.NewSnapshotterStateContract(dataMarketContractAddr, Client)
+		SnapshotterStateInstances[dataMarketContractAddr.Hex()] = snapshotterStateInstance
+	}
+}
+
+func ConfigureABI() {
+	contractABI, err := abi.JSON(strings.NewReader(contract.ContractMetaData.ABI))
+	if err != nil {
+		log.Errorf("Failed to configure contract ABI: %s", err)
+		log.Fatal(err)
+	}
+
+	snapshotterStateABI, err := abi.JSON(strings.NewReader(snapshotterStateContract.SnapshotterStateContractMetaData.ABI))
+	if err != nil {
+		log.Errorf("Failed to configure snapshotter state contract ABI: %s", err)
+		log.Fatal(err)
+	}
+
+	ContractABI = contractABI
+	SnapshotterStateContractABI = snapshotterStateABI
 }
 
 func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K, err error)) (K, error) {
@@ -79,146 +102,129 @@ func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K
 	return val, err
 }
 
-func ColdSyncMappings() {
-	for {
-		coldSyncAllSlots()
-		time.Sleep(60 * time.Minute)
+// FetchAllSlots fetches all slot information once during startup.
+func FetchAllSlots() error {
+	log.Println("Fetching all slot information at startup...")
+
+	// Fetch total node count
+	nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()})
+	if err != nil {
+		log.Errorf("Error fetching total node count: %s", err.Error())
+		return fmt.Errorf("failed to fetch total node count: %s", err.Error())
 	}
 
-}
+	// Loop through all data market addresses in the configuration
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		log.Printf("Fetching slots for data market address: %s", dataMarketAddress.Hex())
 
-func ColdSyncValues() {
-	go func() {
-		for {
-			PopulateStateVars()
-			time.Sleep((time.Millisecond * 500) * BlockTime)
-		}
-	}()
-}
-
-func coldSyncAllSlots() {
-	for _, dataMarket := range config.SettingsObj.DataMarketAddresses {
-		dataMarketAddr := common.HexToAddress(dataMarket)
-		log.Debugln("Cold syncing slots for data market: ", dataMarketAddr.String())
-
-		// Get total node count
-		nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{
-			Context: context.Background(),
-		})
-		if err != nil {
-			log.Errorf("Error getting total node count: %v", err)
-			continue
-		}
-
-		var allSlots []string
-		var mu sync.Mutex
-
-		// Use actual node count instead of hardcoded 6000
+		// Process slots in batches of 20 for parallelism
 		for i := int64(0); i <= nodeCount.Int64(); i += 20 {
 			var wg sync.WaitGroup
 
+			// Fetch each slot in the current batch
 			for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
 				wg.Add(1)
+
 				go func(slotIndex int64) {
 					defer wg.Done()
-					slot, err := Instance.GetSlotInfo(&bind.CallOpts{}, dataMarketAddr, big.NewInt(slotIndex))
-
-					if slot == (contract.PowerloomDataMarketSlotInfo{}) || err != nil {
-						log.Debugln("Error getting slot info: ", slotIndex)
-						return
-					}
-
-					slotMarshalled, err := json.Marshal(slot)
-					if err != nil {
-						log.Debugln("Error marshalling slot info: ", slotIndex)
-						return
-					}
-
-					PersistState(
-						context.Background(),
-						redis.SlotInfo(slot.SlotId.String()),
-						string(slotMarshalled),
-					)
-
-					mu.Lock()
-					allSlots = append(allSlots, redis.SlotInfo(slot.SlotId.String()))
-					mu.Unlock()
-
-					log.Debugln("Slot info: ", slotIndex, string(slotMarshalled), slot.SlotId.String())
+					addSlotInfo(dataMarketAddress.Hex(), slotIndex)
 				}(j)
 			}
 
 			wg.Wait()
 
+			// Add batch of slots to Redis
 			if len(allSlots) > 0 {
-				mu.Lock()
-				err := redis.AddToSet(context.Background(), "AllSlotsInfo", allSlots...)
-				mu.Unlock()
-				if err != nil {
-					log.Errorln("Error adding slots to set: ", err)
-					listenerCommon.SendFailureNotification("ColdSync", err.Error(), time.Now().String(), "ERROR")
+				if err := redis.AddToSet(context.Background(), redis.AllSlotInfo(), allSlots...); err != nil {
+					errMsg := fmt.Sprintf("Error adding slots to Redis set for data market %s: %v", dataMarketAddress.Hex(), err)
+					reporting.SendFailureNotification(pkgs.FetchAllSlots, errMsg, time.Now().String(), "High")
+					log.Error(errMsg)
 				}
-				allSlots = nil // reset batch
 			}
 		}
-		break // Exit after processing first instance
+	}
+
+	log.Println("✅ Completed fetching all slot information at startup.")
+	return nil
+}
+
+func StartPeriodicStateSync() {
+	go func() {
+		for {
+			// Poll dynamic state variables
+			DynamicStateVariables()
+
+			// Poll static variables if PollingStaticStateVariables is true
+			if config.SettingsObj.PollingStaticStateVariables {
+				StaticStateVariables()
+			}
+
+			time.Sleep(time.Second * time.Duration(config.SettingsObj.SlotSyncInterval))
+		}
+	}()
+}
+
+func StaticStateVariables() {
+	// Iterate over all data markets and set static state variables
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		log.Infof("Setting static state variables for data market: %s", dataMarketAddress)
+
+		// Set epochs in a day
+		if output, err := Instance.EpochsInADay(&bind.CallOpts{}, dataMarketAddress); output != nil && err == nil {
+			epochsInADayKey := redis.ContractStateVariableWithDataMarket(dataMarketAddress.Hex(), pkgs.EpochsInADay)
+			PersistState(context.Background(), epochsInADayKey, output.String())
+			log.Infof("Epochs in a day set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.String())
+		}
+
+		// Set epoch size
+		if output, err := Instance.EPOCHSIZE(&bind.CallOpts{}, dataMarketAddress); output != 0 && err == nil {
+			epochSizeKey := redis.ContractStateVariableWithDataMarket(dataMarketAddress.Hex(), pkgs.EPOCH_SIZE)
+			PersistState(context.Background(), epochSizeKey, strconv.Itoa(int(output)))
+			log.Infof("Epoch size set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), strconv.Itoa(int(output)))
+		}
+
+		// Set source chain block time
+		if output, err := Instance.SOURCECHAINBLOCKTIME(&bind.CallOpts{}, dataMarketAddress); output != nil && err == nil {
+			sourceChainBlockTimeKey := redis.ContractStateVariableWithDataMarket(dataMarketAddress.Hex(), pkgs.SOURCE_CHAIN_BLOCK_TIME)
+			PersistState(context.Background(), sourceChainBlockTimeKey, strconv.Itoa(int(output.Int64())))
+			log.Infof("Source chain block time set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), strconv.Itoa(int(output.Int64())))
+		}
 	}
 }
 
-func PopulateStateVars() {
-	for {
-		if block, err := Client.BlockByNumber(context.Background(), nil); err == nil {
-			CurrentBlock = block
-			break
-		} else {
-			log.Debugln("Encountered error while fetching current block: ", err.Error())
-		}
-	}
+func DynamicStateVariables() {
+	// Iterate over all data markets and set dynamic state variables
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		log.Infof("Setting dynamic state variables for data market: %s", dataMarketAddress)
 
-	for _, dataMarket := range config.SettingsObj.DataMarketAddresses {
-		dataMarketAddr := common.HexToAddress(dataMarket)
-
-		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddr); output.EpochId != nil && err == nil {
-			key := redis.CurrentEpochID(strings.ToLower(dataMarketAddr.String()))
-			PersistState(context.Background(), key, output.EpochId.String())
-			log.Debugln("Current epoch set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", output.EpochId.String())
+		// Set current epoch
+		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
+			currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
+			PersistState(context.Background(), currentEpochKey, output.EpochId.String())
+			log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
 		}
 
-		if output, err := Instance.EpochsInADay(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.EpochsInADay)
-			PersistState(context.Background(), key, output.String())
-			log.Debugln("Epochs in a day set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", output.String())
-		}
-
-		if output, err := Instance.EPOCHSIZE(&bind.CallOpts{}, dataMarketAddr); output != 0 && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.EPOCH_SIZE)
-			PersistState(context.Background(), key, strconv.Itoa(int(output)))
-			log.Debugln("Epoch size set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", strconv.Itoa(int(output)))
-		}
-
-		if output, err := Instance.SOURCECHAINBLOCKTIME(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
-			key := redis.ContractStateVariableWithDataMarket(dataMarketAddr.String(), pkgs.SOURCE_CHAIN_BLOCK_TIME)
-			PersistState(context.Background(), key, strconv.Itoa(int(output.Int64())))
-			log.Debugln("Source chain block time set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", strconv.Itoa(int(output.Int64())))
-		}
-
-		if output, err := Instance.DayCounter(&bind.CallOpts{}, dataMarketAddr); output != nil && err == nil {
-			key := redis.DataMarketCurrentDay(dataMarket)
-			PersistState(context.Background(), key, strconv.Itoa(int(output.Int64())))
-			log.Debugln("Day counter set for data market ", strings.ToLower(dataMarketAddr.String()), " to ", strconv.Itoa(int(output.Int64())))
+		// Set day counter
+		if output, err := Instance.DayCounter(&bind.CallOpts{}, dataMarketAddress); output != nil && err == nil {
+			dayCounterKey := redis.DataMarketCurrentDay(dataMarketAddress.Hex())
+			PersistState(context.Background(), dayCounterKey, strconv.Itoa(int(output.Int64())))
+			log.Infof("Day counter set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), strconv.Itoa(int(output.Int64())))
 		}
 	}
 }
 
-func PersistState(ctx context.Context, key string, val string) {
-	var err error
-	if err = redis.Set(ctx, key, val, 0); err != nil {
-		log.Errorln("Error setting state variable: ", key, val)
-		listenerCommon.SendFailureNotification("PersistState", err.Error(), time.Now().String(), "ERROR")
+func PersistState(ctx context.Context, key, value string) {
+	// Set the state variable in Redis
+	if err := redis.Set(ctx, key, value, 0); err != nil {
+		errMsg := fmt.Sprintf("Error setting state variable %s in Redis: %s", key, err.Error())
+		reporting.SendFailureNotification(pkgs.PersistState, errMsg, time.Now().String(), "High")
+		log.Error(errMsg)
 	}
-	if err = redis.PersistKey(ctx, key); err != nil {
-		log.Errorln("Error persisting state variable: ", key)
-		listenerCommon.SendFailureNotification("PersistState", err.Error(), time.Now().String(), "ERROR")
-		return
+
+	// Persist the state variable in Redis
+	if err := redis.PersistKey(ctx, key); err != nil {
+		errMsg := fmt.Sprintf("Error persisting state variable %s in Redis: %s", key, err.Error())
+		reporting.SendFailureNotification(pkgs.PersistState, errMsg, time.Now().String(), "High")
+		log.Error(errMsg)
 	}
 }
