@@ -1,11 +1,21 @@
 package pkgs
 
+// Process Name Constants
+// process : identifier
+const (
+	PersistState       = "PersistState"
+	FetchAllSlots      = "FetchAllSlots"
+	MonitorEvents      = "MonitorEvents"
+	ProcessBlockEvents = "ProcessBlockEvents"
+)
+
+// State Variable Constants
+// state variable : identifier
 const (
 	CurrentEpochID          = "CurrentEpochID"
-	CurrentBatchId          = "CurrentBatchId"
 	CurrentDayKey           = "CurrentDayKey"
 	EpochsInADay            = "EpochsInADay"
-	SlotCounter             = "Slot	Counter"
 	EPOCH_SIZE              = "EPOCH_SIZE"
 	SOURCE_CHAIN_BLOCK_TIME = "SOURCE_CHAIN_BLOCK_TIME"
+	AllSlotsInfoKey         = "AllSlotsInfoKey"
 )
