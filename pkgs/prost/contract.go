@@ -36,13 +36,20 @@ var (
 )
 
 func Initialize() {
-	// Set up the RPC client, contract, and ABI instance
+	// Initialize RPC client
 	ConfigureClient()
+
+	// Initialize contract instances
 	ConfigureContractInstance()
+	ConfigureSnapshotterStateContractInstance()
+
+	// Initialize ABI instances
 	ConfigureABI()
+	ConfigureSnapshotterStateABI()
 }
 
 func ConfigureClient() {
+	// Initialize RPC client
 	rpcClient, err := rpc.DialOptions(context.Background(), config.SettingsObj.ClientUrl, rpc.WithHTTPClient(&http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}))
 	if err != nil {
 		log.Errorf("Failed to connect to client: %s", err)
@@ -54,34 +61,42 @@ func ConfigureClient() {
 
 func ConfigureContractInstance() {
 	// Initialize single contract instance using the protocol state contract address
-	protocolStateAddr := common.HexToAddress(config.SettingsObj.ContractAddress)
-	instance, err := contract.NewContract(protocolStateAddr, Client)
+	protocolStateAddress := common.HexToAddress(config.SettingsObj.ContractAddress)
+	instance, err := contract.NewContract(protocolStateAddress, Client)
 	if err != nil {
-		log.Fatalf("Failed to create contract instance: %v", err)
+		log.Fatalf("Failed to create protocol state contract instance: %v", err)
 	}
 
 	Instance = instance
+}
 
-	for _, dataMarketContractAddr := range config.SettingsObj.DataMarketContractAddresses {
-		snapshotterStateInstance, _ := snapshotterStateContract.NewSnapshotterStateContract(dataMarketContractAddr, Client)
-		SnapshotterStateInstances[dataMarketContractAddr.Hex()] = snapshotterStateInstance
+func ConfigureSnapshotterStateContractInstance() {
+	// Initialize snapshotter state contract instance
+	for _, dataMarketContractAddress := range config.SettingsObj.DataMarketContractAddresses {
+		snapshotterStateInstance, _ := snapshotterStateContract.NewSnapshotterStateContract(dataMarketContractAddress, Client)
+		SnapshotterStateInstances[dataMarketContractAddress.Hex()] = snapshotterStateInstance
 	}
 }
 
 func ConfigureABI() {
+	// Initialize contract ABI
 	contractABI, err := abi.JSON(strings.NewReader(contract.ContractMetaData.ABI))
 	if err != nil {
-		log.Errorf("Failed to configure contract ABI: %s", err)
+		log.Errorf("Failed to configure protocol state contract ABI: %s", err)
 		log.Fatal(err)
 	}
 
+	ContractABI = contractABI
+}
+
+func ConfigureSnapshotterStateABI() {
+	// Initialize snapshotter state contract ABI
 	snapshotterStateABI, err := abi.JSON(strings.NewReader(snapshotterStateContract.SnapshotterStateContractMetaData.ABI))
 	if err != nil {
 		log.Errorf("Failed to configure snapshotter state contract ABI: %s", err)
 		log.Fatal(err)
 	}
 
-	ContractABI = contractABI
 	SnapshotterStateContractABI = snapshotterStateABI
 }
 
