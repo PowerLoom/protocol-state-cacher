@@ -19,3 +19,8 @@ const (
 	SOURCE_CHAIN_BLOCK_TIME = "SOURCE_CHAIN_BLOCK_TIME"
 	AllSlotsInfoKey         = "AllSlotsInfoKey"
 )
+
+// General Constants
+const (
+	BlockOffset = 2
+)

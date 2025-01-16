@@ -36,13 +36,21 @@ func MonitorEvents() {
 
 		latestBlockNumber := latestBlock.Number().Int64()
 
-		// Check if lastProcessedBlock is set, if not set it to the latest block
+		// Adjust the target block to account for the offset
+		targetBlockNumber := latestBlockNumber - pkgs.BlockOffset
+		if targetBlockNumber < 0 {
+			log.Warn("Target block number is below zero. Skipping iteration...")
+			time.Sleep(100 * time.Millisecond)
+			continue
+		}
+
+		// Check if lastProcessedBlock is set, if not, set it to the target block number
 		if lastProcessedBlock == 0 {
-			lastProcessedBlock = latestBlockNumber
+			lastProcessedBlock = targetBlockNumber
 		}
 
 		// Process new blocks and backtrack for error correction
-		for blockNum := lastProcessedBlock + 1; blockNum <= latestBlockNumber; blockNum++ {
+		for blockNum := lastProcessedBlock + 1; blockNum <= targetBlockNumber; blockNum++ {
 			// Fetch the block by its number by passing the block number
 			block, err := fetchBlock(big.NewInt(blockNum))
 			if err != nil {
