@@ -100,7 +100,7 @@ func ProcessBlockEvents(block *types.Block) {
 	// Create a filter query to fetch logs for the block
 	filterQuery := ethereum.FilterQuery{
 		BlockHash: &hash,
-		Addresses: []common.Address{common.HexToAddress(config.SettingsObj.ContractAddress)},
+		Addresses: []common.Address{common.HexToAddress(config.SettingsObj.SnapshotterStateContractAddress)},
 	}
 
 	operation := func() error {
@@ -122,7 +122,7 @@ func ProcessBlockEvents(block *types.Block) {
 		for _, vLog := range logs {
 			// Check the event signature
 			switch vLog.Topics[0].Hex() {
-			case ContractABI.Events["allSnapshottersUpdated"].ID.Hex():
+			case SnapshotterStateContractABI.Events["allSnapshottersUpdated"].ID.Hex():
 				log.Debugf("allSnapshottersUpdated event detected in block %d", blockNum)
 
 				// Parse the `allSnapshottersUpdated` event from the log
