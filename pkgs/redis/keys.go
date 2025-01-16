@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+func AllSlotInfo() string {
+	return pkgs.AllSlotsInfoKey
+}
+
 func ContractStateVariable(varName string) string {
 	return fmt.Sprintf("ProtocolState.%s", varName)
 }
