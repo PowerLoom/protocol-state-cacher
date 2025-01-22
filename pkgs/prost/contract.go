@@ -208,6 +208,13 @@ func StaticStateVariables() {
 }
 
 func DynamicStateVariables() {
+	// Set total nodes count
+	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {
+		totalNodesCountKey := redis.TotalNodesCountKey()
+		PersistState(context.Background(), totalNodesCountKey, strconv.Itoa(int(output.Int64())))
+		log.Infof("Total nodes count set to %s", strconv.Itoa(int(output.Int64())))
+	}
+
 	// Iterate over all data markets and set dynamic state variables
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
 		log.Infof("Setting dynamic state variables for data market: %s", dataMarketAddress)

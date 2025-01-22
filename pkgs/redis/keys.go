@@ -10,6 +10,10 @@ func AllSlotInfo() string {
 	return pkgs.AllSlotsInfoKey
 }
 
+func TotalNodesCountKey() string {
+	return pkgs.TotalNodesCount
+}
+
 func ContractStateVariable(varName string) string {
 	return fmt.Sprintf("ProtocolState.%s", varName)
 }
