@@ -14,6 +14,7 @@ const (
 const (
 	CurrentEpochID          = "CurrentEpochID"
 	CurrentDayKey           = "CurrentDayKey"
+	TotalNodesCount         = "TotalNodesCount"
 	EpochsInADay            = "EpochsInADay"
 	EPOCH_SIZE              = "EPOCH_SIZE"
 	SOURCE_CHAIN_BLOCK_TIME = "SOURCE_CHAIN_BLOCK_TIME"
