@@ -32,7 +32,8 @@ var (
 	Instance                    *contract.Contract
 	ContractABI                 abi.ABI
 	SnapshotterStateContractABI abi.ABI
-	SnapshotterStateInstances   = make(map[string]*snapshotterStateContract.SnapshotterStateContract)
+	SnapshotterStateAddress     common.Address
+	SnapshotterStateInstance    *snapshotterStateContract.SnapshotterStateContract
 )
 
 func Initialize() {
@@ -71,11 +72,19 @@ func ConfigureContractInstance() {
 }
 
 func ConfigureSnapshotterStateContractInstance() {
-	// Initialize snapshotter state contract instance
-	for _, dataMarketContractAddress := range config.SettingsObj.DataMarketContractAddresses {
-		snapshotterStateInstance, _ := snapshotterStateContract.NewSnapshotterStateContract(dataMarketContractAddress, Client)
-		SnapshotterStateInstances[dataMarketContractAddress.Hex()] = snapshotterStateInstance
+	// Extract snapshotter state contract address
+	snapshotterStateAddress, err := Instance.SnapshotterState(&bind.CallOpts{})
+	if err != nil {
+		log.Errorf("Error fetching snapshotter state address: %s", err.Error())
 	}
+	SnapshotterStateAddress = snapshotterStateAddress
+
+	// Initialize snapshotter state contract instance
+	snapshotterStateInstance, err := snapshotterStateContract.NewSnapshotterStateContract(snapshotterStateAddress, Client)
+	if err != nil {
+		log.Fatalf("Failed to create snapshotter state contract instance: %v", err)
+	}
+	SnapshotterStateInstance = snapshotterStateInstance
 }
 
 func ConfigureABI() {

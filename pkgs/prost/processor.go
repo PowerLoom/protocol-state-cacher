@@ -108,7 +108,7 @@ func ProcessBlockEvents(block *types.Block) {
 	// Create a filter query to fetch logs for the block
 	filterQuery := ethereum.FilterQuery{
 		BlockHash: &hash,
-		Addresses: []common.Address{common.HexToAddress(config.SettingsObj.SnapshotterStateContractAddress)},
+		Addresses: []common.Address{SnapshotterStateAddress},
 	}
 
 	operation := func() error {
@@ -134,7 +134,7 @@ func ProcessBlockEvents(block *types.Block) {
 				log.Debugf("allSnapshottersUpdated event detected in block %d", blockNum)
 
 				// Parse the `allSnapshottersUpdated` event from the log
-				releasedEvent, err := SnapshotterStateInstances[dataMarketAddress].ParseAllSnapshottersUpdated(vLog)
+				releasedEvent, err := SnapshotterStateInstance.ParseAllSnapshottersUpdated(vLog)
 				if err != nil {
 					errorMsg := fmt.Sprintf("Failed to parse `allSnapshottersUpdated` event for block %d, data market %s: %s", blockNum, dataMarketAddress, err.Error())
 					reporting.SendFailureNotification(pkgs.ProcessBlockEvents, errorMsg, time.Now().String(), "High")
