@@ -186,8 +186,8 @@ func FetchAllSlots() error {
 func StartPeriodicStateSync() {
 	go func() {
 		for {
-			// Poll day counter
-			UpdateDayCounter()
+			// Poll dynamic state variables
+			DynamicStateVariables()
 
 			// Poll static variables if PollingStaticStateVariables is true
 			if config.SettingsObj.PollingStaticStateVariables {
@@ -227,7 +227,7 @@ func StaticStateVariables() {
 	}
 }
 
-func UpdateDayCounter() {
+func DynamicStateVariables() {
 	// Set total nodes count
 	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {
 		totalNodesCountKey := redis.TotalNodesCountKey()
