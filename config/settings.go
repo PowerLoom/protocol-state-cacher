@@ -23,6 +23,7 @@ type Settings struct {
 	BlockInterval               int
 	BlockOffset                 int
 	StatePollingInterval        int
+	SlotSyncInterval            int
 	PollingStaticStateVariables bool
 }
 
@@ -53,6 +54,11 @@ func LoadConfig() {
 		log.Fatalf("Invalid STATE_POLLING_INTERVAL value: %v", err)
 	}
 
+	slotSyncInterval, err := strconv.Atoi(getEnv("SLOT_SYNC_INTERVAL", "60"))
+	if err != nil {
+		log.Fatalf("Invalid SLOT_SYNC_INTERVAL value: %v", err)
+	}
+
 	config := Settings{
 		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
 		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
@@ -63,6 +69,7 @@ func LoadConfig() {
 		DataMarketContractAddresses: dataMarketContractAddresses,
 		StatePollingInterval:        statePollingInterval,
 		PollingStaticStateVariables: pollingStaticStateVariables,
+		SlotSyncInterval:            slotSyncInterval,
 	}
 
 	redisDB, redisDBParseErr := strconv.Atoi(getEnv("REDIS_DB", ""))
