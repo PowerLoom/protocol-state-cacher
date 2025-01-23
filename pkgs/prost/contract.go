@@ -126,6 +126,17 @@ func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K
 	return val, err
 }
 
+// isValidDataMarketAddress checks if the given address is in the DataMarketAddress list
+func isValidDataMarketAddress(dataMarketAddress string) bool {
+	for _, addr := range config.SettingsObj.DataMarketAddresses {
+		if dataMarketAddress == addr {
+			return true
+		}
+	}
+
+	return false
+}
+
 // FetchAllSlots fetches all slot information once during startup.
 func FetchAllSlots() error {
 	log.Println("Fetching all slot information at startup...")
@@ -183,7 +194,7 @@ func StartPeriodicStateSync() {
 				StaticStateVariables()
 			}
 
-			time.Sleep(time.Second * time.Duration(config.SettingsObj.SlotSyncInterval))
+			time.Sleep(time.Duration(config.SettingsObj.StatePollingInterval) * time.Second)
 		}
 	}()
 }
@@ -224,16 +235,9 @@ func DynamicStateVariables() {
 		log.Infof("Total nodes count set to %s", strconv.Itoa(int(output.Int64())))
 	}
 
-	// Iterate over all data markets and set dynamic state variables
+	// Iterate over all data markets and update day counter
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-		log.Infof("Setting dynamic state variables for data market: %s", dataMarketAddress)
-
-		// Set current epoch
-		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
-			currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
-			PersistState(context.Background(), currentEpochKey, output.EpochId.String())
-			log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
-		}
+		log.Infof("Updating day counter for data market: %s", dataMarketAddress)
 
 		// Set day counter
 		if output, err := Instance.DayCounter(&bind.CallOpts{}, dataMarketAddress); output != nil && err == nil {

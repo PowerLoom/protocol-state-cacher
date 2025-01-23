@@ -10,6 +10,7 @@ import (
 	"protocol-state-cacher/pkgs/contract"
 	"protocol-state-cacher/pkgs/redis"
 	"protocol-state-cacher/pkgs/reporting"
+	"strings"
 	"time"
 
 	"github.com/cenkalti/backoff"
@@ -37,7 +38,7 @@ func MonitorEvents() {
 		latestBlockNumber := latestBlock.Number().Int64()
 
 		// Adjust the target block to account for the offset
-		targetBlockNumber := latestBlockNumber - pkgs.BlockOffset
+		targetBlockNumber := latestBlockNumber - int64(config.SettingsObj.BlockOffset)
 		if targetBlockNumber < 0 {
 			log.Warn("Target block number is below zero. Skipping iteration...")
 			time.Sleep(100 * time.Millisecond)
@@ -63,13 +64,16 @@ func MonitorEvents() {
 				continue
 			}
 
-			// Process the events in the block
-			go ProcessBlockEvents(block)
+			// Process snapshotter state events
+			go ProcessSnapshotterStateEvents(block)
+
+			// Process protocol state events
+			go ProcessProtocolStateEvents(block)
 
 			lastProcessedBlock = blockNum
 		}
 
-		time.Sleep(time.Duration(config.SettingsObj.BlockTime*500) * time.Millisecond)
+		time.Sleep(time.Duration(config.SettingsObj.BlockInterval) * time.Second)
 	}
 }
 
@@ -97,8 +101,66 @@ func fetchBlock(blockNum *big.Int) (*types.Block, error) {
 	return block, nil
 }
 
-// ProcessBlockEvents processes logs for the given block
-func ProcessBlockEvents(block *types.Block) {
+// ProcessProtocolStateEvents processes protocol state events
+func ProcessProtocolStateEvents(block *types.Block) {
+	var logs []types.Log
+	var err error
+
+	hash := block.Hash()
+	blockNum := block.Number().Int64()
+
+	// Create a filter query to fetch logs for the block
+	filterQuery := ethereum.FilterQuery{
+		BlockHash: &hash,
+		Addresses: []common.Address{common.HexToAddress(config.SettingsObj.ContractAddress)},
+	}
+
+	operation := func() error {
+		logs, err = Client.FilterLogs(context.Background(), filterQuery)
+		return err
+	}
+
+	if err = backoff.Retry(operation, backoff.WithMaxRetries(backoff.NewConstantBackOff(200*time.Millisecond), 3)); err != nil {
+		errorMsg := fmt.Sprintf("Error fetching logs for block number %d: %s", blockNum, err.Error())
+		reporting.SendFailureNotification(pkgs.ProcessProtocolStateEvents, errorMsg, time.Now().String(), "High")
+		log.Error(errorMsg)
+		return
+	}
+
+	log.Infof("Processing %d logs for block number %d", len(logs), blockNum)
+
+	for _, vLog := range logs {
+		// Check the event signature and handle the `EpochReleased` event
+		switch vLog.Topics[0].Hex() {
+		case ContractABI.Events["EpochReleased"].ID.Hex():
+			log.Debugf("EpochReleased event detected in block %d", block.Number().Int64())
+
+			// Parse the `EpochReleased` event from the log
+			releasedEvent, err := Instance.ParseEpochReleased(vLog)
+			if err != nil {
+				errorMsg := fmt.Sprintf("Epoch release parse error for block %d: %s", block.Number().Int64(), err.Error())
+				reporting.SendFailureNotification(pkgs.ProcessProtocolStateEvents, errorMsg, time.Now().String(), "High")
+				log.Error(errorMsg)
+				continue
+			}
+
+			// Check if the DataMarketAddress in the event matches any address in the DataMarketAddress array
+			if isValidDataMarketAddress(releasedEvent.DataMarketAddress.Hex()) {
+				// Get data market address and epoch ID from the event
+				dataMarketAddress := releasedEvent.DataMarketAddress
+				epochID := releasedEvent.EpochId.String()
+
+				// Persist the current epoch
+				currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
+				PersistState(context.Background(), currentEpochKey, epochID)
+				log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), epochID)
+			}
+		}
+	}
+}
+
+// ProcessSnapshotterStateEvents processes snapshotter state events
+func ProcessSnapshotterStateEvents(block *types.Block) {
 	var logs []types.Log
 	var err error
 
@@ -118,7 +180,7 @@ func ProcessBlockEvents(block *types.Block) {
 
 	if err = backoff.Retry(operation, backoff.WithMaxRetries(backoff.NewConstantBackOff(200*time.Millisecond), 3)); err != nil {
 		errorMsg := fmt.Sprintf("Error fetching logs for block number %d: %s", blockNum, err.Error())
-		reporting.SendFailureNotification(pkgs.ProcessBlockEvents, errorMsg, time.Now().String(), "High")
+		reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
 		log.Error(errorMsg)
 		return
 	}
@@ -137,7 +199,7 @@ func ProcessBlockEvents(block *types.Block) {
 				releasedEvent, err := SnapshotterStateInstance.ParseAllSnapshottersUpdated(vLog)
 				if err != nil {
 					errorMsg := fmt.Sprintf("Failed to parse `allSnapshottersUpdated` event for block %d, data market %s: %s", blockNum, dataMarketAddress, err.Error())
-					reporting.SendFailureNotification(pkgs.ProcessBlockEvents, errorMsg, time.Now().String(), "High")
+					reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
 					log.Error(errorMsg)
 					continue
 				}
@@ -147,7 +209,7 @@ func ProcessBlockEvents(block *types.Block) {
 				tx, _, err := Client.TransactionByHash(context.Background(), txHash)
 				if err != nil {
 					errorMsg := fmt.Sprintf("Failed to fetch transaction details for hash %s in block %d: %s", txHash.Hex(), blockNum, err.Error())
-					reporting.SendFailureNotification(pkgs.ProcessBlockEvents, errorMsg, time.Now().String(), "High")
+					reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
 					log.Error(errorMsg)
 					continue
 				}
@@ -156,7 +218,7 @@ func ProcessBlockEvents(block *types.Block) {
 				nodeID, snapshotterAddress, err := decodeTransactionInput(tx.Data())
 				if err != nil {
 					errMsg := fmt.Sprintf("Failed to decode transaction input for hash %s in block %d: %s", txHash.Hex(), blockNum, err.Error())
-					reporting.SendFailureNotification(pkgs.ProcessBlockEvents, errMsg, time.Now().String(), "High")
+					reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errMsg, time.Now().String(), "High")
 					log.Error(errMsg)
 					continue
 				}
