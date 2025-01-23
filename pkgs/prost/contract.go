@@ -186,8 +186,8 @@ func FetchAllSlots() error {
 func StartPeriodicStateSync() {
 	go func() {
 		for {
-			// Poll day counter
-			UpdateDayCounter()
+			// Poll dynamic state variables
+			DynamicStateVariables()
 
 			// Poll static variables if PollingStaticStateVariables is true
 			if config.SettingsObj.PollingStaticStateVariables {
@@ -227,7 +227,7 @@ func StaticStateVariables() {
 	}
 }
 
-func UpdateDayCounter() {
+func DynamicStateVariables() {
 	// Iterate over all data markets and update day counter
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
 		log.Infof("Updating day counter for data market: %s", dataMarketAddress)
