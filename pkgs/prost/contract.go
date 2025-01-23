@@ -32,7 +32,8 @@ var (
 	Instance                    *contract.Contract
 	ContractABI                 abi.ABI
 	SnapshotterStateContractABI abi.ABI
-	SnapshotterStateInstances   = make(map[string]*snapshotterStateContract.SnapshotterStateContract)
+	SnapshotterStateAddress     common.Address
+	SnapshotterStateInstance    *snapshotterStateContract.SnapshotterStateContract
 )
 
 func Initialize() {
@@ -71,11 +72,19 @@ func ConfigureContractInstance() {
 }
 
 func ConfigureSnapshotterStateContractInstance() {
-	// Initialize snapshotter state contract instance
-	for _, dataMarketContractAddress := range config.SettingsObj.DataMarketContractAddresses {
-		snapshotterStateInstance, _ := snapshotterStateContract.NewSnapshotterStateContract(dataMarketContractAddress, Client)
-		SnapshotterStateInstances[dataMarketContractAddress.Hex()] = snapshotterStateInstance
+	// Extract snapshotter state contract address
+	snapshotterStateAddress, err := Instance.SnapshotterState(&bind.CallOpts{})
+	if err != nil {
+		log.Errorf("Error fetching snapshotter state address: %s", err.Error())
 	}
+	SnapshotterStateAddress = snapshotterStateAddress
+
+	// Initialize snapshotter state contract instance
+	snapshotterStateInstance, err := snapshotterStateContract.NewSnapshotterStateContract(snapshotterStateAddress, Client)
+	if err != nil {
+		log.Fatalf("Failed to create snapshotter state contract instance: %v", err)
+	}
+	SnapshotterStateInstance = snapshotterStateInstance
 }
 
 func ConfigureABI() {
@@ -115,6 +124,17 @@ func MustQuery[K any](ctx context.Context, call func(opts *bind.CallOpts) (val K
 		return *new(K), err
 	}
 	return val, err
+}
+
+// isValidDataMarketAddress checks if the given address is in the DataMarketAddress list
+func isValidDataMarketAddress(dataMarketAddress string) bool {
+	for _, addr := range config.SettingsObj.DataMarketAddresses {
+		if dataMarketAddress == addr {
+			return true
+		}
+	}
+
+	return false
 }
 
 // FetchAllSlots fetches all slot information once during startup.
@@ -166,15 +186,15 @@ func FetchAllSlots() error {
 func StartPeriodicStateSync() {
 	go func() {
 		for {
-			// Poll dynamic state variables
-			DynamicStateVariables()
+			// Poll day counter
+			UpdateDayCounter()
 
 			// Poll static variables if PollingStaticStateVariables is true
 			if config.SettingsObj.PollingStaticStateVariables {
 				StaticStateVariables()
 			}
 
-			time.Sleep(time.Second * time.Duration(config.SettingsObj.SlotSyncInterval))
+			time.Sleep(time.Duration(config.SettingsObj.StatePollingInterval) * time.Second)
 		}
 	}()
 }
@@ -207,7 +227,7 @@ func StaticStateVariables() {
 	}
 }
 
-func DynamicStateVariables() {
+func UpdateDayCounter() {
 	// Set total nodes count
 	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {
 		totalNodesCountKey := redis.TotalNodesCountKey()
@@ -215,16 +235,9 @@ func DynamicStateVariables() {
 		log.Infof("Total nodes count set to %s", strconv.Itoa(int(output.Int64())))
 	}
 
-	// Iterate over all data markets and set dynamic state variables
+	// Iterate over all data markets and update day counter
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-		log.Infof("Setting dynamic state variables for data market: %s", dataMarketAddress)
-
-		// Set current epoch
-		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
-			currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
-			PersistState(context.Background(), currentEpochKey, output.EpochId.String())
-			log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
-		}
+		log.Infof("Updating day counter for data market: %s", dataMarketAddress)
 
 		// Set day counter
 		if output, err := Instance.DayCounter(&bind.CallOpts{}, dataMarketAddress); output != nil && err == nil {

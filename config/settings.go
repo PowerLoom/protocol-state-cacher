@@ -12,18 +12,18 @@ import (
 var SettingsObj *Settings
 
 type Settings struct {
-	ClientUrl                       string
-	ContractAddress                 string
-	SnapshotterStateContractAddress string
-	RedisHost                       string
-	RedisPort                       string
-	SlackReportingUrl               string
-	DataMarketAddresses             []string
-	DataMarketContractAddresses     []common.Address
-	RedisDB                         int
-	BlockTime                       int
-	SlotSyncInterval                int
-	PollingStaticStateVariables     bool
+	ClientUrl                   string
+	ContractAddress             string
+	RedisHost                   string
+	RedisPort                   string
+	SlackReportingUrl           string
+	DataMarketAddresses         []string
+	DataMarketContractAddresses []common.Address
+	RedisDB                     int
+	BlockInterval               int
+	BlockOffset                 int
+	StatePollingInterval        int
+	PollingStaticStateVariables bool
 }
 
 func LoadConfig() {
@@ -48,22 +48,21 @@ func LoadConfig() {
 		log.Fatalf("Failed to parse POLLING_STATIC_STATE_VARIABLES environment variable: %v", pollingStaticStateVariablesErr)
 	}
 
-	slotSyncInterval, err := strconv.Atoi(getEnv("SLOT_SYNC_INTERVAL", "60"))
+	statePollingInterval, err := strconv.Atoi(getEnv("STATE_POLLING_INTERVAL", "60"))
 	if err != nil {
-		log.Fatalf("Invalid SLOT_SYNC_INTERVAL value: %v", err)
+		log.Fatalf("Invalid STATE_POLLING_INTERVAL value: %v", err)
 	}
 
 	config := Settings{
-		ClientUrl:                       getEnv("PROST_RPC_URL", ""),
-		ContractAddress:                 getEnv("PROTOCOL_STATE_CONTRACT", ""),
-		SnapshotterStateContractAddress: getEnv("SNAPSHOTTER_STATE_CONTRACT", ""),
-		RedisHost:                       getEnv("REDIS_HOST", ""),
-		RedisPort:                       getEnv("REDIS_PORT", ""),
-		SlackReportingUrl:               getEnv("SLACK_REPORTING_URL", ""),
-		DataMarketAddresses:             dataMarketAddressesList,
-		DataMarketContractAddresses:     dataMarketContractAddresses,
-		SlotSyncInterval:                slotSyncInterval,
-		PollingStaticStateVariables:     pollingStaticStateVariables,
+		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
+		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
+		RedisHost:                   getEnv("REDIS_HOST", ""),
+		RedisPort:                   getEnv("REDIS_PORT", ""),
+		SlackReportingUrl:           getEnv("SLACK_REPORTING_URL", ""),
+		DataMarketAddresses:         dataMarketAddressesList,
+		DataMarketContractAddresses: dataMarketContractAddresses,
+		StatePollingInterval:        statePollingInterval,
+		PollingStaticStateVariables: pollingStaticStateVariables,
 	}
 
 	redisDB, redisDBParseErr := strconv.Atoi(getEnv("REDIS_DB", ""))
@@ -72,11 +71,17 @@ func LoadConfig() {
 	}
 	config.RedisDB = redisDB
 
-	blockTime, blockTimeParseErr := strconv.Atoi(getEnv("BLOCK_TIME", ""))
-	if blockTimeParseErr != nil {
-		log.Fatalf("Failed to parse BLOCK_TIME environment variable: %v", blockTimeParseErr)
+	blockInterval, blockIntervalParseErr := strconv.Atoi(getEnv("BLOCK_INTERVAL", "5"))
+	if blockIntervalParseErr != nil {
+		log.Fatalf("Failed to parse BLOCK_INTERVAL environment variable: %v", blockIntervalParseErr)
 	}
-	config.BlockTime = blockTime
+	config.BlockInterval = blockInterval
+
+	blockOffset, blockOffsetParseErr := strconv.Atoi(getEnv("BLOCK_OFFSET", "2"))
+	if blockOffsetParseErr != nil {
+		log.Fatalf("Failed to parse BLOCK_OFFSET environment variable: %v", blockOffsetParseErr)
+	}
+	config.BlockOffset = blockOffset
 
 	SettingsObj = &config
 }
