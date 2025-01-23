@@ -12,18 +12,17 @@ import (
 var SettingsObj *Settings
 
 type Settings struct {
-	ClientUrl                       string
-	ContractAddress                 string
-	SnapshotterStateContractAddress string
-	RedisHost                       string
-	RedisPort                       string
-	SlackReportingUrl               string
-	DataMarketAddresses             []string
-	DataMarketContractAddresses     []common.Address
-	RedisDB                         int
-	BlockTime                       int
-	SlotSyncInterval                int
-	PollingStaticStateVariables     bool
+	ClientUrl                   string
+	ContractAddress             string
+	RedisHost                   string
+	RedisPort                   string
+	SlackReportingUrl           string
+	DataMarketAddresses         []string
+	DataMarketContractAddresses []common.Address
+	RedisDB                     int
+	BlockTime                   int
+	SlotSyncInterval            int
+	PollingStaticStateVariables bool
 }
 
 func LoadConfig() {
@@ -54,16 +53,15 @@ func LoadConfig() {
 	}
 
 	config := Settings{
-		ClientUrl:                       getEnv("PROST_RPC_URL", ""),
-		ContractAddress:                 getEnv("PROTOCOL_STATE_CONTRACT", ""),
-		SnapshotterStateContractAddress: getEnv("SNAPSHOTTER_STATE_CONTRACT", ""),
-		RedisHost:                       getEnv("REDIS_HOST", ""),
-		RedisPort:                       getEnv("REDIS_PORT", ""),
-		SlackReportingUrl:               getEnv("SLACK_REPORTING_URL", ""),
-		DataMarketAddresses:             dataMarketAddressesList,
-		DataMarketContractAddresses:     dataMarketContractAddresses,
-		SlotSyncInterval:                slotSyncInterval,
-		PollingStaticStateVariables:     pollingStaticStateVariables,
+		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
+		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
+		RedisHost:                   getEnv("REDIS_HOST", ""),
+		RedisPort:                   getEnv("REDIS_PORT", ""),
+		SlackReportingUrl:           getEnv("SLACK_REPORTING_URL", ""),
+		DataMarketAddresses:         dataMarketAddressesList,
+		DataMarketContractAddresses: dataMarketContractAddresses,
+		SlotSyncInterval:            slotSyncInterval,
+		PollingStaticStateVariables: pollingStaticStateVariables,
 	}
 
 	redisDB, redisDBParseErr := strconv.Atoi(getEnv("REDIS_DB", ""))
