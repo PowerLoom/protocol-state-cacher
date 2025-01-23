@@ -20,8 +20,9 @@ type Settings struct {
 	DataMarketAddresses         []string
 	DataMarketContractAddresses []common.Address
 	RedisDB                     int
-	BlockTime                   int
-	SlotSyncInterval            int
+	BlockInterval               int
+	BlockOffset                 int
+	StatePollingInterval        int
 	PollingStaticStateVariables bool
 }
 
@@ -47,9 +48,9 @@ func LoadConfig() {
 		log.Fatalf("Failed to parse POLLING_STATIC_STATE_VARIABLES environment variable: %v", pollingStaticStateVariablesErr)
 	}
 
-	slotSyncInterval, err := strconv.Atoi(getEnv("SLOT_SYNC_INTERVAL", "60"))
+	statePollingInterval, err := strconv.Atoi(getEnv("STATE_POLLING_INTERVAL", "60"))
 	if err != nil {
-		log.Fatalf("Invalid SLOT_SYNC_INTERVAL value: %v", err)
+		log.Fatalf("Invalid STATE_POLLING_INTERVAL value: %v", err)
 	}
 
 	config := Settings{
@@ -60,7 +61,7 @@ func LoadConfig() {
 		SlackReportingUrl:           getEnv("SLACK_REPORTING_URL", ""),
 		DataMarketAddresses:         dataMarketAddressesList,
 		DataMarketContractAddresses: dataMarketContractAddresses,
-		SlotSyncInterval:            slotSyncInterval,
+		StatePollingInterval:        statePollingInterval,
 		PollingStaticStateVariables: pollingStaticStateVariables,
 	}
 
@@ -70,11 +71,17 @@ func LoadConfig() {
 	}
 	config.RedisDB = redisDB
 
-	blockTime, blockTimeParseErr := strconv.Atoi(getEnv("BLOCK_TIME", ""))
-	if blockTimeParseErr != nil {
-		log.Fatalf("Failed to parse BLOCK_TIME environment variable: %v", blockTimeParseErr)
+	blockInterval, blockIntervalParseErr := strconv.Atoi(getEnv("BLOCK_INTERVAL", "5"))
+	if blockIntervalParseErr != nil {
+		log.Fatalf("Failed to parse BLOCK_INTERVAL environment variable: %v", blockIntervalParseErr)
 	}
-	config.BlockTime = blockTime
+	config.BlockInterval = blockInterval
+
+	blockOffset, blockOffsetParseErr := strconv.Atoi(getEnv("BLOCK_OFFSET", "2"))
+	if blockOffsetParseErr != nil {
+		log.Fatalf("Failed to parse BLOCK_OFFSET environment variable: %v", blockOffsetParseErr)
+	}
+	config.BlockOffset = blockOffset
 
 	SettingsObj = &config
 }
