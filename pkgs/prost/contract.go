@@ -184,7 +184,7 @@ func FetchAllSlots() error {
 }
 
 func SyncAllSlots() {
-	ticker := time.NewTicker(time.Duration(config.SettingsObj.SlotSyncInterval) * time.Minute) // Configurable interval
+	ticker := time.NewTicker(time.Duration(config.SettingsObj.SlotSyncInterval) * time.Second) // Configurable interval
 	defer ticker.Stop()
 
 	// Fetch all slots once at startup
