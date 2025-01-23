@@ -240,6 +240,15 @@ func StaticStateVariables() {
 }
 
 func DynamicStateVariables() {
+	// get current epoch
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
+			currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
+			PersistState(context.Background(), currentEpochKey, output.EpochId.String())
+			log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
+		}
+	}
+
 	// Set total nodes count
 	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {
 		totalNodesCountKey := redis.TotalNodesCountKey()
