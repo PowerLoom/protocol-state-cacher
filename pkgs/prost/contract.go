@@ -183,6 +183,18 @@ func FetchAllSlots() error {
 	return nil
 }
 
+func SyncAllSlots() {
+	ticker := time.NewTicker(time.Duration(config.SettingsObj.SlotSyncInterval) * time.Minute) // Configurable interval
+	defer ticker.Stop()
+
+	// Fetch all slots once at startup
+	FetchAllSlots()
+
+	for range ticker.C {
+		FetchAllSlots()
+	}
+}
+
 func StartPeriodicStateSync() {
 	go func() {
 		for {
