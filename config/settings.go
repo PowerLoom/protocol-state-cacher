@@ -22,7 +22,7 @@ type Settings struct {
 	RedisDB                     int
 	BlockInterval               int
 	BlockOffset                 int
-	StatePollingInterval        int
+	StatePollingInterval        float64
 	SlotSyncInterval            int
 	PollingStaticStateVariables bool
 }
@@ -49,7 +49,7 @@ func LoadConfig() {
 		log.Fatalf("Failed to parse POLLING_STATIC_STATE_VARIABLES environment variable: %v", pollingStaticStateVariablesErr)
 	}
 
-	statePollingInterval, err := strconv.Atoi(getEnv("STATE_POLLING_INTERVAL", "60"))
+	statePollingInterval, err := strconv.ParseFloat(getEnv("STATE_POLLING_INTERVAL", "60"), 64)
 	if err != nil {
 		log.Fatalf("Invalid STATE_POLLING_INTERVAL value: %v", err)
 	}

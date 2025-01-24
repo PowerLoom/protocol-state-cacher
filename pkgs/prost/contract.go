@@ -205,8 +205,9 @@ func StartPeriodicStateSync() {
 			if config.SettingsObj.PollingStaticStateVariables {
 				StaticStateVariables()
 			}
-
-			time.Sleep(time.Duration(config.SettingsObj.StatePollingInterval) * time.Second)
+			// Convert to milliseconds for more precise intervals
+			interval := time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second))
+			time.Sleep(interval)
 		}
 	}()
 }
