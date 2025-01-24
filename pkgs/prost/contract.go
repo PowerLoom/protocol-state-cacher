@@ -196,20 +196,18 @@ func SyncAllSlots() {
 }
 
 func StartPeriodicStateSync() {
-	go func() {
-		for {
-			// Poll dynamic state variables
-			DynamicStateVariables()
+	ticker := time.NewTicker(time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second)))
+	defer ticker.Stop()
 
-			// Poll static variables if PollingStaticStateVariables is true
-			if config.SettingsObj.PollingStaticStateVariables {
-				StaticStateVariables()
-			}
-			// Convert to milliseconds for more precise intervals
-			interval := time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second))
-			time.Sleep(interval)
+	for range ticker.C {
+		// Poll dynamic state variables
+		DynamicStateVariables()
+
+		// Poll static variables if PollingStaticStateVariables is true
+		if config.SettingsObj.PollingStaticStateVariables {
+			StaticStateVariables()
 		}
-	}()
+	}
 }
 
 func StaticStateVariables() {
