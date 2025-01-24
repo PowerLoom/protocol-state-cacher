@@ -27,36 +27,34 @@ var lastProcessedBlock int64
 func MonitorEvents() {
 	log.Println("Monitoring blockchain events for updates...")
 
-	for {
+	ticker := time.NewTicker(time.Duration(float64(time.Second) * config.SettingsObj.BlockInterval))
+	defer ticker.Stop()
+
+	for range ticker.C {
 		latestBlock, err := fetchBlock(nil)
 		if err != nil {
 			log.Errorf("Error fetching latest block: %s", err.Error())
-			time.Sleep(100 * time.Millisecond)
 			continue
 		}
 
 		latestBlockNumber := latestBlock.Number().Int64()
-
-		// Adjust the target block to account for the offset
 		targetBlockNumber := latestBlockNumber - int64(config.SettingsObj.BlockOffset)
+
 		if targetBlockNumber < 0 {
 			log.Warn("Target block number is below zero. Skipping iteration...")
-			time.Sleep(100 * time.Millisecond)
 			continue
 		}
 
-		// Check if lastProcessedBlock is set, if not, set it to the target block number
 		if lastProcessedBlock == 0 {
 			lastProcessedBlock = targetBlockNumber
 		}
 
 		// Process new blocks and backtrack for error correction
 		for blockNum := lastProcessedBlock + 1; blockNum <= targetBlockNumber; blockNum++ {
-			// Fetch the block by its number by passing the block number
 			block, err := fetchBlock(big.NewInt(blockNum))
 			if err != nil {
 				log.Printf("Error fetching block %d: %v", blockNum, err)
-				continue // Skip this block and continue with the next
+				continue
 			}
 
 			if block == nil {
@@ -64,16 +62,11 @@ func MonitorEvents() {
 				continue
 			}
 
-			// Process snapshotter state events
-			go ProcessSnapshotterStateEvents(block)
-
-			// Process protocol state events
+			// go ProcessSnapshotterStateEvents(block)
 			go ProcessProtocolStateEvents(block)
 
 			lastProcessedBlock = blockNum
 		}
-
-		time.Sleep(time.Duration(config.SettingsObj.BlockInterval) * time.Second)
 	}
 }
 

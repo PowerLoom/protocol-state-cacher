@@ -20,7 +20,7 @@ type Settings struct {
 	DataMarketAddresses         []string
 	DataMarketContractAddresses []common.Address
 	RedisDB                     int
-	BlockInterval               int
+	BlockInterval               float64
 	BlockOffset                 int
 	StatePollingInterval        float64
 	SlotSyncInterval            int
@@ -78,7 +78,7 @@ func LoadConfig() {
 	}
 	config.RedisDB = redisDB
 
-	blockInterval, blockIntervalParseErr := strconv.Atoi(getEnv("BLOCK_INTERVAL", "5"))
+	blockInterval, blockIntervalParseErr := strconv.ParseFloat(getEnv("BLOCK_INTERVAL", "5.0"), 64)
 	if blockIntervalParseErr != nil {
 		log.Fatalf("Failed to parse BLOCK_INTERVAL environment variable: %v", blockIntervalParseErr)
 	}
