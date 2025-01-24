@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"math/big"
 	"net/http"
 	"protocol-state-cacher/config"
 	"protocol-state-cacher/pkgs"
@@ -270,6 +271,24 @@ func DynamicStateVariables() {
 			dayCounterKey := redis.DataMarketCurrentDay(dataMarketAddress.Hex())
 			PersistState(context.Background(), dayCounterKey, strconv.Itoa(int(output.Int64())))
 			log.Infof("Day counter set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), strconv.Itoa(int(output.Int64())))
+		}
+	}
+
+	// Set daily snapshot quota table
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		// Fetch the daily snapshot quota for the specified data market address from contract
+		if output, err := MustQuery(context.Background(), func(opts *bind.CallOpts) (*big.Int, error) {
+			return Instance.DailySnapshotQuota(opts, dataMarketAddress)
+		}); err == nil {
+			// Convert the daily snapshot quota to a string for storage in Redis
+			dailySnapshotQuota := output.String()
+
+			// Store the daily snapshot quota in the Redis hash table
+			err := redis.RedisClient.HSet(context.Background(), redis.GetDailySnapshotQuotaTableKey(), dataMarketAddress.Hex(), dailySnapshotQuota).Err()
+			if err != nil {
+				log.Errorf("Failed to set daily snapshot quota for data market %s in Redis: %v", dataMarketAddress.Hex(), err)
+			}
+			log.Infof("Daily snapshot quota set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), dailySnapshotQuota)
 		}
 	}
 }

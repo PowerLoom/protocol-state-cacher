@@ -33,3 +33,7 @@ func CurrentEpochID(dataMarketAddress string) string {
 func DataMarketCurrentDay(dataMarketAddress string) string {
 	return fmt.Sprintf("%s.%s", pkgs.CurrentDayKey, strings.ToLower(dataMarketAddress))
 }
+
+func GetDailySnapshotQuotaTableKey() string {
+	return pkgs.DailySnapshotQuotaTableKey
+}
