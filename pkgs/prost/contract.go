@@ -195,14 +195,20 @@ func SyncAllSlots() {
 	}
 }
 
+func DynamicStateSync() {
+	ticker := time.NewTicker(time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second)))
+	defer ticker.Stop()
+
+	for range ticker.C {
+		DynamicStateVariables()
+	}
+}
+
 func StartPeriodicStateSync() {
 	ticker := time.NewTicker(time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second)))
 	defer ticker.Stop()
 
 	for range ticker.C {
-		// Poll dynamic state variables
-		DynamicStateVariables()
-
 		// Poll static variables if PollingStaticStateVariables is true
 		if config.SettingsObj.PollingStaticStateVariables {
 			StaticStateVariables()

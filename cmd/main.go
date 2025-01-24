@@ -26,8 +26,9 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	wg.Add(2)
+	wg.Add(3)
 	// go prost.MonitorEvents()          // Start monitoring events for updates
+	go prost.DynamicStateSync()        // Start dynamic state sync
 	go prost.StartPeriodicStateSync() // Start periodic state sync
 	go prost.SyncAllSlots()           // Start syncing all slots
 	wg.Wait()
