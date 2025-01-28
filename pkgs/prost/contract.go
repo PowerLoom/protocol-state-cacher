@@ -149,38 +149,34 @@ func FetchAllSlots() error {
 		return fmt.Errorf("failed to fetch total node count: %s", err.Error())
 	}
 
-	// Loop through all data market addresses in the configuration
-	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-		log.Printf("Fetching slots for data market address: %s", dataMarketAddress.Hex())
+	// Process slots in batches of 20 for parallelism
+	for i := int64(0); i <= nodeCount.Int64(); i += 20 {
+		var wg sync.WaitGroup
 
-		// Process slots in batches of 20 for parallelism
-		for i := int64(0); i <= nodeCount.Int64(); i += 20 {
-			var wg sync.WaitGroup
+		// Fetch each slot in the current batch
+		for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
+			wg.Add(1)
 
-			// Fetch each slot in the current batch
-			for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
-				wg.Add(1)
+			go func(slotIndex int64) {
+				defer wg.Done()
+				addSlotInfo(slotIndex)
+			}(j)
+		}
 
-				go func(slotIndex int64) {
-					defer wg.Done()
-					addSlotInfo(dataMarketAddress.Hex(), slotIndex)
-				}(j)
-			}
+		wg.Wait()
 
-			wg.Wait()
-
-			// Add batch of slots to Redis
-			if len(allSlots) > 0 {
-				if err := redis.AddToSet(context.Background(), redis.AllSlotInfo(), allSlots...); err != nil {
-					errMsg := fmt.Sprintf("Error adding slots to Redis set for data market %s: %v", dataMarketAddress.Hex(), err)
-					reporting.SendFailureNotification(pkgs.FetchAllSlots, errMsg, time.Now().String(), "High")
-					log.Error(errMsg)
-				}
+		// Add batch of slots to Redis
+		if len(allSlots) > 0 {
+			if err := redis.AddToSet(context.Background(), redis.AllSlotInfo(), allSlots...); err != nil {
+				errMsg := fmt.Sprintf("Error adding slots to Redis set: %v", err)
+				reporting.SendFailureNotification(pkgs.FetchAllSlots, errMsg, time.Now().String(), "High")
+				log.Error(errMsg)
 			}
 		}
 	}
 
 	log.Println("✅ Completed fetching all slot information at startup.")
+
 	return nil
 }
 
