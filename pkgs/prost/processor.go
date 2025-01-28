@@ -7,9 +7,9 @@ import (
 	"math/big"
 	"protocol-state-cacher/config"
 	"protocol-state-cacher/pkgs"
-	"protocol-state-cacher/pkgs/contract"
 	"protocol-state-cacher/pkgs/redis"
 	"protocol-state-cacher/pkgs/reporting"
+	"strconv"
 	"strings"
 	"time"
 
@@ -22,6 +22,19 @@ import (
 )
 
 var lastProcessedBlock int64
+
+var emptySlotInfo = struct {
+	SnapshotterAddress common.Address
+	NodePrice          *big.Int
+	AmountSentOnL1     *big.Int
+	MintedOn           *big.Int
+	BurnedOn           *big.Int
+	LastUpdated        *big.Int
+	IsLegacy           bool
+	ClaimedTokens      bool
+	Active             bool
+	IsKyced            bool
+}{}
 
 // MonitorEvents continuously monitors blockchain events for updates
 func MonitorEvents() {
@@ -218,43 +231,43 @@ func ProcessSnapshotterStateEvents(block *types.Block) {
 
 				// Process the node ID and snapshotter address
 				log.Infof("🚀 Node ID: %d, Snapshotter Address: %s", nodeID, snapshotterAddress.Hex())
-				addSlotInfo(dataMarketAddress, nodeID)
+				addSlotInfo(nodeID)
 			}
 		}
 	}
 }
 
-func addSlotInfo(dataMarketAddress string, slotID int64) {
-	// Fetch the slot info from the contract
-	slot, err := Instance.GetSlotInfo(&bind.CallOpts{}, common.HexToAddress(dataMarketAddress), big.NewInt(slotID))
+func addSlotInfo(slotID int64) {
+	// Fetch the slot info from the snapshotter state contract
+	slotInfo, err := SnapshotterStateInstance.NodeInfo(&bind.CallOpts{}, big.NewInt(slotID))
 	if err != nil {
-		log.Printf("Error fetching slot %d for data market %s: %v", slotID, dataMarketAddress, err)
+		log.Printf("Error fetching slot info for slot %d: %v", slotID, err)
 		return
 	}
 
 	// Check if the slot info is empty
-	if slot == (contract.PowerloomDataMarketSlotInfo{}) {
-		log.Printf("No data for slot %d in data market %s", slotID, dataMarketAddress)
+	if slotInfo == emptySlotInfo {
+		log.Printf("No data for slot %d", slotID)
 		return
 	}
 
 	// Marshal the slot info to JSON
-	slotMarshalled, err := json.Marshal(slot)
+	slotInfoMarshalled, err := json.Marshal(slotInfo)
 	if err != nil {
-		log.Printf("Error marshalling slot %d for data market %s: %v", slotID, dataMarketAddress, err)
+		log.Printf("Error marshalling slot info for slot %d: %v", slotID, err)
 		return
 	}
 
 	// Persist slot information
-	slotKey := redis.SlotInfo(slot.SlotId.String())
-	PersistState(context.Background(), slotKey, string(slotMarshalled))
+	slotInfoKey := redis.SlotInfo(strconv.FormatInt(slotID, 10))
+	PersistState(context.Background(), slotInfoKey, string(slotInfoMarshalled))
 
 	// Add slot key to the batch
 	mu.Lock()
-	allSlots = append(allSlots, slotKey)
+	allSlots = append(allSlots, slotInfoKey)
 	mu.Unlock()
 
-	log.Printf("Fetched and persisted slot %d for data market %s", slotID, dataMarketAddress)
+	log.Printf("Fetched and persisted slot info for slot %d", slotID)
 }
 
 func decodeTransactionInput(inputData []byte) (int64, common.Address, error) {
