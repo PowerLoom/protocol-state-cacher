@@ -243,16 +243,6 @@ func StaticStateVariables() {
 }
 
 func DynamicStateVariables() {
-	// get current epoch
-	// NOTE: This will be removed in the next merge to main since we are using event logs to track EpochReleased event and setting current epoch in redis
-	// for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-	// 	if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
-	// 		currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
-	// 		PersistState(context.Background(), currentEpochKey, output.EpochId.String())
-	// 		log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
-	// 	}
-	// }
-
 	// Set total nodes count
 	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {
 		totalNodesCountKey := redis.TotalNodesCountKey()
@@ -260,7 +250,7 @@ func DynamicStateVariables() {
 		log.Infof("Total nodes count set to %s", strconv.Itoa(int(output.Int64())))
 	}
 
-	// Iterate over all data markets and update day counter
+	// Iterate over all data markets and set day counter and daily snapshot quota
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
 		log.Infof("Updating day counter for data market: %s", dataMarketAddress)
 
@@ -270,11 +260,8 @@ func DynamicStateVariables() {
 			PersistState(context.Background(), dayCounterKey, strconv.Itoa(int(output.Int64())))
 			log.Infof("Day counter set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), strconv.Itoa(int(output.Int64())))
 		}
-	}
 
-	// Set daily snapshot quota table
-	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-		// Fetch the daily snapshot quota for the specified data market address from contract
+		// Set daily snapshot quota
 		if output, err := MustQuery(context.Background(), func(opts *bind.CallOpts) (*big.Int, error) {
 			return Instance.DailySnapshotQuota(opts, dataMarketAddress)
 		}); err == nil {
@@ -286,6 +273,7 @@ func DynamicStateVariables() {
 			if err != nil {
 				log.Errorf("Failed to set daily snapshot quota for data market %s in Redis: %v", dataMarketAddress.Hex(), err)
 			}
+
 			log.Infof("Daily snapshot quota set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), dailySnapshotQuota)
 		}
 	}

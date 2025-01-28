@@ -62,7 +62,7 @@ func MonitorEvents() {
 				continue
 			}
 
-			// go ProcessSnapshotterStateEvents(block)
+			// Process protocol state events
 			go ProcessProtocolStateEvents(block)
 
 			lastProcessedBlock = blockNum
