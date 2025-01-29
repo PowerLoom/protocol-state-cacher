@@ -193,46 +193,44 @@ func ProcessSnapshotterStateEvents(block *types.Block) {
 
 	log.Infof("Processing %d logs for block number %d", len(logs), blockNum)
 
-	for _, dataMarketAddress := range config.SettingsObj.DataMarketAddresses {
-		// Process the logs for the current block
-		for _, vLog := range logs {
-			// Check the event signature
-			switch vLog.Topics[0].Hex() {
-			case SnapshotterStateContractABI.Events["allSnapshottersUpdated"].ID.Hex():
-				log.Debugf("allSnapshottersUpdated event detected in block %d", blockNum)
+	// Process the logs for the current block
+	for _, vLog := range logs {
+		// Check the event signature
+		switch vLog.Topics[0].Hex() {
+		case SnapshotterStateContractABI.Events["allSnapshottersUpdated"].ID.Hex():
+			log.Debugf("allSnapshottersUpdated event detected in block %d", blockNum)
 
-				// Parse the `allSnapshottersUpdated` event from the log
-				releasedEvent, err := SnapshotterStateInstance.ParseAllSnapshottersUpdated(vLog)
-				if err != nil {
-					errorMsg := fmt.Sprintf("Failed to parse `allSnapshottersUpdated` event for block %d, data market %s: %s", blockNum, dataMarketAddress, err.Error())
-					reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
-					log.Error(errorMsg)
-					continue
-				}
-
-				// Fetch the transaction details using the transaction hash
-				txHash := releasedEvent.Raw.TxHash
-				tx, _, err := Client.TransactionByHash(context.Background(), txHash)
-				if err != nil {
-					errorMsg := fmt.Sprintf("Failed to fetch transaction details for hash %s in block %d: %s", txHash.Hex(), blockNum, err.Error())
-					reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
-					log.Error(errorMsg)
-					continue
-				}
-
-				// Decode the transaction input to get the node ID and snapshotter address
-				nodeID, snapshotterAddress, err := decodeTransactionInput(tx.Data())
-				if err != nil {
-					errMsg := fmt.Sprintf("Failed to decode transaction input for hash %s in block %d: %s", txHash.Hex(), blockNum, err.Error())
-					reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errMsg, time.Now().String(), "High")
-					log.Error(errMsg)
-					continue
-				}
-
-				// Process the node ID and snapshotter address
-				log.Infof("🚀 Node ID: %d, Snapshotter Address: %s", nodeID, snapshotterAddress.Hex())
-				addSlotInfo(nodeID)
+			// Parse the `allSnapshottersUpdated` event from the log
+			releasedEvent, err := SnapshotterStateInstance.ParseAllSnapshottersUpdated(vLog)
+			if err != nil {
+				errorMsg := fmt.Sprintf("Failed to parse `allSnapshottersUpdated` event for block %d: %s", blockNum, err.Error())
+				reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
+				log.Error(errorMsg)
+				continue
 			}
+
+			// Fetch the transaction details using the transaction hash
+			txHash := releasedEvent.Raw.TxHash
+			tx, _, err := Client.TransactionByHash(context.Background(), txHash)
+			if err != nil {
+				errorMsg := fmt.Sprintf("Failed to fetch transaction details for hash %s in block %d: %s", txHash.Hex(), blockNum, err.Error())
+				reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errorMsg, time.Now().String(), "High")
+				log.Error(errorMsg)
+				continue
+			}
+
+			// Decode the transaction input to get the node ID and snapshotter address
+			nodeID, snapshotterAddress, err := decodeTransactionInput(tx.Data())
+			if err != nil {
+				errMsg := fmt.Sprintf("Failed to decode transaction input for hash %s in block %d: %s", txHash.Hex(), blockNum, err.Error())
+				reporting.SendFailureNotification(pkgs.ProcessSnapshotterStateEvents, errMsg, time.Now().String(), "High")
+				log.Error(errMsg)
+				continue
+			}
+
+			// Process the node ID and snapshotter address
+			log.Infof("🚀 Node ID: %d, Snapshotter Address: %s", nodeID, snapshotterAddress.Hex())
+			addSlotInfo(nodeID)
 		}
 	}
 }
