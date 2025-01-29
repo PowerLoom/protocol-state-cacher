@@ -66,7 +66,7 @@ func MonitorEvents() {
 		for blockNum := lastProcessedBlock + 1; blockNum <= targetBlockNumber; blockNum++ {
 			block, err := fetchBlock(big.NewInt(blockNum))
 			if err != nil {
-				log.Printf("Error fetching block %d: %v", blockNum, err)
+				log.Errorf("Error fetching block %d: %v", blockNum, err)
 				continue
 			}
 
@@ -239,20 +239,20 @@ func addSlotInfo(slotID int64) {
 	// Fetch the slot info from the snapshotter state contract
 	slotInfo, err := SnapshotterStateInstance.NodeInfo(&bind.CallOpts{}, big.NewInt(slotID))
 	if err != nil {
-		log.Printf("Error fetching slot info for slot %d: %v", slotID, err)
+		log.Errorf("Error fetching slot info for slot %d: %v", slotID, err)
 		return
 	}
 
 	// Check if the slot info is empty
 	if slotInfo == emptySlotInfo {
-		log.Printf("No data for slot %d", slotID)
+		log.Errorf("No data for slot %d", slotID)
 		return
 	}
 
 	// Marshal the slot info to JSON
 	slotInfoMarshalled, err := json.Marshal(slotInfo)
 	if err != nil {
-		log.Printf("Error marshalling slot info for slot %d: %v", slotID, err)
+		log.Errorf("Error marshalling slot info for slot %d: %v", slotID, err)
 		return
 	}
 
