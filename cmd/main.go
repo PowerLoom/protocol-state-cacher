@@ -9,16 +9,29 @@ import (
 )
 
 func main() {
+	// Initiate logger
 	utils.InitLogger()
+
+	// Load the config object
 	config.LoadConfig()
 
-	prost.ConfigureClient()
-	prost.ConfigureContractInstance()
+	// Initialize the RPC client, contract, and ABI instance
+	prost.Initialize()
+
+	// Setup redis
 	redis.RedisClient = redis.NewRedisClient()
 
-	wg := &sync.WaitGroup{}
-	wg.Add(2)
-	go prost.ColdSyncMappings()
-	go prost.ColdSyncValues()
+	// Set static state variables once
+	prost.StaticStateVariables()
+
+	var wg sync.WaitGroup
+
+	wg.Add(4)
+	go prost.MonitorEvents()    // Start monitoring events for updates
+	go prost.DynamicStateSync() // Start dynamic state sync
+	if config.SettingsObj.PollingStaticStateVariables {
+		go prost.StaticStateSync() // Start static state sync
+	}
+	go prost.SyncAllSlots() // Start syncing all slots
 	wg.Wait()
 }

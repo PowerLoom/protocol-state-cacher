@@ -1,7 +1,8 @@
-package common
+package reporting
 
 import (
 	"fmt"
+
 	log "github.com/sirupsen/logrus"
 )
 
