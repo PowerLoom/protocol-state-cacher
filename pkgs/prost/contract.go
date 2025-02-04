@@ -197,7 +197,7 @@ func SyncAllSlots() {
 }
 
 func DynamicStateSync() {
-	ticker := time.NewTicker(time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second)))
+	ticker := time.NewTicker(time.Duration(config.SettingsObj.BlockInterval * float64(time.Second)))
 	defer ticker.Stop()
 
 	for range ticker.C {
@@ -245,13 +245,13 @@ func StaticStateVariables() {
 func DynamicStateVariables() {
 	// get current epoch
 	// NOTE: This will be removed in the next merge to main since we are using event logs to track EpochReleased event and setting current epoch in redis
-	// for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-	// 	if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
-	// 		currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
-	// 		PersistState(context.Background(), currentEpochKey, output.EpochId.String())
-	// 		log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
-	// 	}
-	// }
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
+			currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
+			PersistState(context.Background(), currentEpochKey, output.EpochId.String())
+			log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
+		}
+	}
 
 	// Set total nodes count
 	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {

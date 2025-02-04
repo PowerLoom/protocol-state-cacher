@@ -25,9 +25,13 @@ func main() {
 	prost.StaticStateVariables()
 
 	var wg sync.WaitGroup
-
-	wg.Add(4)
-	go prost.MonitorEvents()    // Start monitoring events for updates
+	var waitCount = 2
+	if config.SettingsObj.PollingStaticStateVariables {
+		waitCount++
+	}
+	wg.Add(waitCount)
+	// event monitoring will be refactored as a fix to issue #8: https://github.com/PowerLoom/protocol-state-cacher/issues/8
+	// go prost.MonitorEvents()    // Start monitoring events for updates
 	go prost.DynamicStateSync() // Start dynamic state sync
 	if config.SettingsObj.PollingStaticStateVariables {
 		go prost.StaticStateSync() // Start static state sync
