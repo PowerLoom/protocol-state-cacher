@@ -11,6 +11,7 @@ import (
 	"protocol-state-cacher/pkgs/redis"
 	"protocol-state-cacher/pkgs/reporting"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/cenkalti/backoff"
@@ -23,8 +24,19 @@ import (
 
 var lastProcessedBlock int64
 
+type EventProcessor struct {
+	workerLimit chan struct{}
+	wg          sync.WaitGroup
+}
+
+func NewEventProcessor(maxWorkers int) *EventProcessor {
+	return &EventProcessor{
+		workerLimit: make(chan struct{}, maxWorkers),
+	}
+}
+
 // MonitorEvents continuously monitors blockchain events for updates
-func MonitorEvents() {
+func (ep *EventProcessor) MonitorEvents() {
 	log.Println("Monitoring blockchain events for updates...")
 
 	ticker := time.NewTicker(time.Duration(float64(time.Second) * config.SettingsObj.BlockInterval))
@@ -62,8 +74,14 @@ func MonitorEvents() {
 				continue
 			}
 
-			// go ProcessSnapshotterStateEvents(block)
-			go ProcessProtocolStateEvents(block)
+			// Limit concurrent goroutines
+			ep.workerLimit <- struct{}{}
+			ep.wg.Add(1)
+			go func(b *types.Block) {
+				defer ep.wg.Done()
+				defer func() { <-ep.workerLimit }()
+				ProcessProtocolStateEvents(b)
+			}(block) // Pass block as parameter to closure
 
 			lastProcessedBlock = blockNum
 		}
