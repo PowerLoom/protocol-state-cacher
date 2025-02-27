@@ -6,124 +6,124 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "target",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+        }
         ],
         "name": "AddressEmptyCode",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "balance",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "needed",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "balance",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "needed",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+        }
         ],
         "name": "ERC1155InsufficientBalance",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "approver",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "approver",
+            "type": "address"
+        }
         ],
         "name": "ERC1155InvalidApprover",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "idsLength",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "valuesLength",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "idsLength",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "valuesLength",
+            "type": "uint256"
+        }
         ],
         "name": "ERC1155InvalidArrayLength",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        }
         ],
         "name": "ERC1155InvalidOperator",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "receiver",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "receiver",
+            "type": "address"
+        }
         ],
         "name": "ERC1155InvalidReceiver",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "sender",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+        }
         ],
         "name": "ERC1155InvalidSender",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        },
+        {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        }
         ],
         "name": "ERC1155MissingApprovalForAll",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "implementation",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "implementation",
+            "type": "address"
+        }
         ],
         "name": "ERC1967InvalidImplementation",
         "type": "error"
@@ -160,22 +160,22 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        }
         ],
         "name": "OwnableInvalidOwner",
         "type": "error"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+        }
         ],
         "name": "OwnableUnauthorizedAccount",
         "type": "error"
@@ -192,11 +192,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "bytes32",
-                "name": "slot",
-                "type": "bytes32"
-            }
+        {
+            "internalType": "bytes32",
+            "name": "slot",
+            "type": "bytes32"
+        }
         ],
         "name": "UUPSUnsupportedProxiableUUID",
         "type": "error"
@@ -204,18 +204,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "adminAddress",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "bool",
-                "name": "allowed",
-                "type": "bool"
-            }
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "adminAddress",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "allowed",
+            "type": "bool"
+        }
         ],
         "name": "AdminsUpdated",
         "type": "event"
@@ -223,24 +223,24 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "bool",
-                "name": "approved",
-                "type": "bool"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "approved",
+            "type": "bool"
+        }
         ],
         "name": "ApprovalForAll",
         "type": "event"
@@ -248,18 +248,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "paramName",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newValue",
-                "type": "uint256"
-            }
+        {
+            "indexed": false,
+            "internalType": "string",
+            "name": "paramName",
+            "type": "string"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newValue",
+            "type": "uint256"
+        }
         ],
         "name": "ConfigurationUpdated",
         "type": "event"
@@ -267,18 +267,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+        }
         ],
         "name": "Deposit",
         "type": "event"
@@ -286,18 +286,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+        }
         ],
         "name": "EmergencyWithdraw",
         "type": "event"
@@ -305,12 +305,12 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint64",
-                "name": "version",
-                "type": "uint64"
-            }
+        {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "version",
+            "type": "uint64"
+        }
         ],
         "name": "Initialized",
         "type": "event"
@@ -318,24 +318,24 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "claimer",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "claimer",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+        }
         ],
         "name": "LegacyNodeTokensClaimed",
         "type": "event"
@@ -343,12 +343,12 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "newName",
-                "type": "string"
-            }
+        {
+            "indexed": false,
+            "internalType": "string",
+            "name": "newName",
+            "type": "string"
+        }
         ],
         "name": "NameUpdated",
         "type": "event"
@@ -356,18 +356,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "NodeBurned",
         "type": "event"
@@ -375,18 +375,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "NodeMinted",
         "type": "event"
@@ -394,18 +394,37 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "previousOwner",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+        }
+        ],
+        "name": "OwnershipTransferStarted",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+        }
         ],
         "name": "OwnershipTransferred",
         "type": "event"
@@ -413,12 +432,12 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            }
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+        }
         ],
         "name": "Paused",
         "type": "event"
@@ -426,12 +445,37 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newSnapshotterState",
-                "type": "address"
-            }
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        },
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "oldSnapshotter",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "newSnapshotter",
+            "type": "address"
+        }
+        ],
+        "name": "SnapshotterAddressChanged",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newSnapshotterState",
+            "type": "address"
+        }
         ],
         "name": "SnapshotterStateUpdated",
         "type": "event"
@@ -439,24 +483,24 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "claimer",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "claimer",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+        }
         ],
         "name": "SnapshotterTokensClaimed",
         "type": "event"
@@ -464,36 +508,36 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256[]",
-                "name": "ids",
-                "type": "uint256[]"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256[]",
-                "name": "values",
-                "type": "uint256[]"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256[]",
+            "name": "values",
+            "type": "uint256[]"
+        }
         ],
         "name": "TransferBatch",
         "type": "event"
@@ -501,36 +545,36 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "value",
-                "type": "uint256"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+        },
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        },
+        {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+        }
         ],
         "name": "TransferSingle",
         "type": "event"
@@ -538,18 +582,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "value",
-                "type": "string"
-            },
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            }
+        {
+            "indexed": false,
+            "internalType": "string",
+            "name": "value",
+            "type": "string"
+        },
+        {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }
         ],
         "name": "URI",
         "type": "event"
@@ -557,12 +601,12 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "newUri",
-                "type": "string"
-            }
+        {
+            "indexed": false,
+            "internalType": "string",
+            "name": "newUri",
+            "type": "string"
+        }
         ],
         "name": "URIUpdated",
         "type": "event"
@@ -570,12 +614,12 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            }
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+        }
         ],
         "name": "Unpaused",
         "type": "event"
@@ -583,12 +627,12 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "implementation",
-                "type": "address"
-            }
+        {
+            "indexed": true,
+            "internalType": "address",
+            "name": "implementation",
+            "type": "address"
+        }
         ],
         "name": "Upgraded",
         "type": "event"
@@ -596,18 +640,18 @@
     {
         "anonymous": false,
         "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "snapshotterAddress",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "bool",
-                "name": "allowed",
-                "type": "bool"
-            }
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "snapshotterAddress",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "allowed",
+            "type": "bool"
+        }
         ],
         "name": "allSnapshottersUpdated",
         "type": "event"
@@ -616,11 +660,11 @@
         "inputs": [],
         "name": "MAX_SUPPLY",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -629,32 +673,39 @@
         "inputs": [],
         "name": "UPGRADE_INTERFACE_VERSION",
         "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
+        {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "acceptOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "_to",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_amount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bool",
-                "name": "_isKyced",
-                "type": "bool"
-            }
+        {
+            "internalType": "address",
+            "name": "_to",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_amount",
+            "type": "uint256"
+        },
+        {
+            "internalType": "bool",
+            "name": "_isKyced",
+            "type": "bool"
+        }
         ],
         "name": "adminMintLegacyNodes",
         "outputs": [],
@@ -663,35 +714,35 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }
         ],
         "name": "allSnapshotters",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address",
-                "name": "snapshotterAddress",
-                "type": "address"
-            }
+        {
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        },
+        {
+            "internalType": "address",
+            "name": "snapshotterAddress",
+            "type": "address"
+        }
         ],
         "name": "assignSnapshotterToNode",
         "outputs": [],
@@ -700,16 +751,16 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address",
-                "name": "snapshotterAddress",
-                "type": "address"
-            }
+        {
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        },
+        {
+            "internalType": "address",
+            "name": "snapshotterAddress",
+            "type": "address"
+        }
         ],
         "name": "assignSnapshotterToNodeAdmin",
         "outputs": [],
@@ -718,16 +769,16 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "nodeIds",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "address[]",
-                "name": "snapshotterAddresses",
-                "type": "address[]"
-            }
+        {
+            "internalType": "uint256[]",
+            "name": "nodeIds",
+            "type": "uint256[]"
+        },
+        {
+            "internalType": "address[]",
+            "name": "snapshotterAddresses",
+            "type": "address[]"
+        }
         ],
         "name": "assignSnapshotterToNodeBulk",
         "outputs": [],
@@ -736,16 +787,16 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "nodeIds",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "address[]",
-                "name": "snapshotterAddresses",
-                "type": "address[]"
-            }
+        {
+            "internalType": "uint256[]",
+            "name": "nodeIds",
+            "type": "uint256[]"
+        },
+        {
+            "internalType": "address[]",
+            "name": "snapshotterAddresses",
+            "type": "address[]"
+        }
         ],
         "name": "assignSnapshotterToNodeBulkAdmin",
         "outputs": [],
@@ -754,59 +805,59 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            }
+        {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }
         ],
         "name": "balanceOf",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address[]",
-                "name": "accounts",
-                "type": "address[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "ids",
-                "type": "uint256[]"
-            }
+        {
+            "internalType": "address[]",
+            "name": "accounts",
+            "type": "address[]"
+        },
+        {
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+        }
         ],
         "name": "balanceOfBatch",
         "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
+        {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "burnNode",
         "outputs": [],
@@ -815,11 +866,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "claimNodeTokens",
         "outputs": [],
@@ -828,49 +879,49 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "claimableLegacyNodeTokens",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "claimableNodeTokens",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "_claimableNodeTokens",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_claimableNodeTokens",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "completeKyc",
         "outputs": [],
@@ -879,57 +930,50 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeCount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeInitialClaimPercentage",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeCliff",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeValue",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeVestingDays",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeVestingStart",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyTokensSentOnL1",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_legacyNodeNonKycedCooldown",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeCount",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeInitialClaimPercentage",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeCliff",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeValue",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeVestingDays",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeVestingStart",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyTokensSentOnL1",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_legacyNodeNonKycedCooldown",
+            "type": "uint256"
+        }
         ],
         "name": "configureLegacyNodes",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "deposit",
-        "outputs": [],
-        "stateMutability": "payable",
         "type": "function"
     },
     {
@@ -943,30 +987,30 @@
         "inputs": [],
         "name": "enabledNodeCount",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }
         ],
         "name": "exists",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -975,30 +1019,30 @@
         "inputs": [],
         "name": "getAdmins",
         "outputs": [
-            {
-                "internalType": "address[]",
-                "name": "",
-                "type": "address[]"
-            }
+        {
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "_address",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+        }
         ],
         "name": "getAllUserNodeIds",
         "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
+        {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1007,30 +1051,30 @@
         "inputs": [],
         "name": "getLegacyInitialClaim",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "_address",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+        }
         ],
         "name": "getNodesOwned",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1039,70 +1083,70 @@
         "inputs": [],
         "name": "getTotalSnapshotterCount",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "_address",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+        }
         ],
         "name": "getUserBurnedNodeIds",
         "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
+        {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "_address",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+        }
         ],
         "name": "getUserOwnedNodeIds",
         "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
+        {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "initialOwner",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "initialNodePrice",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "initialName",
-                "type": "string"
-            }
+        {
+            "internalType": "address",
+            "name": "initialOwner",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "initialNodePrice",
+            "type": "uint256"
+        },
+        {
+            "internalType": "string",
+            "name": "initialName",
+            "type": "string"
+        }
         ],
         "name": "initialize",
         "outputs": [],
@@ -1111,81 +1155,81 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+        },
+        {
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        }
         ],
         "name": "isApprovedForAll",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "isNodeAvailable",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "name": "isNodeBurned",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "name": "lastSnapshotterChange",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1194,11 +1238,11 @@
         "inputs": [],
         "name": "legacyNodeCliff",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1207,11 +1251,11 @@
         "inputs": [],
         "name": "legacyNodeCount",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1220,11 +1264,11 @@
         "inputs": [],
         "name": "legacyNodeInitialClaimPercentage",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1233,11 +1277,11 @@
         "inputs": [],
         "name": "legacyNodeNonKycedCooldown",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1246,11 +1290,11 @@
         "inputs": [],
         "name": "legacyNodeValue",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1259,11 +1303,11 @@
         "inputs": [],
         "name": "legacyNodeVestingDays",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1272,11 +1316,11 @@
         "inputs": [],
         "name": "legacyNodeVestingStart",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1285,22 +1329,22 @@
         "inputs": [],
         "name": "legacyTokensSentOnL1",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+        }
         ],
         "name": "mintNode",
         "outputs": [],
@@ -1311,11 +1355,11 @@
         "inputs": [],
         "name": "mintStartTime",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1324,11 +1368,11 @@
         "inputs": [],
         "name": "name",
         "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
+        {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1337,133 +1381,133 @@
         "inputs": [],
         "name": "nodeCount",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "name": "nodeIdToOwner",
         "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "name": "nodeIdToVestingInfo",
         "outputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "initialClaim",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokensAfterInitialClaim",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "tokensClaimed",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "lastClaim",
-                "type": "uint256"
-            }
+        {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "initialClaim",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "tokensAfterInitialClaim",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "tokensClaimed",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "lastClaim",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "name": "nodeInfo",
         "outputs": [
-            {
-                "internalType": "address",
-                "name": "snapshotterAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "nodePrice",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amountSentOnL1",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "mintedOn",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "burnedOn",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "lastUpdated",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bool",
-                "name": "isLegacy",
-                "type": "bool"
-            },
-            {
-                "internalType": "bool",
-                "name": "claimedTokens",
-                "type": "bool"
-            },
-            {
-                "internalType": "bool",
-                "name": "active",
-                "type": "bool"
-            },
-            {
-                "internalType": "bool",
-                "name": "isKyced",
-                "type": "bool"
-            }
+        {
+            "internalType": "address",
+            "name": "snapshotterAddress",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "nodePrice",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "amountSentOnL1",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "mintedOn",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "burnedOn",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "lastUpdated",
+            "type": "uint256"
+        },
+        {
+            "internalType": "bool",
+            "name": "isLegacy",
+            "type": "bool"
+        },
+        {
+            "internalType": "bool",
+            "name": "claimedTokens",
+            "type": "bool"
+        },
+        {
+            "internalType": "bool",
+            "name": "active",
+            "type": "bool"
+        },
+        {
+            "internalType": "bool",
+            "name": "isKyced",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1472,30 +1516,30 @@
         "inputs": [],
         "name": "nodePrice",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "nodeId",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "nodeId",
+            "type": "uint256"
+        }
         ],
         "name": "nodeSnapshotterMapping",
         "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1504,11 +1548,11 @@
         "inputs": [],
         "name": "owner",
         "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1524,11 +1568,24 @@
         "inputs": [],
         "name": "paused",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "pendingOwner",
+        "outputs": [
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1537,11 +1594,11 @@
         "inputs": [],
         "name": "proxiableUUID",
         "outputs": [
-            {
-                "internalType": "bytes32",
-                "name": "",
-                "type": "bytes32"
-            }
+        {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1555,31 +1612,31 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            },
-            {
-                "internalType": "bytes",
-                "name": "",
-                "type": "bytes"
-            }
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        },
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        },
+        {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        },
+        {
+            "internalType": "bytes",
+            "name": "",
+            "type": "bytes"
+        }
         ],
         "name": "safeBatchTransferFrom",
         "outputs": [],
@@ -1588,31 +1645,31 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bytes",
-                "name": "",
-                "type": "bytes"
-            }
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        },
+        {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        },
+        {
+            "internalType": "bytes",
+            "name": "",
+            "type": "bytes"
+        }
         ],
         "name": "safeTransferFrom",
         "outputs": [],
@@ -1621,16 +1678,16 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "internalType": "bool",
-                "name": "approved",
-                "type": "bool"
-            }
+        {
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+        },
+        {
+            "internalType": "bool",
+            "name": "approved",
+            "type": "bool"
+        }
         ],
         "name": "setApprovalForAll",
         "outputs": [],
@@ -1639,11 +1696,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_mintStartTime",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_mintStartTime",
+            "type": "uint256"
+        }
         ],
         "name": "setMintStartTime",
         "outputs": [],
@@ -1652,11 +1709,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            }
+        {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+        }
         ],
         "name": "setName",
         "outputs": [],
@@ -1665,11 +1722,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_snapshotterAddressChangeCooldown",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_snapshotterAddressChangeCooldown",
+            "type": "uint256"
+        }
         ],
         "name": "setSnapshotterAddressChangeCooldown",
         "outputs": [],
@@ -1678,11 +1735,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_snapshotterTokenClaimCooldown",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_snapshotterTokenClaimCooldown",
+            "type": "uint256"
+        }
         ],
         "name": "setSnapshotterTokenClaimCooldown",
         "outputs": [],
@@ -1691,11 +1748,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "string",
-                "name": "newuri",
-                "type": "string"
-            }
+        {
+            "internalType": "string",
+            "name": "newuri",
+            "type": "string"
+        }
         ],
         "name": "setURI",
         "outputs": [],
@@ -1706,11 +1763,11 @@
         "inputs": [],
         "name": "snapshotterAddressChangeCooldown",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1719,30 +1776,30 @@
         "inputs": [],
         "name": "snapshotterTokenClaimCooldown",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "bytes4",
-                "name": "interfaceId",
-                "type": "bytes4"
-            }
+        {
+            "internalType": "bytes4",
+            "name": "interfaceId",
+            "type": "bytes4"
+        }
         ],
         "name": "supportsInterface",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1751,41 +1808,41 @@
         "inputs": [],
         "name": "totalSupply",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+        }
         ],
         "name": "totalSupply",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
+        {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+        }
         ],
         "name": "transferOwnership",
         "outputs": [],
@@ -1801,16 +1858,16 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address[]",
-                "name": "_admins",
-                "type": "address[]"
-            },
-            {
-                "internalType": "bool[]",
-                "name": "_status",
-                "type": "bool[]"
-            }
+        {
+            "internalType": "address[]",
+            "name": "_admins",
+            "type": "address[]"
+        },
+        {
+            "internalType": "bool[]",
+            "name": "_status",
+            "type": "bool[]"
+        }
         ],
         "name": "updateAdmins",
         "outputs": [],
@@ -1819,11 +1876,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_maxSupply",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_maxSupply",
+            "type": "uint256"
+        }
         ],
         "name": "updateMaxSupply",
         "outputs": [],
@@ -1832,11 +1889,11 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_nodePrice",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "_nodePrice",
+            "type": "uint256"
+        }
         ],
         "name": "updateNodePrice",
         "outputs": [],
@@ -1845,16 +1902,16 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "address",
-                "name": "newImplementation",
-                "type": "address"
-            },
-            {
-                "internalType": "bytes",
-                "name": "data",
-                "type": "bytes"
-            }
+        {
+            "internalType": "address",
+            "name": "newImplementation",
+            "type": "address"
+        },
+        {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+        }
         ],
         "name": "upgradeToAndCall",
         "outputs": [],
@@ -1863,19 +1920,19 @@
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "name": "uri",
         "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
+        {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -1884,11 +1941,11 @@
         "inputs": [],
         "name": "vestedLegacyNodeTokens",
         "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
         ],
         "stateMutability": "view",
         "type": "function"
