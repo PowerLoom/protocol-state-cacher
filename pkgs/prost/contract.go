@@ -27,8 +27,6 @@ import (
 )
 
 var (
-	allSlots                    []string
-	mu                          sync.Mutex
 	Client                      *ethclient.Client
 	Instance                    *contract.Contract
 	ContractABI                 abi.ABI
@@ -138,49 +136,31 @@ func isValidDataMarketAddress(dataMarketAddress string) bool {
 	return false
 }
 
-// FetchAllSlots fetches all slot information once during startup.
 func FetchAllSlots() error {
-	log.Println("Fetching all slot information at startup...")
+	log.Println("Fetching all slot information...")
 
 	// Fetch total node count
-	nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()})
+	nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{})
 	if err != nil {
 		log.Errorf("Error fetching total node count: %s", err.Error())
 		return fmt.Errorf("failed to fetch total node count: %s", err.Error())
 	}
 
-	// Loop through all data market addresses in the configuration
-	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-		log.Printf("Fetching slots for data market address: %s", dataMarketAddress.Hex())
+	// Process slots in batches
+	for i := int64(0); i <= nodeCount.Int64(); i += 20 {
+		var wg sync.WaitGroup
 
-		// Process slots in batches of 20 for parallelism
-		for i := int64(0); i <= nodeCount.Int64(); i += 20 {
-			var wg sync.WaitGroup
-
-			// Fetch each slot in the current batch
-			for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
-				wg.Add(1)
-
-				go func(slotIndex int64) {
-					defer wg.Done()
-					addSlotInfo(dataMarketAddress.Hex(), slotIndex)
-				}(j)
-			}
-
-			wg.Wait()
-
-			// Add batch of slots to Redis
-			if len(allSlots) > 0 {
-				if err := redis.AddToSet(context.Background(), redis.AllSlotInfo(), allSlots...); err != nil {
-					errMsg := fmt.Sprintf("Error adding slots to Redis set for data market %s: %v", dataMarketAddress.Hex(), err)
-					reporting.SendFailureNotification(pkgs.FetchAllSlots, errMsg, time.Now().String(), "High")
-					log.Error(errMsg)
-				}
-			}
+		// Fetch each slot in the current batch
+		for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
+			wg.Add(1)
+			go func(slotIndex int64) {
+				defer wg.Done()
+				addSlotInfo(slotIndex)
+			}(j)
 		}
+		wg.Wait()
 	}
 
-	log.Println("✅ Completed fetching all slot information at startup.")
 	return nil
 }
 
@@ -295,13 +275,6 @@ func PersistState(ctx context.Context, key, value string) {
 	// Set the state variable in Redis
 	if err := redis.Set(ctx, key, value, 0); err != nil {
 		errMsg := fmt.Sprintf("Error setting state variable %s in Redis: %s", key, err.Error())
-		reporting.SendFailureNotification(pkgs.PersistState, errMsg, time.Now().String(), "High")
-		log.Error(errMsg)
-	}
-
-	// Persist the state variable in Redis
-	if err := redis.PersistKey(ctx, key); err != nil {
-		errMsg := fmt.Sprintf("Error persisting state variable %s in Redis: %s", key, err.Error())
 		reporting.SendFailureNotification(pkgs.PersistState, errMsg, time.Now().String(), "High")
 		log.Error(errMsg)
 	}
