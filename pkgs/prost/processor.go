@@ -245,7 +245,7 @@ func (sm *SlotManager) AddSlot(slotID int64, slotData string) bool {
 // flushSlots persists all current slots to Redis and clears the internal storage
 // Note: This method assumes the caller holds the lock
 func (sm *SlotManager) flushSlots() {
-	slots := make([]any, len(sm.slots))
+	slots := make([]any, 0, len(sm.slots))
 	for slotID, slotData := range sm.slots {
 		slotKey := redis.SlotInfo(strconv.FormatInt(slotID, 10))
 		PersistState(context.Background(), slotKey, slotData)
@@ -253,7 +253,7 @@ func (sm *SlotManager) flushSlots() {
 	}
 	allSlotsKey := redis.AllSlotInfo()
 	redis.RedisClient.SAdd(context.Background(), allSlotsKey, slots...)
-	log.Printf("Flushed batch of %d slots to Redis. Range: %s - %s", len(sm.slots), slots[0], slots[len(slots)-1])
+	log.Printf("Flushed batch of %d slots to Redis. Range: %v - %v", len(sm.slots), slots[0], slots[len(slots)-1])
 	sm.slots = make(map[int64]string)
 }
 
