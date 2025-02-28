@@ -253,7 +253,7 @@ func (sm *SlotManager) flushSlots() {
 	}
 	allSlotsKey := redis.AllSlotInfo()
 	redis.RedisClient.SAdd(context.Background(), allSlotsKey, slots...)
-	log.Printf("Flushed batch of %d slots to Redis. Range: %d - %d", len(sm.slots), slots[0], slots[len(slots)-1])
+	log.Printf("Flushed batch of %d slots to Redis. Range: %s - %s", len(sm.slots), slots[0], slots[len(slots)-1])
 	sm.slots = make(map[int64]string)
 }
 
