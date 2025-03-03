@@ -14,6 +14,8 @@ import (
 	"sync"
 	"time"
 
+	"strconv"
+
 	"github.com/cenkalti/backoff"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -267,6 +269,7 @@ func (sm *SlotManager) ForceFlush() {
 	}
 }
 
+// Cleanup ensures all pending slots are flushed before program termination
 func Cleanup() {
 	slotManager.ForceFlush()
 }

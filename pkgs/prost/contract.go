@@ -171,6 +171,7 @@ func SyncAllSlots() {
 	// Fetch all slots once at startup
 	FetchAllSlots()
 
+	// TODO: Do we need to continually fetch all slots if we are using events to track slot minting?
 	for range ticker.C {
 		FetchAllSlots()
 	}
