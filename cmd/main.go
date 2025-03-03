@@ -24,21 +24,34 @@ func main() {
 	// Set static state variables once
 	prost.StaticStateVariables()
 
+	// Create EventProcessor instance with a reasonable worker limit
+	ep := prost.NewEventProcessor(10) // Adjust worker limit based on your needs
+
 	var wg sync.WaitGroup
-
-	// Start dynamic state sync
-	wg.Add(1)
-	go prost.DynamicStateSync() // Start dynamic state sync
-
-	// Start static state sync if enabled
+	routineCount := 3 // Base count for guaranteed routines
 	if config.SettingsObj.PollingStaticStateVariables {
-		wg.Add(1)
-		go prost.StaticStateSync() // Start static state sync
+		routineCount++
 	}
+	wg.Add(routineCount)
 
-	// Start syncing all slots
-	wg.Add(1)
-	go prost.SyncAllSlots() // Start syncing all slots
+	go func() {
+		ep.MonitorEvents() // Use the EventProcessor instance
+		wg.Done()
+	}()
+	go func() {
+		prost.DynamicStateSync()
+		wg.Done()
+	}()
+	if config.SettingsObj.PollingStaticStateVariables {
+		go func() {
+			prost.StaticStateSync()
+			wg.Done()
+		}()
+	}
+	go func() {
+		prost.SyncAllSlots()
+		wg.Done()
+	}()
 
 	wg.Wait()
 }
