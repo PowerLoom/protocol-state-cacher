@@ -143,39 +143,36 @@ func FetchAllSlots() error {
 	log.Println("Fetching all slot information at startup...")
 
 	// Fetch total node count
-	nodeCount, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()})
+	nodeCount, err := SnapshotterStateInstance.NodeCount(&bind.CallOpts{Context: context.Background()})
 	if err != nil {
 		log.Errorf("Error fetching total node count: %s", err.Error())
 		return fmt.Errorf("failed to fetch total node count: %s", err.Error())
 	}
 
-	// Loop through all data market addresses in the configuration
-	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-		log.Printf("Fetching slots for data market address: %s", dataMarketAddress.Hex())
+	log.Printf("Fetching slots for data market address: %s", SnapshotterStateAddress.Hex())
 
-		// Process slots in batches of 20 for parallelism
-		for i := int64(0); i <= nodeCount.Int64(); i += 20 {
-			var wg sync.WaitGroup
+	// Process slots in batches of 20 for parallelism
+	for i := int64(0); i <= nodeCount.Int64(); i += 20 {
+		var wg sync.WaitGroup
 
-			// Fetch each slot in the current batch
-			for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
-				wg.Add(1)
+		// Fetch each slot in the current batch
+		for j := i; j < i+20 && j <= nodeCount.Int64(); j++ {
+			wg.Add(1)
 
-				go func(slotIndex int64) {
-					defer wg.Done()
-					addSlotInfo(dataMarketAddress.Hex(), slotIndex)
-				}(j)
-			}
+			go func(slotIndex int64) {
+				defer wg.Done()
+				addSlotInfo(slotIndex)
+			}(j)
+		}
 
-			wg.Wait()
+		wg.Wait()
 
-			// Add batch of slots to Redis
-			if len(allSlots) > 0 {
-				if err := redis.AddToSet(context.Background(), redis.AllSlotInfo(), allSlots...); err != nil {
-					errMsg := fmt.Sprintf("Error adding slots to Redis set for data market %s: %v", dataMarketAddress.Hex(), err)
-					reporting.SendFailureNotification(pkgs.FetchAllSlots, errMsg, time.Now().String(), "High")
-					log.Error(errMsg)
-				}
+		// Add batch of slots to Redis
+		if len(allSlots) > 0 {
+			if err := redis.AddToSet(context.Background(), redis.AllSlotInfo(), allSlots...); err != nil {
+				errMsg := fmt.Sprintf("Error adding slots to Redis set for snapshotter state contract %s: %v", SnapshotterStateAddress.Hex(), err)
+				reporting.SendFailureNotification(pkgs.FetchAllSlots, errMsg, time.Now().String(), "High")
+				log.Error(errMsg)
 			}
 		}
 	}
@@ -191,13 +188,14 @@ func SyncAllSlots() {
 	// Fetch all slots once at startup
 	FetchAllSlots()
 
+	// TODO: Do we need to continually fetch all slots if we are using events to track slot minting?
 	for range ticker.C {
 		FetchAllSlots()
 	}
 }
 
 func DynamicStateSync() {
-	ticker := time.NewTicker(time.Duration(config.SettingsObj.StatePollingInterval * float64(time.Second)))
+	ticker := time.NewTicker(time.Duration(config.SettingsObj.BlockInterval * float64(time.Second)))
 	defer ticker.Stop()
 
 	for range ticker.C {
@@ -245,13 +243,13 @@ func StaticStateVariables() {
 func DynamicStateVariables() {
 	// get current epoch
 	// NOTE: This will be removed in the next merge to main since we are using event logs to track EpochReleased event and setting current epoch in redis
-	// for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
-	// 	if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
-	// 		currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
-	// 		PersistState(context.Background(), currentEpochKey, output.EpochId.String())
-	// 		log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
-	// 	}
-	// }
+	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
+		if output, err := Instance.CurrentEpoch(&bind.CallOpts{}, dataMarketAddress); output.EpochId != nil && err == nil {
+			currentEpochKey := redis.CurrentEpochID(strings.ToLower(dataMarketAddress.Hex()))
+			PersistState(context.Background(), currentEpochKey, output.EpochId.String())
+			log.Infof("Current epoch set for data market %s to %s", strings.ToLower(dataMarketAddress.Hex()), output.EpochId.String())
+		}
+	}
 
 	// Set total nodes count
 	if output, err := Instance.GetTotalNodeCount(&bind.CallOpts{Context: context.Background()}); output != nil && err == nil {

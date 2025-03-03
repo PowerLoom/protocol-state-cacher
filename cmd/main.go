@@ -26,12 +26,19 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	wg.Add(4)
-	go prost.MonitorEvents()    // Start monitoring events for updates
+	// Start dynamic state sync
+	wg.Add(1)
 	go prost.DynamicStateSync() // Start dynamic state sync
+
+	// Start static state sync if enabled
 	if config.SettingsObj.PollingStaticStateVariables {
+		wg.Add(1)
 		go prost.StaticStateSync() // Start static state sync
 	}
+
+	// Start syncing all slots
+	wg.Add(1)
 	go prost.SyncAllSlots() // Start syncing all slots
+
 	wg.Wait()
 }
