@@ -182,7 +182,7 @@ func ProcessProtocolStateEvents(block *types.Block) {
 }
 
 // Create a package-level SlotManager instance with a reasonable batch size
-var slotManager = NewSlotManager(100)
+var slotManager = NewSlotManager(config.SettingsObj.RedisFlushBatchSize)
 
 func addSlotInfo(slotID int64) {
 	// Fetch the slot info from the contract
