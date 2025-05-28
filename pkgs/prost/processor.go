@@ -182,9 +182,14 @@ func ProcessProtocolStateEvents(block *types.Block) {
 }
 
 // Create a package-level SlotManager instance with a reasonable batch size
-var slotManager = NewSlotManager(config.SettingsObj.RedisFlushBatchSize)
+var slotManager *SlotManager
 
 func addSlotInfo(slotID int64) {
+	// Initialize slotManager if not already done
+	if slotManager == nil {
+		slotManager = NewSlotManager(config.SettingsObj.RedisFlushBatchSize)
+	}
+
 	// Fetch the slot info from the contract
 	slot, err := SnapshotterStateInstance.NodeInfo(&bind.CallOpts{}, big.NewInt(slotID))
 	if err != nil {
@@ -280,5 +285,7 @@ func (sm *SlotManager) ForceFlush() {
 
 // Cleanup ensures all pending slots are flushed before program termination
 func Cleanup() {
-	slotManager.ForceFlush()
+	if slotManager != nil {
+		slotManager.ForceFlush()
+	}
 }
