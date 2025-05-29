@@ -25,6 +25,7 @@ type Settings struct {
 	StatePollingInterval        float64
 	SlotSyncInterval            int
 	PollingStaticStateVariables bool
+	RedisFlushBatchSize         int
 }
 
 func LoadConfig() {
@@ -59,6 +60,11 @@ func LoadConfig() {
 		log.Fatalf("Invalid SLOT_SYNC_INTERVAL value: %v", err)
 	}
 
+	redisFlushBatchSize, err := strconv.Atoi(getEnv("REDIS_FLUSH_BATCH_SIZE", "100"))
+	if err != nil {
+		log.Fatalf("Invalid REDIS_FLUSH_BATCH_SIZE value: %v", err)
+	}
+
 	config := Settings{
 		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
 		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
@@ -70,6 +76,7 @@ func LoadConfig() {
 		StatePollingInterval:        statePollingInterval,
 		PollingStaticStateVariables: pollingStaticStateVariables,
 		SlotSyncInterval:            slotSyncInterval,
+		RedisFlushBatchSize:         redisFlushBatchSize,
 	}
 
 	redisDB, redisDBParseErr := strconv.Atoi(getEnv("REDIS_DB", ""))
