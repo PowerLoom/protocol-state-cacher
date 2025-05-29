@@ -58,7 +58,7 @@ func (ep *EventProcessor) MonitorEvents() {
 		}
 
 		if lastProcessedBlock == 0 {
-			lastProcessedBlock = targetBlockNumber
+			lastProcessedBlock = targetBlockNumber - 1
 		}
 
 		// Process new blocks and backtrack for error correction
