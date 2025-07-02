@@ -29,7 +29,8 @@ import (
 
 var (
 	RPCHelper                   *rpchelper.RPCHelper
-	Client                      *ethclient.Client // Deprecated: kept for backward compatibility with contract instances
+	ContractBackend             *rpchelper.ContractBackend
+	Client                      *ethclient.Client // Deprecated: kept for backward compatibility
 	Instance                    *contract.Contract
 	ContractABI                 abi.ABI
 	SnapshotterStateContractABI abi.ABI
@@ -73,13 +74,17 @@ func ConfigureClient() {
 	}
 
 	Client = ethclient.NewClient(rpcClient)
+
+	// Create the ContractBackend that will use the RPC helper for all contract calls
+	ContractBackend = RPCHelper.NewContractBackend()
+
 	log.Info("RPC helper initialized successfully with failover support")
 }
 
 func ConfigureContractInstance() {
 	// Initialize single contract instance using the protocol state contract address
 	protocolStateAddress := common.HexToAddress(config.SettingsObj.ContractAddress)
-	instance, err := contract.NewContract(protocolStateAddress, Client)
+	instance, err := contract.NewContract(protocolStateAddress, ContractBackend)
 	if err != nil {
 		log.Fatalf("Failed to create protocol state contract instance: %v", err)
 	}
@@ -96,7 +101,7 @@ func ConfigureSnapshotterStateContractInstance() {
 	SnapshotterStateAddress = snapshotterStateAddress
 
 	// Initialize snapshotter state contract instance
-	snapshotterStateInstance, err := snapshotterStateContract.NewSnapshotterStateContract(snapshotterStateAddress, Client)
+	snapshotterStateInstance, err := snapshotterStateContract.NewSnapshotterStateContract(snapshotterStateAddress, ContractBackend)
 	if err != nil {
 		log.Fatalf("Failed to create snapshotter state contract instance: %v", err)
 	}
