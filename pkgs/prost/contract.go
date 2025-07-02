@@ -23,11 +23,13 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
+	rpchelper "github.com/powerloom/rpc-helper"
 	log "github.com/sirupsen/logrus"
 )
 
 var (
-	Client                      *ethclient.Client
+	RPCHelper                   *rpchelper.RPCHelper
+	Client                      *ethclient.Client // Deprecated: kept for backward compatibility with contract instances
 	Instance                    *contract.Contract
 	ContractABI                 abi.ABI
 	SnapshotterStateContractABI abi.ABI
@@ -49,14 +51,29 @@ func Initialize() {
 }
 
 func ConfigureClient() {
-	// Initialize RPC client
+	// Initialize RPC helper with configuration from settings
+	rpcConfig := config.SettingsObj.ToRPCConfig()
+	RPCHelper = rpchelper.NewRPCHelper(rpcConfig)
+
+	// Initialize the RPC helper
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	if err := RPCHelper.Initialize(ctx); err != nil {
+		log.Errorf("Failed to initialize RPC helper: %s", err)
+		log.Fatal(err)
+	}
+
+	// Keep the legacy Client for contract instances that expect ethclient.Client
+	// This uses the first available healthy node from the RPC helper
 	rpcClient, err := rpc.DialOptions(context.Background(), config.SettingsObj.ClientUrl, rpc.WithHTTPClient(&http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}))
 	if err != nil {
-		log.Errorf("Failed to connect to client: %s", err)
+		log.Errorf("Failed to connect to legacy client: %s", err)
 		log.Fatal(err)
 	}
 
 	Client = ethclient.NewClient(rpcClient)
+	log.Info("RPC helper initialized successfully with failover support")
 }
 
 func ConfigureContractInstance() {
