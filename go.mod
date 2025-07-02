@@ -43,5 +43,3 @@ require (
 )
 
 replace github.com/ethereum/go-ethereum v1.14.7 => github.com/PowerLoom/go-ethereum v1.14.7-unsupported-tx-final
-
-replace github.com/powerloom/rpc-helper => ./rpc-helper
