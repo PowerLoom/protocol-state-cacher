@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"os"
 	"strconv"
+	"time"
+
+	rpchelper "github.com/powerloom/rpc-helper"
 
 	"github.com/ethereum/go-ethereum/common"
 	log "github.com/sirupsen/logrus"
@@ -26,6 +29,12 @@ type Settings struct {
 	SlotSyncInterval            int
 	PollingStaticStateVariables bool
 	RedisFlushBatchSize         int
+	RPCNodes                    []string `json:"rpc_nodes"`
+	ArchiveNodes                []string `json:"archive_nodes"`
+	MaxRetries                  int      `json:"max_retries"`
+	RetryDelayMs                int      `json:"retry_delay_ms"`
+	MaxRetryDelayS              int      `json:"max_retry_delay_s"`
+	RequestTimeoutS             int      `json:"request_timeout_s"`
 }
 
 func LoadConfig() {
@@ -65,6 +74,20 @@ func LoadConfig() {
 		log.Fatalf("Invalid REDIS_FLUSH_BATCH_SIZE value: %v", err)
 	}
 
+	// Parse RPC nodes from environment
+	rpcNodesStr := getEnv("RPC_NODES", "[]")
+	var rpcNodes []string
+	if err := json.Unmarshal([]byte(rpcNodesStr), &rpcNodes); err != nil {
+		log.Fatalf("Failed to parse RPC_NODES environment variable: %v", err)
+	}
+
+	// Parse archive nodes from environment
+	archiveNodesStr := getEnv("ARCHIVE_NODES", "[]")
+	var archiveNodes []string
+	if err := json.Unmarshal([]byte(archiveNodesStr), &archiveNodes); err != nil {
+		log.Fatalf("Failed to parse ARCHIVE_NODES environment variable: %v", err)
+	}
+
 	config := Settings{
 		ClientUrl:                   getEnv("PROST_RPC_URL", ""),
 		ContractAddress:             getEnv("PROTOCOL_STATE_CONTRACT", ""),
@@ -77,6 +100,12 @@ func LoadConfig() {
 		PollingStaticStateVariables: pollingStaticStateVariables,
 		SlotSyncInterval:            slotSyncInterval,
 		RedisFlushBatchSize:         redisFlushBatchSize,
+		RPCNodes:                    rpcNodes,
+		ArchiveNodes:                archiveNodes,
+		MaxRetries:                  getEnvInt("MAX_RETRIES", 3),
+		RetryDelayMs:                getEnvInt("RETRY_DELAY_MS", 500),
+		MaxRetryDelayS:              getEnvInt("MAX_RETRY_DELAY_S", 30),
+		RequestTimeoutS:             getEnvInt("REQUEST_TIMEOUT_S", 30),
 	}
 
 	redisDB, redisDBParseErr := strconv.Atoi(getEnv("REDIS_DB", ""))
@@ -106,4 +135,39 @@ func getEnv(key, defaultValue string) string {
 		return defaultValue
 	}
 	return value
+}
+
+func getEnvInt(key string, defaultValue int) int {
+	value := getEnv(key, "")
+	if value == "" {
+		return defaultValue
+	}
+	intValue, err := strconv.Atoi(value)
+	if err != nil {
+		log.Fatalf("Failed to parse %s environment variable: %v", key, err)
+	}
+	return intValue
+}
+
+func (s *Settings) ToRPCConfig() *rpchelper.RPCConfig {
+	return &rpchelper.RPCConfig{
+		Nodes: func() []rpchelper.NodeConfig {
+			var nodes []rpchelper.NodeConfig
+			for _, url := range s.RPCNodes {
+				nodes = append(nodes, rpchelper.NodeConfig{URL: url})
+			}
+			return nodes
+		}(),
+		ArchiveNodes: func() []rpchelper.NodeConfig {
+			var nodes []rpchelper.NodeConfig
+			for _, url := range s.ArchiveNodes {
+				nodes = append(nodes, rpchelper.NodeConfig{URL: url})
+			}
+			return nodes
+		}(),
+		MaxRetries:     s.MaxRetries,
+		RetryDelay:     time.Duration(s.RetryDelayMs) * time.Millisecond,
+		MaxRetryDelay:  time.Duration(s.MaxRetryDelayS) * time.Second,
+		RequestTimeout: time.Duration(s.RequestTimeoutS) * time.Second,
+	}
 }
