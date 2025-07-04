@@ -7,6 +7,7 @@ import (
 	"time"
 
 	rpchelper "github.com/powerloom/rpc-helper"
+	"github.com/powerloom/rpc-helper/reporting"
 
 	"github.com/ethereum/go-ethereum/common"
 	log "github.com/sirupsen/logrus"
@@ -150,7 +151,7 @@ func getEnvInt(key string, defaultValue int) int {
 }
 
 func (s *Settings) ToRPCConfig() *rpchelper.RPCConfig {
-	return &rpchelper.RPCConfig{
+	config := &rpchelper.RPCConfig{
 		Nodes: func() []rpchelper.NodeConfig {
 			var nodes []rpchelper.NodeConfig
 			for _, url := range s.RPCNodes {
@@ -170,4 +171,18 @@ func (s *Settings) ToRPCConfig() *rpchelper.RPCConfig {
 		MaxRetryDelay:  time.Duration(s.MaxRetryDelayS) * time.Second,
 		RequestTimeout: time.Duration(s.RequestTimeoutS) * time.Second,
 	}
+
+	// Configure webhook if SlackReportingUrl is provided
+	if s.SlackReportingUrl != "" {
+		log.Infof("Configuring webhook alerts with URL: %s", s.SlackReportingUrl)
+		config.WebhookConfig = &reporting.WebhookConfig{
+			URL:     s.SlackReportingUrl,
+			Timeout: 30 * time.Second,
+			Retries: 3,
+		}
+	} else {
+		log.Warnf("No webhook URL configured - SLACK_REPORTING_URL environment variable not set")
+	}
+
+	return config
 }
