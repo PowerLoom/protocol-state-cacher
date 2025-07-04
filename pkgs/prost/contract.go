@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"math/big"
 	"net/http"
 	"protocol-state-cacher/config"
 	"protocol-state-cacher/pkgs"
@@ -285,9 +284,7 @@ func DynamicStateVariables() {
 	// Set daily snapshot quota table
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
 		// Fetch the daily snapshot quota for the specified data market address from contract
-		if output, err := MustQuery(context.Background(), func(opts *bind.CallOpts) (*big.Int, error) {
-			return Instance.DailySnapshotQuota(opts, dataMarketAddress)
-		}); err == nil {
+		if output, err := Instance.DailySnapshotQuota(&bind.CallOpts{}, dataMarketAddress); err == nil {
 			// Convert the daily snapshot quota to a string for storage in Redis
 			dailySnapshotQuota := output.String()
 
