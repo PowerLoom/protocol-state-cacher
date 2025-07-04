@@ -62,6 +62,13 @@ func ConfigureClient() {
 
 	if err := RPCHelper.Initialize(ctx); err != nil {
 		log.Errorf("Failed to initialize RPC helper: %s", err)
+
+		// Give the alert processor time to send webhooks before terminating
+		if rpcConfig.WebhookConfig != nil {
+			log.Info("Waiting for alert notifications to be sent...")
+			time.Sleep(5 * time.Second)
+		}
+
 		log.Fatal(err)
 	}
 
