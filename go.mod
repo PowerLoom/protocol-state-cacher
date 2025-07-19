@@ -2,13 +2,11 @@ module protocol-state-cacher
 
 go 1.23.0
 
-toolchain go1.23.4
-
 require (
 	github.com/cenkalti/backoff/v4 v4.3.0
-	github.com/ethereum/go-ethereum v1.14.13
+	github.com/ethereum/go-ethereum v1.14.7
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/powerloom/go-rpc-helper v1.0.3
+	github.com/powerloom/go-rpc-helper v1.0.4
 	github.com/sirupsen/logrus v1.9.3
 )
 
