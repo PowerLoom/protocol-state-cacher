@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"math/big"
 	"net/http"
 	"protocol-state-cacher/config"
 	"protocol-state-cacher/pkgs"
@@ -23,11 +22,14 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
+	rpchelper "github.com/powerloom/go-rpc-helper"
 	log "github.com/sirupsen/logrus"
 )
 
 var (
-	Client                      *ethclient.Client
+	RPCHelper                   *rpchelper.RPCHelper
+	ContractBackend             *rpchelper.ContractBackend
+	Client                      *ethclient.Client // Deprecated: kept for backward compatibility
 	Instance                    *contract.Contract
 	ContractABI                 abi.ABI
 	SnapshotterStateContractABI abi.ABI
@@ -49,20 +51,46 @@ func Initialize() {
 }
 
 func ConfigureClient() {
-	// Initialize RPC client
+	// Initialize RPC helper with configuration from settings
+	rpcConfig := config.SettingsObj.ToRPCConfig()
+	RPCHelper = rpchelper.NewRPCHelper(rpcConfig)
+
+	// Initialize the RPC helper
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	if err := RPCHelper.Initialize(ctx); err != nil {
+		log.Errorf("Failed to initialize RPC helper: %s", err)
+
+		// Give the alert processor time to send webhooks before terminating
+		if rpcConfig.WebhookConfig != nil {
+			log.Info("Waiting for alert notifications to be sent...")
+			time.Sleep(5 * time.Second)
+		}
+
+		log.Fatal(err)
+	}
+
+	// Keep the legacy Client for contract instances that expect ethclient.Client
+	// This uses the first available healthy node from the RPC helper
 	rpcClient, err := rpc.DialOptions(context.Background(), config.SettingsObj.ClientUrl, rpc.WithHTTPClient(&http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}))
 	if err != nil {
-		log.Errorf("Failed to connect to client: %s", err)
+		log.Errorf("Failed to connect to legacy client: %s", err)
 		log.Fatal(err)
 	}
 
 	Client = ethclient.NewClient(rpcClient)
+
+	// Create the ContractBackend that will use the RPC helper for all contract calls
+	ContractBackend = RPCHelper.NewContractBackend()
+
+	log.Info("RPC helper initialized successfully with failover support")
 }
 
 func ConfigureContractInstance() {
 	// Initialize single contract instance using the protocol state contract address
 	protocolStateAddress := common.HexToAddress(config.SettingsObj.ContractAddress)
-	instance, err := contract.NewContract(protocolStateAddress, Client)
+	instance, err := contract.NewContract(protocolStateAddress, ContractBackend)
 	if err != nil {
 		log.Fatalf("Failed to create protocol state contract instance: %v", err)
 	}
@@ -79,7 +107,7 @@ func ConfigureSnapshotterStateContractInstance() {
 	SnapshotterStateAddress = snapshotterStateAddress
 
 	// Initialize snapshotter state contract instance
-	snapshotterStateInstance, err := snapshotterStateContract.NewSnapshotterStateContract(snapshotterStateAddress, Client)
+	snapshotterStateInstance, err := snapshotterStateContract.NewSnapshotterStateContract(snapshotterStateAddress, ContractBackend)
 	if err != nil {
 		log.Fatalf("Failed to create snapshotter state contract instance: %v", err)
 	}
@@ -256,9 +284,7 @@ func DynamicStateVariables() {
 	// Set daily snapshot quota table
 	for _, dataMarketAddress := range config.SettingsObj.DataMarketContractAddresses {
 		// Fetch the daily snapshot quota for the specified data market address from contract
-		if output, err := MustQuery(context.Background(), func(opts *bind.CallOpts) (*big.Int, error) {
-			return Instance.DailySnapshotQuota(opts, dataMarketAddress)
-		}); err == nil {
+		if output, err := Instance.DailySnapshotQuota(&bind.CallOpts{}, dataMarketAddress); err == nil {
 			// Convert the daily snapshot quota to a string for storage in Redis
 			dailySnapshotQuota := output.String()
 
