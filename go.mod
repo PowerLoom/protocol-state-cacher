@@ -10,7 +10,10 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 )
 
-require github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
+require (
+	github.com/crate-crypto/go-ipa v0.0.0-20240223125850-b1e8a79f509c // indirect
+	github.com/ethereum/go-verkle v0.1.1-0.20240829091221-dffa7562dbe9 // indirect
+)
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
@@ -41,3 +44,5 @@ require (
 	golang.org/x/sys v0.30.0 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
+
+replace github.com/ethereum/go-ethereum v1.14.7 => github.com/powerloom/go-ethereum v1.14.7-unsupported-tx-final
