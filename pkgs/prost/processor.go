@@ -104,7 +104,7 @@ func fetchBlock(blockNum *big.Int) (*types.Block, error) {
 	var block *types.Block
 	operation := func() error {
 		var err error
-		block, err = Client.BlockByNumber(context.Background(), blockNum) // Pass blockNum (nil for the latest block)
+		block, err = RPCHelper.BlockByNumber(context.Background(), blockNum) // Pass blockNum (nil for the latest block)
 		if err != nil {
 			log.Errorf("Failed to fetch block %v: %v", blockNum, err)
 			return err // Return the error to trigger a retry
@@ -138,7 +138,7 @@ func ProcessProtocolStateEvents(block *types.Block) {
 	}
 
 	operation := func() error {
-		logs, err = Client.FilterLogs(context.Background(), filterQuery)
+		logs, err = RPCHelper.FilterLogs(context.Background(), filterQuery)
 		return err
 	}
 
