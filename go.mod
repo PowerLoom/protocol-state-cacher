@@ -6,7 +6,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/ethereum/go-ethereum v1.16.1
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/powerloom/go-rpc-helper v1.0.5-0.20250731174712-575c7f4bc102
+	github.com/powerloom/go-rpc-helper v1.0.5-0.20250731182038-925d3a9856fd
 	github.com/sirupsen/logrus v1.9.3
 )
 
