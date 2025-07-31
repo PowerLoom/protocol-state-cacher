@@ -6,9 +6,11 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/ethereum/go-ethereum v1.14.7
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/powerloom/go-rpc-helper v1.0.5-0.20250726065922-28883c22bd97
+	github.com/powerloom/go-rpc-helper v1.0.5-0.20250731185155-347cef719bc4
 	github.com/sirupsen/logrus v1.9.3
 )
+
+require github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
@@ -18,13 +20,11 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
 	github.com/consensys/gnark-crypto v0.12.1 // indirect
-	github.com/crate-crypto/go-ipa v0.0.0-20240223125850-b1e8a79f509c // indirect
 	github.com/crate-crypto/go-kzg-4844 v1.0.0 // indirect
 	github.com/deckarep/golang-set/v2 v2.6.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/ethereum/c-kzg-4844 v1.0.0 // indirect
-	github.com/ethereum/go-verkle v0.1.1-0.20240829091221-dffa7562dbe9 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
@@ -41,5 +41,3 @@ require (
 	golang.org/x/sys v0.30.0 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
-
-replace github.com/ethereum/go-ethereum v1.14.7 => github.com/PowerLoom/go-ethereum v1.14.7-unsupported-tx-final
