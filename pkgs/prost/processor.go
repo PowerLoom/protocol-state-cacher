@@ -37,7 +37,7 @@ func NewEventProcessor(maxWorkers int) *EventProcessor {
 
 // MonitorEvents continuously monitors blockchain events for updates
 func (ep *EventProcessor) MonitorEvents() {
-	log.Println("Monitoring blockchain events for updates...")
+	log.Info("Monitoring blockchain events for updates...")
 
 	ticker := time.NewTicker(time.Duration(float64(time.Second) * config.SettingsObj.BlockInterval))
 	defer ticker.Stop()
@@ -58,19 +58,30 @@ func (ep *EventProcessor) MonitorEvents() {
 		}
 
 		if lastProcessedBlock == 0 {
-			lastProcessedBlock = targetBlockNumber
+			lastProcessedBlock = targetBlockNumber - 1
 		}
 
 		// Process new blocks and backtrack for error correction
 		for blockNum := lastProcessedBlock + 1; blockNum <= targetBlockNumber; blockNum++ {
-			block, err := fetchBlock(big.NewInt(blockNum))
-			if err != nil {
-				log.Printf("Error fetching block %d: %v", blockNum, err)
+			var currentBlock *types.Block
+			var fetchBlockErr error
+
+			// Check if the current block to process is the 'latestBlock' we already fetched.
+			// This occurs if BlockOffset is 0, making targetBlockNumber == latestBlock.Number().Int64().
+			if blockNum == latestBlock.Number().Int64() {
+				log.Debugf("Reusing pre-fetched latest block %d for processing.", blockNum)
+				currentBlock = latestBlock
+			} else {
+				currentBlock, fetchBlockErr = fetchBlock(big.NewInt(blockNum))
+			}
+
+			if fetchBlockErr != nil {
+				log.Errorf("Error fetching block %d: %v", blockNum, fetchBlockErr)
 				continue
 			}
 
-			if block == nil {
-				log.Errorf("Received nil block for number: %d", blockNum)
+			if currentBlock == nil {
+				log.Errorf("Fetched or reused block for number %d is nil. Skipping.", blockNum)
 				continue
 			}
 
@@ -81,7 +92,7 @@ func (ep *EventProcessor) MonitorEvents() {
 				defer ep.wg.Done()
 				defer func() { <-ep.workerLimit }()
 				ProcessProtocolStateEvents(b)
-			}(block) // Pass block as parameter to closure
+			}(currentBlock)
 
 			lastProcessedBlock = blockNum
 		}
@@ -93,7 +104,7 @@ func fetchBlock(blockNum *big.Int) (*types.Block, error) {
 	var block *types.Block
 	operation := func() error {
 		var err error
-		block, err = Client.BlockByNumber(context.Background(), blockNum) // Pass blockNum (nil for the latest block)
+		block, err = RPCHelper.BlockByNumber(context.Background(), blockNum) // Pass blockNum (nil for the latest block)
 		if err != nil {
 			log.Errorf("Failed to fetch block %v: %v", blockNum, err)
 			return err // Return the error to trigger a retry
@@ -127,7 +138,7 @@ func ProcessProtocolStateEvents(block *types.Block) {
 	}
 
 	operation := func() error {
-		logs, err = Client.FilterLogs(context.Background(), filterQuery)
+		logs, err = RPCHelper.FilterLogs(context.Background(), filterQuery)
 		return err
 	}
 
@@ -171,13 +182,18 @@ func ProcessProtocolStateEvents(block *types.Block) {
 }
 
 // Create a package-level SlotManager instance with a reasonable batch size
-var slotManager = NewSlotManager(100)
+var slotManager *SlotManager
 
 func addSlotInfo(slotID int64) {
+	// Initialize slotManager if not already done
+	if slotManager == nil {
+		slotManager = NewSlotManager(config.SettingsObj.RedisFlushBatchSize)
+	}
+
 	// Fetch the slot info from the contract
 	slot, err := SnapshotterStateInstance.NodeInfo(&bind.CallOpts{}, big.NewInt(slotID))
 	if err != nil {
-		log.Printf("Error fetching slot %d: %v", slotID, err)
+		log.Errorf("Error fetching slot %d: %v", slotID, err)
 		return
 	}
 
@@ -194,23 +210,23 @@ func addSlotInfo(slotID int64) {
 		Active             bool
 		IsKyced            bool
 	}{}) {
-		log.Printf("No data for slot %d", slotID)
+		log.Warnf("No data for slot %d", slotID)
 		return
 	}
 
 	// Marshal the slot info to JSON
 	slotMarshalled, err := json.Marshal(slot)
 	if err != nil {
-		log.Printf("Error marshalling returned information for slot %d: %v", slotID, err)
+		log.Errorf("Error marshalling returned information for slot %d: %v", slotID, err)
 		return
 	}
 
 	// Add slot data to the SlotManager, which will handle persistence
 	if slotManager.AddSlot(slotID, string(slotMarshalled)) {
-		log.Printf("Batch size reached, slots have been flushed to Redis")
+		log.Infof("Slot batch size reached, slots have been flushed to Redis for slot %d", slotID)
 	}
 
-	log.Printf("Added slot %d to batch", slotID)
+	log.Infof("Added slot %d to batch", slotID)
 }
 
 // SlotManager handles the storage and batching of slot information
@@ -253,7 +269,7 @@ func (sm *SlotManager) flushSlots() {
 	}
 	allSlotsKey := redis.AllSlotInfo()
 	redis.RedisClient.SAdd(context.Background(), allSlotsKey, slots...)
-	log.Printf("Flushed batch of %d slots to Redis. Range: %v - %v", len(sm.slots), slots[0], slots[len(slots)-1])
+	log.Printf("Flushed batch of %d slots to Redis", len(sm.slots))
 	sm.slots = make(map[int64]string)
 }
 
@@ -269,5 +285,7 @@ func (sm *SlotManager) ForceFlush() {
 
 // Cleanup ensures all pending slots are flushed before program termination
 func Cleanup() {
-	slotManager.ForceFlush()
+	if slotManager != nil {
+		slotManager.ForceFlush()
+	}
 }
